@@ -1,0 +1,203 @@
+---
+import { nav } from '../data/site';
+
+interface Props {
+  /** `overlay` sits on top of the home hero with white text; `solid` is the white bar of the inner pages. */
+  variant?: 'overlay' | 'solid';
+}
+
+const { variant = 'solid' } = Astro.props;
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
+---
+
+<header class:list={['site-header', `site-header--${variant}`]} data-header>
+  <div class="site-header__inner">
+    <button
+      class="site-header__toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="site-nav"
+      data-nav-toggle
+    >
+      <span class="visually-hidden">Abrir menú</span>
+      <span class="site-header__burger" aria-hidden="true"></span>
+    </button>
+    <nav id="site-nav" class="site-header__nav" aria-label="Principal">
+      <ul>
+        {
+          nav.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                class:list={{ 'is-active': isActive(item.href) }}
+                aria-current={isActive(item.href) ? 'page' : undefined}
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const header = document.querySelector<HTMLElement>('[data-header]');
+  const toggle = header?.querySelector<HTMLButtonElement>('[data-nav-toggle]');
+
+  toggle?.addEventListener('click', () => {
+    const open = toggle.getAttribute('aria-expanded') !== 'true';
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.querySelector('.visually-hidden')!.textContent = open ? 'Cerrar menú' : 'Abrir menú';
+    header!.dataset.open = String(open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && header?.dataset.open === 'true') toggle?.click();
+  });
+</script>
+
+<style>
+  .site-header {
+    position: relative;
+    z-index: 20;
+    height: var(--header-height);
+    font-family: var(--font-nav);
+    font-size: 18.4px;
+  }
+
+  .site-header--solid {
+    background: var(--white);
+    color: var(--purple);
+  }
+
+  .site-header--overlay {
+    position: absolute;
+    inset: 0 0 auto;
+    color: var(--white);
+  }
+
+  .site-header__inner {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    max-width: var(--max-width);
+    height: 100%;
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+    padding-right: clamp(16px, 1.8vw, 26px);
+  }
+
+  .site-header__nav ul {
+    display: flex;
+    gap: clamp(24px, 2.6vw, 40px);
+    padding: 0;
+    list-style: none;
+  }
+
+  .site-header__nav a {
+    text-decoration: none;
+    font-weight: 400;
+  }
+
+  .site-header__nav a:hover {
+    text-decoration: underline;
+    text-underline-offset: 6px;
+  }
+
+  .site-header__nav a.is-active {
+    font-weight: 900;
+  }
+
+  .site-header__toggle {
+    display: none;
+  }
+
+  @media (max-width: 760px) {
+    .site-header__toggle {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      margin-right: -10px;
+      padding: 0;
+      border: 0;
+      background: none;
+      color: inherit;
+      cursor: pointer;
+    }
+
+    .site-header__burger,
+    .site-header__burger::before,
+    .site-header__burger::after {
+      width: 24px;
+      height: 2px;
+      background: currentColor;
+      transition: transform 0.2s ease, background-color 0.2s ease;
+    }
+
+    .site-header__burger {
+      position: relative;
+    }
+
+    .site-header__burger::before,
+    .site-header__burger::after {
+      content: '';
+      position: absolute;
+      left: 0;
+    }
+
+    .site-header__burger::before {
+      top: -7px;
+    }
+
+    .site-header__burger::after {
+      top: 7px;
+    }
+
+    [data-open='true'] .site-header__toggle {
+      color: var(--white);
+    }
+
+    [data-open='true'] .site-header__burger {
+      background: transparent;
+    }
+
+    [data-open='true'] .site-header__burger::before {
+      transform: translateY(7px) rotate(45deg);
+    }
+
+    [data-open='true'] .site-header__burger::after {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    .site-header__nav {
+      position: fixed;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      background: var(--purple);
+      color: var(--white);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s ease, visibility 0.2s;
+    }
+
+    [data-open='true'] .site-header__nav {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .site-header__nav ul {
+      flex-direction: column;
+      align-items: center;
+      gap: 28px;
+      font-size: 26px;
+    }
+  }
+</style>

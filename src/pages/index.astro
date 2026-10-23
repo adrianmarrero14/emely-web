@@ -1,0 +1,174 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import HeroCarousel from '../components/HeroCarousel.astro';
+import ProjectsCarousel from '../components/ProjectsCarousel.astro';
+import ContactBlock from '../components/ContactBlock.astro';
+import emelyCircle from '../assets/figma/emely-circle.png';
+import projectsBanner from '../assets/figma/projects-banner.png';
+import { site } from '../data/site';
+---
+
+<Base headerVariant="overlay">
+  <HeroCarousel />
+
+  <section class="cv container" aria-labelledby="cv-title">
+    <div class="cv__copy">
+      <h2 id="cv-title" class="heading cv__title">
+        Echa un ojo a mi currículum y descubre mi experiencia como diseñadora UX/UI
+      </h2>
+      <p>
+        La fusión entre diseño gráfico y experiencia de usuario me permite crear interfaces visualmente
+        atractivas y funcionales. Mi amor por la narrativa visual influye en cómo diseño para contar
+        historias a través de interfaces digitales.
+      </p>
+      <a class="button" href={site.cvHome} target="_blank" rel="noopener noreferrer">
+        Ver currículum
+        <img src="/icons/arrow-white-small.svg" width="8.84279" height="6.6324" alt="" />
+      </a>
+    </div>
+    <Image class="cv__photo" src={emelyCircle} alt="Retrato de Emely Aponte" widths={[336, 672]} sizes="(max-width: 760px) 70vw, 400px" />
+  </section>
+
+  <section class="projects-intro" aria-labelledby="projects-title">
+    <div class="projects-intro__label">
+      <h2 id="projects-title" class="display-title">Proyectos</h2>
+      <p class="projects-intro__subtitle">Proyectos en los que he trabajado</p>
+      <a class="arrow-link" href="/portafolio">
+        ¡Ir al portafolio ya!
+        <img src="/icons/arrow-purple-20.svg" width="20" height="15.0007" alt="" />
+      </a>
+    </div>
+    <div class="projects-intro__banner">
+      <Image class="projects-intro__image" src={projectsBanner} alt="" widths={[640, projectsBanner.width]} sizes="(max-width: 760px) 100vw, 70vw" />
+      <div class="projects-intro__tint" aria-hidden="true"></div>
+      <blockquote class="quote projects-intro__quote">
+        <p>“¿Quieres que tus usuarios se enamoren de tus diseños? Enamórate de tus usuarios”.</p>
+        <cite>Dana Chisnell</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <ProjectsCarousel />
+
+  <ContactBlock />
+</Base>
+
+<style>
+  .cv {
+    display: grid;
+    grid-template-columns: minmax(0, 650px) minmax(0, 1fr);
+    align-items: center;
+    gap: 48px;
+    min-height: clamp(480px, 38.4vw, 553px);
+    padding-block: 72px;
+  }
+
+  .cv__copy {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    font-size: 16px;
+  }
+
+  .cv__title {
+    font-size: clamp(26px, 2.5vw, 36px);
+    line-height: 1.25;
+  }
+
+  .cv__copy .button {
+    margin-top: 12px;
+    min-width: 214px;
+  }
+
+  .cv__photo {
+    justify-self: end;
+    width: min(100%, 400px);
+    height: auto;
+  }
+
+  .projects-intro {
+    display: grid;
+    grid-template-columns: calc(33.33% - 10px) 1fr;
+    min-height: 363px;
+  }
+
+  .projects-intro__label {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 48px var(--gutter);
+    padding-left: clamp(16px, 6vw, 85px);
+    color: var(--text);
+  }
+
+  .projects-intro__subtitle {
+    margin-bottom: 14px;
+    font-size: 16px;
+  }
+
+  .projects-intro__banner {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    overflow: hidden;
+    padding: 48px clamp(24px, 8.8vw, 126px) 48px 24px;
+  }
+
+  .projects-intro__image {
+    position: absolute;
+    top: -25%;
+    left: 0;
+    width: 97%;
+    height: 162%;
+    object-fit: cover;
+  }
+
+  .projects-intro__tint {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 64.9%;
+    right: 0;
+    background: var(--magenta);
+    mix-blend-mode: multiply;
+  }
+
+  .projects-intro__quote {
+    position: relative;
+    max-width: 375px;
+  }
+
+  @media (max-width: 760px) {
+    .cv {
+      grid-template-columns: 1fr;
+      padding-block: 56px;
+    }
+
+    .cv__photo {
+      justify-self: center;
+      width: min(80%, 320px);
+    }
+
+    .projects-intro {
+      grid-template-columns: 1fr;
+    }
+
+    .projects-intro__banner {
+      min-height: 300px;
+    }
+
+    .projects-intro__image {
+      top: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .projects-intro__tint {
+      left: 40%;
+    }
+  }
+</style>

@@ -1,0 +1,36 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container site-footer__inner">
+    <p>Copyright © {year} Emely Aponte</p>
+    <a href="/" class="site-footer__logo">
+      <img src="/icons/logo-white.svg" width="246.4" height="33.9862" alt="Emely Aponte, ir al inicio" />
+    </a>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--purple);
+    color: var(--white);
+    font-family: var(--font-footer);
+    font-size: 18px;
+  }
+
+  .site-footer__inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    min-height: 144px;
+    padding-block: 32px;
+  }
+
+  .site-footer__logo img {
+    width: clamp(180px, 17vw, 246px);
+    height: auto;
+  }
+</style>

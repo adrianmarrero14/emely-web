@@ -1,0 +1,260 @@
+---
+import { Image } from 'astro:assets';
+import hero1 from '../assets/figma/hero-1.png';
+import hero2 from '../assets/figma/hero-2.png';
+import hero3 from '../assets/figma/hero-3.png';
+
+const slides = [
+  { image: hero1, label: 'Hola, soy Emely Aponte, diseñadora UX/UI' },
+  { image: hero2, label: 'Me encanta la creación de contenidos y las redes sociales' },
+  { image: hero3, label: 'Me apasiona el mundo gaming, las series y los cómics' },
+];
+---
+
+<section class="hero" aria-roledescription="carrusel" aria-label="Presentación" data-hero>
+  <div class="hero__slides">
+    {
+      slides.map((slide, index) => (
+        <div
+          class:list={['hero__slide', `hero__slide--${index + 1}`, { 'is-active': index === 0 }]}
+          role="group"
+          aria-roledescription="diapositiva"
+          aria-label={`${index + 1} de ${slides.length}`}
+          aria-hidden={index === 0 ? undefined : 'true'}
+          data-slide
+        >
+          <Image
+            class="hero__image"
+            src={slide.image}
+            alt=""
+            widths={[640, 960, slide.image.width]}
+            sizes="100vw"
+            loading={index === 0 ? 'eager' : 'lazy'}
+            fetchpriority={index === 0 ? 'high' : undefined}
+          />
+          <div class="hero__copy container">
+            {index === 0 && (
+              <h1 class="hero__title">
+                <span class="hero__kicker">Hola, soy</span>
+                <span class="hero__name">Emely Aponte</span>
+                <span class="hero__tag hero__tag--small">
+                  Diseñadora <strong>UX/UI</strong>
+                </span>
+              </h1>
+            )}
+            {index === 1 && (
+              <p class="hero__title">
+                <span class="hero__big">Me encanta</span>
+                <span class="hero__mid">la creación de contenidos</span>
+                <span class="hero__tag">
+                  y las redes <strong>sociales</strong>
+                </span>
+              </p>
+            )}
+            {index === 2 && (
+              <p class="hero__title">
+                <span class="hero__big">Me apasiona</span>
+                <span class="hero__tag">
+                  el mundo <strong>gaming</strong>
+                </span>
+                <span class="hero__mid">las series y los comics</span>
+              </p>
+            )}
+          </div>
+        </div>
+      ))
+    }
+  </div>
+
+  <div class="hero__dots">
+    {
+      slides.map((slide, index) => (
+        <button
+          type="button"
+          class:list={['hero__dot', { 'is-active': index === 0 }]}
+          aria-label={`Ver diapositiva ${index + 1}: ${slide.label}`}
+          aria-current={index === 0 ? 'true' : undefined}
+          data-dot={index}
+        />
+      ))
+    }
+  </div>
+</section>
+
+<script>
+  const hero = document.querySelector<HTMLElement>('[data-hero]');
+
+  if (hero) {
+    const slides = [...hero.querySelectorAll<HTMLElement>('[data-slide]')];
+    const dots = [...hero.querySelectorAll<HTMLButtonElement>('[data-dot]')];
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let current = 0;
+    let timer: number | undefined;
+
+    const show = (index: number) => {
+      current = (index + slides.length) % slides.length;
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('is-active', i === current);
+        if (i === current) slide.removeAttribute('aria-hidden');
+        else slide.setAttribute('aria-hidden', 'true');
+      });
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('is-active', i === current);
+        if (i === current) dot.setAttribute('aria-current', 'true');
+        else dot.removeAttribute('aria-current');
+      });
+    };
+
+    const stop = () => window.clearInterval(timer);
+    const start = () => {
+      if (reduceMotion) return;
+      stop();
+      timer = window.setInterval(() => show(current + 1), 6000);
+    };
+
+    dots.forEach((dot, i) =>
+      dot.addEventListener('click', () => {
+        show(i);
+        start();
+      }),
+    );
+    hero.addEventListener('mouseenter', stop);
+    hero.addEventListener('mouseleave', start);
+    hero.addEventListener('focusin', stop);
+    hero.addEventListener('focusout', start);
+    start();
+  }
+</script>
+
+<style>
+  .hero {
+    position: relative;
+    height: clamp(560px, 59.4vw, 855px);
+    overflow: hidden;
+    background: var(--purple);
+    color: var(--white);
+  }
+
+  .hero__slides,
+  .hero__slide {
+    position: absolute;
+    inset: 0;
+  }
+
+  .hero__slide {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.8s ease, visibility 0.8s;
+  }
+
+  .hero__slide.is-active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .hero__image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 70% center;
+  }
+
+  .hero__copy {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding-left: clamp(16px, 6vw, 87px);
+  }
+
+  .hero__title {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    font-weight: 700;
+    line-height: 1.33;
+  }
+
+  .hero__kicker {
+    font-size: clamp(30px, 3.33vw, 48px);
+  }
+
+  .hero__name {
+    font-size: clamp(42px, 5vw, 72px);
+    line-height: 1.1;
+  }
+
+  .hero__big {
+    font-size: clamp(44px, 5.48vw, 79px);
+  }
+
+  .hero__mid {
+    font-size: clamp(28px, 4.11vw, 59px);
+  }
+
+  .hero__tag {
+    margin-block: 0.25em;
+    padding: 0.06em 0.28em;
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--text);
+    font-weight: 400;
+    font-size: clamp(24px, 3.08vw, 44px);
+  }
+
+  .hero__tag--small {
+    margin-top: 0.4em;
+    font-size: clamp(22px, 2.5vw, 36px);
+  }
+
+  .hero__tag strong {
+    font-weight: 700;
+  }
+
+  .hero__slide--1 .hero__title {
+    margin-top: 2vw;
+  }
+
+  .hero__dots {
+    position: absolute;
+    left: 50%;
+    bottom: 5.5%;
+    display: flex;
+    gap: 4px;
+    transform: translateX(-50%);
+  }
+
+  .hero__dot {
+    width: 36px;
+    height: 19px;
+    padding: 8px 0;
+    border: 0;
+    background: rgba(255, 255, 255, 0.5) content-box;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .hero__dot.is-active {
+    background-color: var(--white);
+  }
+
+  @media (max-width: 760px) {
+    .hero__image {
+      object-position: 62% center;
+    }
+
+    .hero__copy {
+      align-items: flex-end;
+      padding-bottom: 96px;
+    }
+
+    .hero__title {
+      text-shadow: 0 2px 16px rgba(72, 19, 142, 0.45);
+    }
+
+    .hero__tag {
+      text-shadow: none;
+    }
+  }
+</style>

@@ -1,0 +1,32 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Página no encontrada">
+  <section class="container not-found">
+    <p class="display-title">404</p>
+    <h1 class="heading">Esta página no existe… todavía.</h1>
+    <a class="arrow-link" href="/">
+      Volver al inicio
+      <img src="/icons/arrow-purple-20.svg" width="20" height="15.0007" alt="" />
+    </a>
+  </section>
+</Base>
+
+<style>
+  .not-found {
+    display: grid;
+    justify-items: start;
+    gap: 16px;
+    padding-block: 120px 160px;
+  }
+
+  .not-found h1 {
+    font-size: clamp(32px, 4vw, 48px);
+    line-height: 1.2;
+  }
+
+  .not-found .arrow-link {
+    margin-top: 16px;
+  }
+</style>

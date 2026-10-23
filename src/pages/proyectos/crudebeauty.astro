@@ -1,0 +1,323 @@
+---
+import { Image } from 'astro:assets';
+import CaseStudy from '../../layouts/CaseStudy.astro';
+import ResponsiveFigure from '../../components/ResponsiveFigure.astro';
+import cover from '../../assets/projects/home/crudebeauty.jpg';
+import reto from '../../assets/projects/crudebeauty/reto.jpg';
+import proceso from '../../assets/projects/crudebeauty/proceso.png';
+import procesoMobile from '../../assets/projects/crudebeauty/proceso-mobile.png';
+import competencia1 from '../../assets/projects/crudebeauty/competencia-1.png';
+import competencia2 from '../../assets/projects/crudebeauty/competencia-2.png';
+import competencia3 from '../../assets/projects/crudebeauty/competencia-3.png';
+import competenciaMobile1 from '../../assets/projects/crudebeauty/competencia-mobile-1.png';
+import competenciaMobile2 from '../../assets/projects/crudebeauty/competencia-mobile-2.png';
+import competenciaMobile3 from '../../assets/projects/crudebeauty/competencia-mobile-3.png';
+import persona from '../../assets/projects/crudebeauty/persona.jpg';
+import solucion1 from '../../assets/projects/crudebeauty/solucion-1.png';
+import solucion2 from '../../assets/projects/crudebeauty/solucion-2.png';
+import branding from '../../assets/projects/crudebeauty/branding.png';
+import colores from '../../assets/projects/crudebeauty/colores.jpg';
+import iconos from '../../assets/projects/crudebeauty/iconos.png';
+
+const competitors = [
+  { name: 'The Ordinary', desktop: competencia1, mobile: competenciaMobile1 },
+  { name: 'La Roche Posay', desktop: competencia2, mobile: competenciaMobile2 },
+  { name: "Kiehl's", desktop: competencia3, mobile: competenciaMobile3 },
+];
+
+const prototypeUrl =
+  'https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fproto%2FSBhNVU9kQoWQXY9dcZe9B1%2FCrudeBeauty---Ecommerce%3Fpage-id%3D417%253A615%26type%3Ddesign%26node-id%3D418-616%26viewport%3D882%252C544%252C0.5%26t%3DAGEZ8JlqnFwFLjcF-1%26scaling%3Dscale-down%26starting-point-node-id%3D418%253A616%26mode%3Ddesign';
+---
+
+<CaseStudy
+  name="CrudeBeauty"
+  tagline="Diseñando la web de CrudeBeauty, aceites esenciales orgánicos."
+  cover={cover}
+  description="CrudeBeauty cuenta con 9 aceites esenciales que preservan de forma integral todas las características originales de sus productos, así como los componentes utilizados para su elaboración."
+  details={[
+    { label: 'Cliente', value: 'CrudeBeauty' },
+    { label: 'Rol', value: 'Diseñadora UX/UI' },
+    { label: 'Ubicación', value: 'Madrid, España' },
+    {
+      label: 'Brief',
+      value: 'Diseñar el sitio web con una tienda en línea para la empresa CrudeBeauty con el fin de presentar esta nueva marca de aceites esenciales de origen orgánico.',
+    },
+  ]}
+>
+  <section>
+    <h2>Reto</h2>
+    <p>
+      Crear un diseño atractivo, juvenil y limpio con recursos limitados, que esté a la par de la competencia y atraiga
+      a nuevos usuarios, influencers, inversionistas y socios de cooperación.
+    </p>
+    <figure>
+      <Image src={reto} alt="Productos de CrudeBeauty" widths={[880, 1760]} sizes="(max-width: 960px) 92vw, 880px" />
+    </figure>
+  </section>
+
+  <section>
+    <h2>Proceso de diseño</h2>
+    <ResponsiveFigure desktop={proceso} mobile={procesoMobile} alt="Fases del proceso de diseño de CrudeBeauty" />
+  </section>
+
+  <section>
+    <h2>Análisis competitivo</h2>
+    <p>Se han analizado las webs de 3 marcas de la competencia: The Ordinary, La Roche Posay y Kiehl's.</p>
+    {
+      competitors.map((competitor) => (
+        <ResponsiveFigure
+          desktop={competitor.desktop}
+          mobile={competitor.mobile}
+          alt={`Análisis de la web de ${competitor.name}`}
+        />
+      ))
+    }
+  </section>
+
+  <section>
+    <h2>User Persona</h2>
+    <div class="persona">
+      <Image src={persona} alt="María Morales, user persona" widths={[360, 720]} sizes="(max-width: 760px) 92vw, 320px" />
+      <div>
+        <h3>María Morales</h3>
+        <ul class="persona__facts">
+          <li><strong>Edad:</strong> 28</li>
+          <li><strong>Ubicación:</strong> Madrid, España</li>
+          <li><strong>Estado civil:</strong> Soltera</li>
+          <li><strong>Estudios:</strong> Lengua y Literatura</li>
+          <li><strong>Profesión:</strong> Profesora de idiomas</li>
+          <li><strong>Ingresos:</strong> 24.000 € bruto/año</li>
+        </ul>
+      </div>
+    </div>
+    <p>
+      María Morales es una profesora de idiomas apasionada que vive en Madrid. Graduada en Lengua y Literatura, enseña
+      inglés y francés en una escuela de idiomas. María disfruta cuidando su piel con una rutina de skincare y suele subir
+      contenido a sus redes sociales sobre los productos que va descubriendo relacionados con el cuidado de la piel.
+    </p>
+    <p>
+      <strong>Motivación:</strong> María considera que el cuidado de su piel es una parte importante de su rutina de
+      salud y bienestar general.
+    </p>
+    <p>
+      <strong>Necesidades:</strong> María necesita productos de skincare que sean efectivos para mantener su piel
+      saludable y que sean seguros de usar. Buscará productos de alta calidad que cumplan con sus expectativas.
+    </p>
+    <p>
+      <strong>Miedos:</strong> mal uso de los productos de skincare con resultados permanentes como manchas, irritación o
+      daños.
+    </p>
+    <h3>¿Cómo interactúa María con la compra de sus productos de belleza?</h3>
+    <p>
+      Antes de realizar la compra, María investiga los productos de skincare. Lee reseñas en línea, investiga los
+      ingredientes y considera las necesidades de su piel. Sigue a bloggers y expertos en la materia para obtener
+      recomendaciones.
+    </p>
+  </section>
+
+  <section>
+    <h2>Solución</h2>
+    <p>
+      Para impulsar la visibilidad de CrudeBeauty, generé una estética fresca y juvenil, incluyendo la creación de un{' '}
+      <strong>nuevo logotipo y el diseño de envases</strong> que reflejan la identidad de la marca.
+    </p>
+    <p>
+      Además, diseñé la página web con banners llamativos, recomendaciones de aceites según el tipo de piel y{' '}
+      <strong>una funcionalidad de carrito de compras</strong>.
+    </p>
+    <p>
+      <strong>La versión inicial (MVP)</strong> de la página web cuenta con características suficientes para atraer a
+      los primeros usuarios y obtener comentarios para futuras mejoras. El principal objetivo es lanzar la web al mercado
+      lo antes posible, con un conjunto mínimo de funcionalidades. Esto permitirá obtener valiosos conocimientos validados
+      de los usuarios con el menor esfuerzo posible.
+    </p>
+    <div class="gallery" style="--cols: 2">
+      <Image src={solucion1} alt="Página de inicio de la web de CrudeBeauty" />
+      <Image src={solucion2} alt="Ficha de producto de CrudeBeauty" />
+    </div>
+  </section>
+
+  <section>
+    <h2>Branding</h2>
+    <p>
+      El logo usa dos palabras con una tipografía elegante y natural, dividida en dos líneas para un equilibrio visual,
+      rematada con un punto para un toque final.
+    </p>
+    <figure class="branding__logo">
+      <Image src={branding} alt="Logotipo de CrudeBeauty" />
+    </figure>
+
+    <div class="brand-specs">
+      <div>
+        <h3>Colores</h3>
+        <ul class="swatches">
+          <li>
+            <span class="swatch" style="background: rgb(121 217 124)"></span>
+            <span><strong>Pantone 2268C</strong><br />C49 M0 Y65 K100 · R121 G217 B124</span>
+          </li>
+          <li>
+            <span class="swatch" style="background: #000"></span>
+            <span><strong>Pantone Neutral Black C</strong><br />C10 M0 Y0 K100 · R0 G0 B0</span>
+          </li>
+        </ul>
+        <h3>Textos</h3>
+        <ul class="type-specs">
+          <li><span>Títulos</span> Gotham Book</li>
+          <li><span>Subtítulos</span> Gotham Book</li>
+          <li><span>Párrafo</span> Gotham Book</li>
+          <li><span>Precio</span> Gotham Medium</li>
+        </ul>
+      </div>
+      <Image src={colores} alt="Envases de CrudeBeauty con la paleta de la marca" widths={[440, 880]} sizes="(max-width: 760px) 92vw, 420px" />
+    </div>
+
+    <h3>Conjunto de iconos</h3>
+    <p>
+      He elegido un conjunto de iconos que siguen la estética de la marca, garantizando una apariencia uniforme en todo
+      el producto.
+    </p>
+    <figure class="branding__icons">
+      <Image src={iconos} alt="Conjunto de iconos de CrudeBeauty" />
+    </figure>
+  </section>
+
+  <section>
+    <h2>El prototipo</h2>
+    <p>
+      Este es el <strong>prototipo interactivo</strong>: te invito a explorar y experimentar con la interfaz descubriendo
+      todas las posibilidades que tiene para ofrecer.
+    </p>
+    <div class="prototype">
+      <iframe src={prototypeUrl} title="Prototipo interactivo de CrudeBeauty en Figma" loading="lazy" allowfullscreen></iframe>
+    </div>
+  </section>
+
+  <section>
+    <h2>Conclusiones</h2>
+    <p>
+      Después de someter esta solución de diseño a prueba, los resultados reflejan una estrategia sólida para impulsar la
+      visibilidad de CrudeBeauty. La estética fresca y juvenil, junto con el nuevo logotipo y los envases que capturan la
+      esencia de la marca, han sentado las bases para una identidad visual vibrante y atractiva.
+    </p>
+    <p>
+      El diseño de la página web, con sus banners cautivadores y la funcionalidad del carrito de compras, constituye una
+      plataforma sólida para atraer a los primeros usuarios. Esta versión inicial, concebida como un MVP, ofrece un
+      conjunto básico pero efectivo de características que permite lanzar al mercado en tiempo récord.
+    </p>
+    <p>
+      El enfoque en obtener retroalimentación de los usuarios desde el inicio permitirá recopilar información valiosa
+      para futuras mejoras. Esta estrategia coloca a la marca en una posición privilegiada para ajustar y expandir sus
+      funcionalidades de acuerdo con las necesidades reales de sus clientes, garantizando así un crecimiento continuo y
+      una experiencia excepcional para sus usuarios.
+    </p>
+  </section>
+</CaseStudy>
+
+<style>
+  .persona {
+    display: grid;
+    grid-template-columns: minmax(0, 320px) 1fr;
+    align-items: center;
+    gap: 32px;
+  }
+
+  .persona img {
+    width: 100%;
+    height: auto;
+  }
+
+  .persona__facts {
+    margin-top: 12px;
+    padding: 0;
+    list-style: none;
+  }
+
+  .branding__logo,
+  .branding__icons {
+    display: flex;
+    justify-content: center;
+    padding: 32px;
+    background: var(--sand);
+  }
+
+  .branding__logo img {
+    width: min(100%, 520px);
+  }
+
+  .branding__icons img {
+    width: min(100%, 360px);
+  }
+
+  .brand-specs {
+    display: grid;
+    grid-template-columns: 1fr minmax(0, 420px);
+    align-items: start;
+    gap: 32px;
+  }
+
+  .brand-specs img {
+    width: 100%;
+    height: auto;
+  }
+
+  .swatches,
+  .type-specs {
+    padding: 0;
+    list-style: none;
+  }
+
+  .swatches li {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 15px;
+  }
+
+  .swatch {
+    flex: none;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+  }
+
+  .type-specs li {
+    display: flex;
+    gap: 12px;
+    font-size: 15px;
+  }
+
+  .type-specs span {
+    min-width: 96px;
+    color: var(--purple);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .prototype {
+    aspect-ratio: 3 / 2;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .prototype iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  @media (max-width: 760px) {
+    .persona,
+    .brand-specs {
+      grid-template-columns: 1fr;
+    }
+
+    .persona img {
+      max-width: 320px;
+    }
+
+    .prototype {
+      aspect-ratio: 9 / 16;
+    }
+  }
+</style>

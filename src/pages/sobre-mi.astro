@@ -1,0 +1,455 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import CtaBar from '../components/CtaBar.astro';
+import emelyPhoto from '../assets/about/emely.png';
+import skillsBg from '../assets/figma/skills-bg.png';
+import skillsSketch from '../assets/figma/skills-sketch.png';
+import { site } from '../data/site';
+
+const knowledge = [
+  'UX Research',
+  'UX Testing',
+  'Pruebas de deseabilidad y usabilidad (encuestas, entrevistas, testeo de prototipos y MVP)',
+  'Creación de benchmarks, user personas, mapas de empatía, user journeys',
+  'Diseño de interfaces gráficas (wireframes, prototipos en media y alta fidelidad)',
+  'Creación de guías de estilos (Design Systems)',
+  'Metodologías ágiles como Kanban, Scrum y Design Thinking',
+];
+
+// Bar lengths taken from the Figma file (filled width / 481px track).
+const skills = [
+  { name: 'Photoshop', level: 85 },
+  { name: 'Illustrator', level: 85 },
+  { name: 'Figma', level: 85 },
+  { name: 'InVision', level: 68 },
+  { name: 'Maze', level: 85 },
+  { name: 'InDesign', level: 63 },
+  { name: 'After Effects', level: 49 },
+  { name: 'Wordpress', level: 36 },
+  { name: 'HTML', level: 36 },
+  { name: 'CSS', level: 36 },
+];
+
+const experience = [
+  {
+    period: '2021',
+    company: 'Darien Technology',
+    role: 'Diseñadora UX/UI',
+    description:
+      'Investigación, ideación, prototipado y diseño de los diferentes productos digitales de Mercantil Banco Panamá.',
+  },
+  {
+    period: '2019-2020',
+    company: 'Lookers Inbound',
+    role: 'Diseñadora gráfica, diseñadora web',
+    description:
+      'Dirección, diseño y desarrollo de piezas gráficas para social media, flyers digitales e impresos, branding e interfaces gráficas para la agencia de Inbound Marketing Lookers.',
+  },
+  {
+    period: '2017-2019',
+    company: 'Wikot',
+    role: 'Diseñadora UX/UI',
+    description:
+      'Investigación, ideación, prototipado y diseño de los diferentes productos digitales de la agencia de tecnología y marketing digital Wikot Technologies.',
+  },
+  {
+    period: '2016-2017',
+    company: 'Seis Grados Media',
+    role: 'Diseñadora gráfica digital',
+    description:
+      'Diseño y creación de conceptos visuales para la agencia de marketing digital Seis Grados Media. Diseño de piezas gráficas para social media como banners, animaciones, 360 y vídeos.',
+  },
+  {
+    period: '2016',
+    company: 'La Web Mercadeo Interactivo',
+    role: 'Diseñadora gráfica digital junior',
+    description:
+      'Diseño y creación de conceptos visuales para la agencia de marketing digital La Web. Diseño de piezas gráficas para social media como banners, animaciones, 360 y vídeos.',
+  },
+];
+---
+
+<Base title="¿Quién soy?" description="Conoce la historia, conocimientos y experiencia de Emely Aponte, diseñadora UX/UI en Madrid.">
+  <section class="story container">
+    <div class="story__copy">
+      <a href="/" class="story__logo">
+        <img src="/icons/logo-stacked-141.svg" width="141" height="72.0557" alt="Emely Aponte, ir al inicio" />
+      </a>
+
+      <h1 class="heading story__title">Un poco de mi historia.</h1>
+      <div class="story__text">
+        <p>
+          Cuento con <strong>10 años de experiencia en diseño gráfico y 8 años como diseñadora UX/UI</strong>.
+          Nací en Caracas, Venezuela, y me gradué como diseñadora gráfica. Actualmente, resido en Madrid, España.
+        </p>
+        <p>
+          Desde mi infancia, he explorado el mundo artístico, creando cómics en mi tiempo libre y escribiendo
+          historias de fantasía.
+        </p>
+        <p>
+          Esta fusión entre diseño gráfico y experiencia de usuario me permite crear interfaces visualmente
+          atractivas y funcionales. Mi amor por la narrativa visual, gracias a mi afición por los cómics y las
+          historias de fantasía, influye en cómo diseño para contar historias a través de interfaces digitales.
+        </p>
+        <p>
+          Hace un tiempo, tomé la decisión de capacitarme en línea a través de plataformas de aprendizaje en
+          usabilidad y diseño de interfaces para productos digitales, adentrándome en lo que comúnmente se llama{' '}
+          <strong>“La ciencia del usuario”</strong>.
+        </p>
+      </div>
+
+      <h2 class="heading story__title">Mis conocimientos como Diseñadora UX/UI.</h2>
+      <ul class="story__list">
+        {knowledge.map((item) => <li>{item}</li>)}
+      </ul>
+
+      <a class="button" href={site.cvAbout} target="_blank" rel="noopener noreferrer">
+        Ver currículum
+        <img src="/icons/arrow-white-small.svg" width="8.84279" height="6.6324" alt="" />
+      </a>
+    </div>
+
+    <Image
+      class="story__photo"
+      src={emelyPhoto}
+      alt="Emely Aponte sonriendo, en blanco y negro"
+      widths={[400, 800]}
+      sizes="(max-width: 900px) 90vw, 40vw"
+    />
+  </section>
+
+  <section class="skills" aria-labelledby="skills-title">
+    <Image class="skills__bg" src={skillsBg} alt="" widths={[800, 1440, skillsBg.width]} sizes="100vw" />
+    <div class="skills__tint" aria-hidden="true"></div>
+    <div class="container skills__inner">
+      <div class="skills__intro">
+        <h2 id="skills-title" class="display-title skills__title">
+          He desarrollado múltiples habilidades en mis años de experiencia como diseñadora.
+        </h2>
+        <p class="skills__note">
+          Creo que el aprendizaje <strong>nunca se detiene</strong>, y me interesa{' '}
+          <strong>desarrollar mis habilidades cada día más.</strong>
+        </p>
+        <a class="arrow-link skills__link" href="/portafolio">
+          ¡Ir al portafolio ya!
+          <img src="/icons/arrow-white-20.svg" width="20" height="15.0007" alt="" />
+        </a>
+      </div>
+
+      <div class="skills__panel">
+        <h3 class="visually-hidden">Herramientas</h3>
+        <ul>
+          {
+            skills.map((skill) => (
+              <li>
+                <span class="skills__name">{skill.name}</span>
+                <span
+                  class="skills__bar"
+                  role="meter"
+                  aria-label={skill.name}
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                  aria-valuenow={skill.level}
+                  style={`--level: ${skill.level}%`}
+                />
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="experience" aria-labelledby="experience-title">
+    <Image class="experience__sketch" src={skillsSketch} alt="" widths={[651, 1302]} sizes="45vw" />
+    <div class="container experience__inner">
+      <h2 id="experience-title" class="display-title">Experiencias laborales</h2>
+      <ol class="timeline">
+        {
+          experience.map((job) => (
+            <li class="timeline__item">
+              <div class="timeline__meta">
+                <span class="timeline__period">{job.period}</span>
+                <img src="/icons/timeline-arrow.svg" width="107" height="22.0919" alt="" />
+                <span class="timeline__company">{job.company}</span>
+              </div>
+              <div class="timeline__body">
+                <h3 class="timeline__role">{job.role}</h3>
+                <p>{job.description}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <CtaBar />
+</Base>
+
+<style>
+  /* Historia */
+  .story {
+    display: grid;
+    grid-template-columns: minmax(0, 560px) minmax(0, 1fr);
+    gap: clamp(40px, 8vw, 140px);
+    align-items: start;
+    padding-block: 0 96px;
+    padding-left: clamp(16px, 6vw, 85px);
+  }
+
+  .story__copy {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .story__logo img {
+    width: 141px;
+    height: auto;
+  }
+
+  .story__title {
+    margin-top: 48px;
+    font-size: 24px;
+    line-height: 1.6;
+  }
+
+  .story__text {
+    display: grid;
+    gap: 14px;
+    margin-top: 16px;
+    color: var(--text-strong);
+    font-family: var(--font-nav);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .story__list {
+    display: grid;
+    gap: 10px;
+    margin-top: 16px;
+    padding-left: 18px;
+    color: var(--text-strong);
+    font-family: var(--font-nav);
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .story__copy .button {
+    margin-top: 40px;
+    min-width: 214px;
+  }
+
+  .story__photo {
+    justify-self: end;
+    width: min(100%, 520px);
+    height: auto;
+    margin-top: 120px;
+    box-shadow: 24px 24px 0 var(--purple);
+  }
+
+  /* Habilidades */
+  .skills {
+    position: relative;
+    color: var(--white);
+  }
+
+  .skills__bg,
+  .skills__tint {
+    position: absolute;
+    inset: 0 0 auto;
+    width: 100%;
+    height: 100%;
+  }
+
+  .skills__bg {
+    object-fit: cover;
+  }
+
+  .skills__tint {
+    background: var(--purple);
+    mix-blend-mode: multiply;
+  }
+
+  .skills__inner {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 520px) minmax(0, 635px);
+    justify-content: space-between;
+    align-items: center;
+    gap: 48px;
+    padding-left: clamp(16px, 6.8vw, 98px);
+    padding-right: clamp(16px, 9.5vw, 139px);
+  }
+
+  .skills__intro {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-block: 120px;
+  }
+
+  .skills__title {
+    color: var(--white);
+  }
+
+  .skills__note {
+    max-width: 462px;
+    margin-top: 24px;
+    padding: 17px 18px;
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--text);
+    font-size: 18px;
+    line-height: 1.37;
+  }
+
+  .skills__link {
+    margin-top: 20px;
+    color: var(--white);
+  }
+
+  .skills__panel {
+    position: relative;
+    z-index: 1;
+    align-self: start;
+    margin-top: 70px;
+    margin-bottom: -56px;
+    padding: 51px 77px 64px;
+    background: var(--purple);
+  }
+
+  .skills__panel ul {
+    display: grid;
+    gap: 23px;
+    padding: 0;
+    list-style: none;
+  }
+
+  .skills__name {
+    display: block;
+    margin-bottom: 13px;
+    font-size: 18px;
+    line-height: 1.2;
+  }
+
+  .skills__bar {
+    display: block;
+    height: 8px;
+    border-radius: 60px;
+    background: linear-gradient(var(--magenta), var(--magenta)) left / var(--level) 100% no-repeat, var(--track);
+  }
+
+  /* Experiencia */
+  .experience {
+    position: relative;
+    overflow: hidden;
+    background: var(--sand);
+  }
+
+  .experience__sketch {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 45%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.5;
+    transform: scaleY(-1);
+  }
+
+  .experience__inner {
+    position: relative;
+    padding-block: 93px 92px;
+    padding-left: clamp(16px, 6.8vw, 98px);
+  }
+
+  .timeline {
+    display: grid;
+    gap: 32px;
+    max-width: 622px;
+    margin-top: 41px;
+    padding: 0;
+    list-style: none;
+  }
+
+  .timeline__item {
+    display: grid;
+    grid-template-columns: 118px 1fr;
+    gap: 17px;
+  }
+
+  .timeline__meta {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-size: 14px;
+  }
+
+  .timeline__period {
+    font-size: 18px;
+  }
+
+  .timeline__meta img {
+    width: 104px;
+    height: auto;
+  }
+
+  .timeline__body {
+    padding-top: 24px;
+    font-size: 14px;
+  }
+
+  .timeline__role {
+    margin-bottom: 8px;
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  @media (max-width: 1024px) {
+    .story {
+      grid-template-columns: 1fr;
+    }
+
+    .story__photo {
+      justify-self: start;
+      margin-top: 0;
+      width: min(calc(100% - 24px), 520px);
+    }
+
+    .skills__inner {
+      grid-template-columns: 1fr;
+      padding-right: var(--gutter);
+    }
+
+    .skills__intro {
+      padding-block: 80px 0;
+    }
+
+    .skills__panel {
+      margin: 0 0 -56px;
+      padding: 40px clamp(24px, 6vw, 77px) 48px;
+    }
+
+    .experience__inner {
+      padding-top: 136px;
+    }
+
+    .experience__sketch {
+      width: 100%;
+      opacity: 0.2;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .timeline__item {
+      grid-template-columns: 1fr;
+      gap: 4px;
+    }
+
+    .timeline__body {
+      padding-top: 0;
+    }
+  }
+</style>

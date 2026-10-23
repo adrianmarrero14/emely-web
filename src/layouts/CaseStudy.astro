@@ -1,0 +1,256 @@
+---
+import type { ImageMetadata } from 'astro';
+import { Image } from 'astro:assets';
+import Base from './Base.astro';
+import CtaBar from '../components/CtaBar.astro';
+
+interface Props {
+  name: string;
+  tagline: string;
+  cover: ImageMetadata;
+  description: string;
+  details: { label: string; value: string }[];
+}
+
+const { name, tagline, cover, description, details } = Astro.props;
+---
+
+<Base title={`${name}, caso de estudio`} description={description}>
+  <header class="case-hero">
+    <div class="container case-hero__inner">
+      <a class="arrow-link case-hero__back" href="/portafolio">
+        <img src="/icons/arrow-white-20.svg" width="20" height="15.0007" alt="" />
+        Volver al portafolio
+      </a>
+      <p class="case-hero__eyebrow">Caso de estudio</p>
+      <h1 class="case-hero__title">{name}</h1>
+      <p class="case-hero__tagline">{tagline}</p>
+    </div>
+  </header>
+
+  <div class="container case-cover">
+    <Image src={cover} alt={`Pantallas del proyecto ${name}`} widths={[640, 1024, 1600]} sizes="(max-width: 1440px) 92vw, 1244px" loading="eager" />
+  </div>
+
+  <section class="container case-summary">
+    <div>
+      <h2 class="display-title">Descripción</h2>
+      <p>{description}</p>
+    </div>
+    <div class="case-summary__details">
+      <h2 class="display-title">Detalles</h2>
+      <dl>
+        {
+          details.map((detail) => (
+            <div>
+              <dt>{detail.label}</dt>
+              <dd>{detail.value}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </section>
+
+  <article class="container case-body">
+    <slot />
+  </article>
+
+  <CtaBar />
+</Base>
+
+<style>
+  .case-hero {
+    position: relative;
+    overflow: hidden;
+    padding-block: 56px 200px;
+    background: var(--purple);
+    color: var(--white);
+  }
+
+  /* Magenta block echoing the duotone banners of the Figma design */
+  .case-hero::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 32%;
+    height: 100%;
+    background: var(--magenta);
+    mix-blend-mode: multiply;
+    opacity: 0.85;
+  }
+
+  .case-hero__inner {
+    position: relative;
+    z-index: 1;
+    padding-left: clamp(16px, 6.8vw, 98px);
+  }
+
+  .case-hero__back {
+    font-size: 16px;
+  }
+
+  .case-hero__back img {
+    transform: scaleX(-1);
+  }
+
+  .case-hero__back:hover img {
+    transform: scaleX(-1) translateX(4px);
+  }
+
+  .case-hero__eyebrow {
+    width: fit-content;
+    min-width: 117px;
+    margin-top: 56px;
+    padding-bottom: 14px;
+    border-bottom: 8px solid var(--magenta);
+    font-size: 18px;
+  }
+
+  .case-hero__title {
+    margin-top: 28px;
+    font-family: var(--font-heading);
+    font-size: clamp(44px, 5vw, 72px);
+    line-height: 1.1;
+  }
+
+  .case-hero__tagline {
+    max-width: 640px;
+    margin-top: 16px;
+    font-size: clamp(20px, 1.7vw, 24px);
+    font-weight: 700;
+  }
+
+  .case-cover {
+    position: relative;
+    margin-top: -150px;
+  }
+
+  .case-cover img {
+    width: 100%;
+    height: auto;
+    box-shadow: 0 24px 60px rgba(40, 0, 70, 0.25);
+  }
+
+  .case-summary {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    gap: clamp(32px, 6vw, 96px);
+    padding-block: 80px;
+    font-size: 17px;
+    line-height: 1.6;
+  }
+
+  .case-summary p {
+    margin-top: 12px;
+  }
+
+  .case-summary__details {
+    padding: 32px 36px;
+    background: var(--sand);
+  }
+
+  .case-summary__details dl {
+    margin: 0;
+  }
+
+  .case-summary__details dl div {
+    margin-top: 18px;
+  }
+
+  .case-summary__details dt {
+    color: var(--purple);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .case-summary__details dd {
+    margin: 2px 0 0;
+    font-size: 16px;
+  }
+
+  /* Long-form content of each case study */
+  .case-body {
+    padding-bottom: 96px;
+    font-size: 17px;
+    line-height: 1.65;
+  }
+
+  .case-body :global(section) {
+    display: grid;
+    gap: 20px;
+    max-width: 880px;
+    margin-inline: auto;
+    padding-block: 48px;
+    border-top: 1px solid #e6e1ec;
+  }
+
+  .case-body :global(h2) {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(32px, 3vw, 45px);
+    line-height: 1.2;
+    color: var(--purple);
+  }
+
+  .case-body :global(h3) {
+    margin-top: 12px;
+    font-family: var(--font-heading);
+    font-size: 20px;
+    line-height: 1.4;
+    color: var(--purple-dark);
+  }
+
+  .case-body :global(strong) {
+    color: var(--purple-dark);
+  }
+
+  .case-body :global(ul) {
+    display: grid;
+    gap: 10px;
+    padding-left: 22px;
+  }
+
+  .case-body :global(li::marker) {
+    color: var(--magenta);
+  }
+
+  .case-body :global(figure img),
+  .case-body :global(.gallery img) {
+    width: 100%;
+    height: auto;
+  }
+
+  .case-body :global(.gallery) {
+    display: grid;
+    grid-template-columns: repeat(var(--cols, 3), minmax(0, 1fr));
+    align-items: start;
+    gap: 16px;
+  }
+
+  .case-body :global(.wide) {
+    max-width: none;
+  }
+
+  @media (max-width: 760px) {
+    .case-hero {
+      padding-bottom: 120px;
+    }
+
+    .case-cover {
+      margin-top: -80px;
+    }
+
+    .case-summary {
+      grid-template-columns: 1fr;
+      padding-block: 56px;
+    }
+
+    .case-body :global(.gallery) {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

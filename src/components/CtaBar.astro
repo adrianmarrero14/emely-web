@@ -1,0 +1,84 @@
+---
+import { site } from '../data/site';
+---
+
+<section class="cta" aria-label="Siguientes pasos">
+  <a class="cta__item cta__item--message" href="/contacto">
+    ¡Enviar un mensaje!
+    <img src="/icons/arrow-white-20.svg" width="20" height="15.0007" alt="" />
+  </a>
+  <a class="cta__item cta__item--portfolio" href="/portafolio">
+    Ver el portafolio primero
+    <img src="/icons/arrow-white-20.svg" width="20" height="15.0007" alt="" />
+  </a>
+  <ul class="cta__item cta__item--social">
+    <li>
+      <a href={site.behance} target="_blank" rel="noopener noreferrer">
+        <img src="/icons/behance-white.svg" width="27" height="27" alt="Behance" />
+      </a>
+    </li>
+    <li>
+      <a href={site.linkedin} target="_blank" rel="noopener noreferrer">
+        <img src="/icons/linkedin-white.svg" width="27" height="27" alt="LinkedIn" />
+      </a>
+    </li>
+  </ul>
+</section>
+
+<style>
+  .cta {
+    display: grid;
+    grid-template-columns: 458fr 614fr 368fr;
+    color: var(--white);
+    font-family: var(--font-display);
+    font-size: clamp(26px, 2.5vw, 36px);
+  }
+
+  .cta__item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    min-height: 122px;
+    margin: 0;
+    padding: 24px clamp(24px, 5.1vw, 74px);
+    text-decoration: none;
+  }
+
+  .cta__item img {
+    transition: transform 0.2s ease;
+  }
+
+  a.cta__item:hover img,
+  a.cta__item:focus-visible img {
+    transform: translateX(4px);
+  }
+
+  .cta__item--message {
+    background: var(--purple-dark);
+  }
+
+  .cta__item--portfolio {
+    background: var(--magenta);
+  }
+
+  .cta__item--social {
+    justify-content: flex-end;
+    gap: 24px;
+    background: var(--magenta-dark);
+    list-style: none;
+  }
+
+  @media (max-width: 1024px) {
+    .cta {
+      grid-template-columns: 1fr;
+    }
+
+    .cta__item {
+      min-height: 96px;
+    }
+
+    .cta__item--social {
+      justify-content: flex-start;
+    }
+  }
+</style>

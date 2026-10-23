@@ -1,0 +1,47 @@
+---
+import type { ImageMetadata } from 'astro';
+import { Image } from 'astro:assets';
+import phone from '../assets/figma/phone-mockup.png';
+
+interface Props {
+  screen?: ImageMetadata;
+  alt?: string;
+  class?: string;
+}
+
+const { screen, alt = '', class: className } = Astro.props;
+---
+
+<div class:list={['phone', className]}>
+  {
+    screen && (
+      <Image class="phone__screen" src={screen} alt={alt} widths={[240, 480]} sizes="(max-width: 760px) 40vw, 170px" />
+    )
+  }
+  <Image class="phone__frame" src={phone} alt="" widths={[400, 800]} sizes="(max-width: 760px) 90vw, 396px" />
+</div>
+
+<style>
+  .phone {
+    position: relative;
+    width: 100%;
+    max-width: 396px;
+    aspect-ratio: 1622 / 1600;
+  }
+
+  .phone__frame {
+    position: relative;
+    width: 100%;
+    height: auto;
+  }
+
+  /* Transparent screen area measured on the mockup PNG */
+  .phone__screen {
+    position: absolute;
+    top: 12.7%;
+    left: 29.3%;
+    width: 41.9%;
+    height: 75.25%;
+    object-fit: cover;
+  }
+</style>

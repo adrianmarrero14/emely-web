@@ -1,0 +1,145 @@
+---
+import { Image } from 'astro:assets';
+import CaseStudy from '../../layouts/CaseStudy.astro';
+import cover from '../../assets/projects/home/pinsxp.jpg';
+import reto1 from '../../assets/projects/pinsxp/reto-1.png';
+import reto2 from '../../assets/projects/pinsxp/reto-2.png';
+import reto3 from '../../assets/projects/pinsxp/reto-3.png';
+import compass1 from '../../assets/projects/pinsxp/compass-1.png';
+import compass2 from '../../assets/projects/pinsxp/compass-2.png';
+import impacto from '../../assets/projects/pinsxp/impacto.jpg';
+---
+
+<CaseStudy
+  name="PinsXP"
+  tagline="Escalando un Design System complejo con IA"
+  cover={cover}
+  description="Lideré la conceptualización, arquitectura y escalado del sistema de diseño “Compass” para PinsXP, una plataforma social para guardar, compartir y conectar momentos y lugares. Integré flujos de trabajo asistidos por IA para unificar y acelerar la creación de nuevas experiencias de usuario."
+  details={[
+    { label: 'Cliente', value: 'PinsXP' },
+    { label: 'Rol', value: 'Lead Product Designer / Diseñadora de Producto' },
+    { label: 'Ubicación', value: 'Madrid, España' },
+    {
+      label: 'Brief',
+      value: 'Diseñar un Sistema de Diseño para PinsXP manteniendo una consistencia visual y escalable para todos sus productos digitales.',
+    },
+  ]}
+>
+  <section>
+    <h2>El reto</h2>
+    <p>
+      PinsXP es una aplicación donde los usuarios guardan lugares favoritos, crean itinerarios de viajes o planes y
+      comparten momentos en grupo con amigos. A medida que la startup crecía, diseñar nuevas pantallas y flujos de
+      forma aislada generaba inconsistencias visuales y ralentizaba el desarrollo.
+    </p>
+    <div class="gallery" style="--cols: 3">
+      <Image src={reto1} alt="Pantallas de PinsXP antes del sistema de diseño" widths={[600, reto1.width]} sizes="(max-width: 760px) 92vw, 300px" />
+      <Image src={reto2} alt="Detalle de componentes inconsistentes" />
+      <Image src={reto3} alt="Detalle de una pantalla de la app" />
+    </div>
+    <h3>El problema</h3>
+    <ul>
+      <li>
+        Había una desconexión inicial y falta de estandarización en los componentes que ralentizaba la creación de
+        nuevos flujos y pantallas.
+      </li>
+      <li>
+        Necesitábamos estandarizar cómo se estructuran y muestran elementos cotidianos de la app (como tarjetas de
+        lugares guardados, creación de grupos o listados de planes).
+      </li>
+      <li>
+        La gestión de componentes complejos (como estados vacíos cuando el usuario aún no tiene grupos o la adaptación
+        automática entre modo claro y oscuro) consumía demasiado tiempo operativo y creaba fricción con el equipo de
+        ingeniería.
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>La solución</h2>
+    <h3>El Sistema de Diseño “Compass” (estrategia y arquitectura)</h3>
+    <div class="gallery" style="--cols: 2">
+      <Image src={compass1} alt="Arquitectura de componentes de Compass" widths={[728, compass1.width]} sizes="(max-width: 760px) 92vw, 440px" />
+      <Image src={compass2} alt="Ejemplo de componentes de Compass" widths={[420, compass2.width]} sizes="(max-width: 760px) 92vw, 440px" />
+    </div>
+
+    <h3>El origen de “Compass” (la brújula del producto)</h3>
+    <p>
+      Nombré al sistema <strong>Compass</strong> porque actúa exactamente como una brújula: guía tanto a diseño como a
+      ingeniería en una sola dirección, asegurando que guardar, compartir y descubrir lugares mantenga siempre el mismo
+      pulso visual y de usabilidad.
+    </p>
+
+    <h3>Arquitectura limpia de componentes en Figma</h3>
+    <p>
+      Organicé librerías avanzadas utilizando componentes con propiedades claras (tipo, color y tamaño), aplicando
+      nomenclaturas estandarizadas y fáciles de entender para que la librería fuera sumamente resistente a futuros
+      cambios de diseño.
+    </p>
+
+    <h3>Reglas de calidad y automatización con IA</h3>
+    <p>
+      Para mantener un estándar impecable, establecí directrices estrictas de redacción y consistencia visual (cuidando
+      las mayúsculas en términos clave de la app como <strong>Moments</strong> o <strong>Itineraries</strong>), además
+      de pautas claras de accesibilidad.
+    </p>
+
+    <h3>Especificaciones y entrega a desarrollo (handoff)</h3>
+    <p>
+      Integré normas rigurosas para cada componente nuevo, documentando comportamientos ante desbordamientos de texto,
+      restricciones de tamaño y todos los estados posibles (cargando, vacío, con error, éxito o deshabilitado) antes de
+      entregarlo a código.
+    </p>
+  </section>
+
+  <section>
+    <h2>El impacto en los nuevos flujos</h2>
+    <figure>
+      <Image src={impacto} alt="Nuevos flujos de PinsXP construidos con Compass" widths={[880, 1760]} sizes="(max-width: 960px) 92vw, 880px" />
+    </figure>
+    <h3>De la fricción a la modularidad</h3>
+    <p>
+      Gracias a <strong>Compass</strong>, la creación de nuevos flujos sociales (como compartir colecciones o coordinar
+      planes en grupo) pasó de ser un proceso artesanal a un sistema modular y predecible.
+    </p>
+    <h3>Sinergia total con ingeniería</h3>
+    <p>
+      Al alinear perfectamente las variables de diseño con la estructura que usa el equipo de desarrollo, se redujo al
+      mínimo el margen de error y el tiempo de revisión en código.
+    </p>
+    <h3>Consistencia en la experiencia de usuario</h3>
+    <p>
+      Cada pantalla de la app refleja ahora una interfaz cohesiva, accesible y optimizada para que los usuarios guarden
+      y compartan sus experiencias sin fricción.
+    </p>
+  </section>
+
+  <section>
+    <h2>Próximos pasos</h2>
+    <h3>Escalado de componentes a la versión web (desktop y responsive)</h3>
+    <p>
+      <strong>El reto web:</strong> a medida que PinsXP crece, los usuarios necesitan gestionar sus itinerarios y
+      colecciones compartidas de forma más cómoda desde pantallas grandes, lo que exige llevar el ecosistema de diseño
+      móvil a una experiencia web robusta y responsiva.
+    </p>
+    <h3>Adaptación y coherencia multiplataforma</h3>
+    <ul>
+      <li>
+        <strong>Sistema de grillas y breakpoints:</strong> se definirá una nueva capa de componentes en Figma adaptados a
+        la web, estableciendo sistemas de retícula flexibles, breakpoints claros y densidades de información optimizadas
+        para pantallas de escritorio (sin perder la paridad visual con la app móvil).
+      </li>
+      <li>
+        <strong>Componentes web-ready (inspirados en shadcn/ui):</strong> se traducirán los componentes móviles de
+        Compass a patrones web complejos (tablas de gestión de itinerarios, menús desplegables de grupos, modales
+        anidados y navegación lateral), asegurando que los patrones de interacción se sientan nativos tanto en web como en
+        mobile.
+      </li>
+      <li>
+        <strong>Consistencia de marca:</strong> mantener la misma filosofía de “brújula” visual, garantizando que el
+        usuario experimente la misma fluidez al recordar y compartir momentos, ya sea desde su navegador móvil o desde el
+        ordenador.
+      </li>
+    </ul>
+  </section>
+</CaseStudy>

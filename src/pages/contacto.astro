@@ -1,0 +1,272 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import contactPhoto from '../assets/figma/contact-photo.png';
+import { site } from '../data/site';
+
+const action = site.formsparkId ? `https://submit-form.com/${site.formsparkId}` : undefined;
+---
+
+<Base title="Contacto" description="Escríbele a Emely Aponte, diseñadora UX/UI en Madrid.">
+  <section class="contact">
+    <Image class="contact__photo" src={contactPhoto} alt="" widths={[760, contactPhoto.width]} sizes="100vw" loading="eager" />
+
+    <div class="container contact__inner">
+      <a href="/" class="contact__logo">
+        <img src="/icons/logo-stacked-180.svg" width="180" height="92.0712" alt="Emely Aponte, ir al inicio" />
+      </a>
+      <h1 class="heading contact__title">¡Mandame un mensaje!</h1>
+
+      <form class="contact__form" method="post" action={action} data-contact-form novalidate>
+        <label class="visually-hidden" for="contact-name">Nombre</label>
+        <input id="contact-name" name="nombre" type="text" placeholder="Nombre *" autocomplete="name" required />
+
+        <label class="visually-hidden" for="contact-email">Email</label>
+        <input id="contact-email" name="email" type="email" placeholder="Email *" autocomplete="email" required />
+
+        <label class="visually-hidden" for="contact-message">Mensaje</label>
+        <textarea id="contact-message" name="mensaje" placeholder="Mensaje *" rows="6" required></textarea>
+
+        <button class="button" type="submit">
+          ¡Enviar un mensaje!
+          <img src="/icons/arrow-white-xs.svg" width="7.86026" height="5.89547" alt="" />
+        </button>
+        <p class="contact__status" role="status" data-status></p>
+      </form>
+
+      <p class="contact__place">{site.name} · {site.location}</p>
+    </div>
+
+    <ul class="contact__social" aria-label="Redes sociales">
+      <li>
+        <a href={site.behance} target="_blank" rel="noopener noreferrer">
+          <img src="/icons/behance-purple.svg" width="45.0577" height="45.0577" alt="Behance" />
+        </a>
+      </li>
+      <li>
+        <a href={site.linkedin} target="_blank" rel="noopener noreferrer">
+          <img src="/icons/linkedin-purple.svg" width="44.3852" height="44.3852" alt="LinkedIn" />
+        </a>
+      </li>
+    </ul>
+  </section>
+</Base>
+
+<script define:vars={{ linkedin: site.linkedin }}>
+  const form = document.querySelector('[data-contact-form]');
+  const status = form.querySelector('[data-status]');
+  const button = form.querySelector('button');
+
+  const setStatus = (html, tone) => {
+    status.innerHTML = html;
+    status.dataset.tone = tone;
+  };
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    if (!form.checkValidity()) {
+      const firstInvalid = form.querySelector(':invalid');
+      setStatus('Revisa los campos marcados: nombre, un email válido y tu mensaje.', 'error');
+      firstInvalid?.focus();
+      return;
+    }
+
+    if (!form.getAttribute('action')) {
+      setStatus(
+        `El formulario todavía no está activo. Mientras tanto, escríbeme por <a href="${linkedin}" target="_blank" rel="noopener noreferrer">LinkedIn</a>.`,
+        'error',
+      );
+      return;
+    }
+
+    button.disabled = true;
+    setStatus('Enviando…', 'info');
+
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(Object.fromEntries(new FormData(form))),
+      });
+      if (!response.ok) throw new Error(String(response.status));
+      form.reset();
+      setStatus('¡Gracias! Tu mensaje se ha enviado. Te responderé lo antes posible.', 'success');
+    } catch {
+      setStatus(
+        `No se pudo enviar el mensaje. Inténtalo de nuevo o escríbeme por <a href="${linkedin}" target="_blank" rel="noopener noreferrer">LinkedIn</a>.`,
+        'error',
+      );
+    } finally {
+      button.disabled = false;
+    }
+  });
+</script>
+
+<style>
+  .contact {
+    position: relative;
+    min-height: clamp(600px, 47vw, 678px);
+    overflow: hidden;
+  }
+
+  .contact__photo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    min-height: 122%;
+    object-fit: cover;
+    object-position: right top;
+  }
+
+  .contact__inner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-top: 0;
+    padding-bottom: 48px;
+    padding-left: clamp(16px, 4.4vw, 64px);
+  }
+
+  .contact__logo {
+    margin-left: 11px;
+  }
+
+  .contact__logo img {
+    width: 180px;
+    height: auto;
+  }
+
+  .contact__title {
+    max-width: 514px;
+    margin-top: 32px;
+    font-size: clamp(36px, 3.33vw, 48px);
+    line-height: 1.46;
+  }
+
+  .contact__form {
+    display: grid;
+    gap: 10px;
+    width: min(100%, 430px);
+    margin-top: 20px;
+  }
+
+  .contact__form input,
+  .contact__form textarea {
+    width: 100%;
+    min-height: 50px;
+    padding: 14px 19px;
+    border: 1px solid transparent;
+    border-radius: 0;
+    background: var(--input-bg);
+    color: var(--text-strong);
+    font-family: var(--font-heading);
+    font-size: 14px;
+    letter-spacing: 0.08em;
+    resize: vertical;
+  }
+
+  .contact__form textarea {
+    min-height: 150px;
+  }
+
+  .contact__form ::placeholder {
+    color: var(--placeholder);
+    opacity: 1;
+  }
+
+  .contact__form input:focus,
+  .contact__form textarea:focus {
+    outline: none;
+    border-color: var(--purple);
+  }
+
+  .contact__form :user-invalid {
+    border-color: var(--magenta);
+  }
+
+  .contact__form .button {
+    min-height: 48px;
+    width: 100%;
+  }
+
+  .contact__form .button:disabled {
+    opacity: 0.6;
+    cursor: progress;
+  }
+
+  .contact__status {
+    min-height: 1.4em;
+    font-size: 14px;
+  }
+
+  .contact__status[data-tone='success'] {
+    color: var(--purple);
+    font-weight: 700;
+  }
+
+  .contact__status[data-tone='error'] {
+    color: var(--magenta);
+  }
+
+  .contact__status :global(a) {
+    font-weight: 700;
+  }
+
+  .contact__place {
+    margin-top: 8px;
+    font-size: 14px;
+  }
+
+  .contact__social {
+    position: absolute;
+    top: 54%;
+    right: 0;
+    display: grid;
+    gap: 13px;
+    margin: 0;
+    padding: 12px 18px 12px 15px;
+    border-radius: 30px 0 0 30px;
+    background: var(--white);
+    list-style: none;
+  }
+
+  .contact__social a {
+    display: block;
+    transition: transform 0.2s ease;
+  }
+
+  .contact__social a:hover {
+    transform: scale(1.08);
+  }
+
+  .contact__social img {
+    width: 45px;
+    height: auto;
+  }
+
+  @media (max-width: 900px) {
+    .contact {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .contact__photo {
+      position: static;
+      order: 2;
+      width: 100%;
+      min-height: 0;
+      height: 440px;
+      margin-bottom: -80px;
+      object-position: 85% top;
+    }
+
+    .contact__social {
+      top: auto;
+      bottom: 40px;
+    }
+  }
+</style>
