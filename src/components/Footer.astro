@@ -10,7 +10,7 @@ const year = new Date().getFullYear();
       <a href="/" class="site-footer__logo">
         <img src="/icons/logo-white.svg" width="246.4" height="33.9862" alt="Emely Aponte, ir al inicio" />
       </a>
-      <p>Diseñadora UX/UI · {site.location}</p>
+      <p>Senior Product & UX/UI Designer · {site.location}</p>
     </div>
 
     <nav aria-label="Pie de página">
@@ -96,11 +96,16 @@ const year = new Date().getFullYear();
   }
 
   .site-footer__legal {
-    padding-block: 20px 28px;
-    border-top: 1px solid rgb(255 255 255 / 0.2);
+    padding-bottom: 28px;
     font-size: 13px;
     font-weight: var(--fw-light);
     opacity: 0.85;
+  }
+
+  /* Border on the paragraph so the line stops at the container edges */
+  .site-footer__legal p {
+    padding-top: 20px;
+    border-top: 1px solid rgb(255 255 255 / 0.2);
   }
 
   @media (max-width: 760px) {

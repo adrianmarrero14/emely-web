@@ -6,7 +6,7 @@ import hero3 from '../assets/figma/hero-3.png';
 import ArrowIcon from './ArrowIcon.astro';
 
 const slides = [
-  { image: hero1, label: 'Hola, soy Emely Aponte, diseñadora UX/UI' },
+  { image: hero1, label: 'Emely Aponte, Senior Product & UX/UI Designer' },
   { image: hero2, label: 'Me encanta la creación de contenidos y las redes sociales' },
   { image: hero3, label: 'Me apasiona el mundo gaming, las series y los cómics' },
 ];
@@ -35,11 +35,13 @@ const slides = [
           />
           <div class="hero__copy container">
             {index === 0 && (
-              <h1 class="hero__title">
-                <span class="hero__kicker">Hola, soy</span>
-                <span class="hero__name">Emely Aponte</span>
-                <span class="hero__tag hero__tag--small">
-                  Diseñadora <strong>UX/UI</strong>
+              <h1 class="hero__title hero__title--main">
+                <span class="hero__tag hero__tag--role">
+                  Emely Aponte · <strong>Senior Product & UX/UI Designer</strong>
+                </span>
+                <span class="hero__headline">
+                  Diseño experiencias digitales <em>end-to-end</em> que transforman procesos complejos en{' '}
+                  <span class="hero__highlight">interfaces intuitivas</span>.
                 </span>
               </h1>
             )}
@@ -167,12 +169,13 @@ const slides = [
     object-position: 70% center;
   }
 
+  /* Bottom padding keeps the headline clear of the persistent buttons */
   .hero__copy {
     position: relative;
     display: flex;
     align-items: center;
     height: 100%;
-    padding-left: clamp(16px, 6vw, 87px);
+    padding-bottom: clamp(96px, 11vw, 160px);
   }
 
   .hero__title {
@@ -225,8 +228,36 @@ const slides = [
     font-weight: var(--fw-semibold);
   }
 
-  .hero__slide--1 .hero__title {
-    margin-top: 2vw;
+  /* Slide 1: professional headline */
+  .hero__title--main {
+    gap: 22px;
+    max-width: min(640px, 52%);
+  }
+
+  .hero__tag--role {
+    margin: 0;
+    padding: 6px 14px;
+    font-size: clamp(13px, 1.1vw, 16px);
+    font-weight: var(--fw-medium);
+  }
+
+  .hero__headline {
+    font-size: clamp(30px, 3.5vw, 52px);
+    font-weight: var(--fw-bold);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+
+  .hero__headline em {
+    font-style: normal;
+    font-weight: var(--fw-light);
+  }
+
+  /* Fuchsia marker under the key words */
+  .hero__highlight {
+    background: linear-gradient(transparent 70%, var(--fuchsia) 70% 92%, transparent 92%);
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
   }
 
   .hero__actions {
@@ -237,7 +268,6 @@ const slides = [
     display: flex;
     flex-wrap: wrap;
     gap: 12px;
-    padding-left: clamp(20px, 6vw, 87px);
   }
 
   .hero__dots {
@@ -266,6 +296,10 @@ const slides = [
   @media (max-width: 760px) {
     .hero__image {
       object-position: 62% center;
+    }
+
+    .hero__title--main {
+      max-width: 100%;
     }
 
     .hero__copy {

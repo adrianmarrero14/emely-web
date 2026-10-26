@@ -1,0 +1,907 @@
+---
+import { Image } from 'astro:assets';
+import CaseStudy from '../../layouts/CaseStudy.astro';
+import CaseSection from '../../components/CaseSection.astro';
+import cover from '../../assets/projects/home/in99.png';
+import reto from '../../assets/projects/in99/reto.png';
+import antonio from '../../assets/projects/in99/antonio.jpg';
+import idea from '../../assets/projects/in99/idea.jpg';
+import experimento from '../../assets/projects/in99/experimento.png';
+import flujo from '../../assets/projects/in99/flujo.png';
+import h01 from '../../assets/projects/in99/heuristica-01.png';
+import h02 from '../../assets/projects/in99/heuristica-02.png';
+import h03 from '../../assets/projects/in99/heuristica-03.png';
+import h04 from '../../assets/projects/in99/heuristica-04.png';
+import h05 from '../../assets/projects/in99/heuristica-05.png';
+import h06 from '../../assets/projects/in99/heuristica-06.png';
+import h07 from '../../assets/projects/in99/heuristica-07.png';
+import h08 from '../../assets/projects/in99/heuristica-08.png';
+import h09 from '../../assets/projects/in99/heuristica-09.png';
+import h10 from '../../assets/projects/in99/heuristica-10.png';
+
+const sections = [
+  { id: 'reto', title: 'El reto' },
+  { id: 'proceso', title: 'Proceso de diseño' },
+  { id: 'persona', title: 'User persona' },
+  { id: 'empatia', title: 'Mapa de empatía' },
+  { id: 'hmw-jtbd', title: 'HMW y JTBD' },
+  { id: 'hipotesis', title: 'Hipótesis y experimento' },
+  { id: 'solucion', title: 'La solución' },
+  { id: 'flujo', title: 'Flujo de usuario' },
+  { id: 'wireframes', title: 'Wireframes' },
+  { id: 'prototipo', title: 'Prototipo' },
+  { id: 'heuristicas', title: 'Análisis heurístico' },
+  { id: 'pruebas', title: 'Próximo paso' },
+];
+
+const process = [
+  { title: 'Empatizar', text: 'Investigar las necesidades financieras de los usuarios.' },
+  { title: 'Definir', text: 'Fijar los objetivos de la calculadora de ahorro y las funcionalidades necesarias.' },
+  { title: 'Idear', text: 'Crear el flujo de usuario y wireframes interactivos para simular la experiencia.' },
+  { title: 'Prototipar', text: 'Construir una interfaz atractiva y coherente, siguiendo principios de usabilidad y diseño centrado en el usuario.' },
+  { title: 'Probar', text: 'Validar que la aplicación sea intuitiva y cumpla las expectativas de los usuarios.' },
+];
+
+const empathy = [
+  {
+    title: '¿Qué piensa y siente?',
+    hint: 'Preocupaciones y aspiraciones',
+    items: ['Ahorrar para la universidad de sus hijos', 'La llegada del nuevo bebé', 'Controlar sus ingresos'],
+  },
+  {
+    title: '¿Qué oye?',
+    hint: 'Lo que dicen sus amigos y su familia',
+    items: ['Su esposa, preocupada por los gastos', 'Planes de viaje con amigos', 'Su hijo mayor, emocionado por la universidad'],
+  },
+  {
+    title: '¿Qué ve?',
+    hint: 'Su entorno y lo que ofrece el mercado',
+    items: ['Amigos que viajan con sus hijos', 'Su hijo mayor entra en la universidad', 'El nacimiento de su bebé', 'Planes de jubilación'],
+  },
+  {
+    title: '¿Qué dice y hace?',
+    hint: 'Actitud en público y con los demás',
+    items: ['Profesional en su trabajo', 'Familiar', 'Comprometido', 'Amable con el personal de la orquesta', 'Los músicos con los que trabaja lo admiran'],
+  },
+];
+
+const features = [
+  {
+    title: 'Calculadora de ahorro',
+    text: 'Planificar el ahorro y ver cuánto se acumula según el perfil y las metas personales.',
+    icon: 'M6 2h12a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2ZM8 6h8v4H8ZM8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01',
+  },
+  {
+    title: 'Contratación de productos financieros',
+    text: 'Acceder a los productos de las entidades asociadas para hacer crecer el rendimiento de las inversiones.',
+    icon: 'M3 17l6-6 4 4 8-8M15 7h6v6',
+  },
+  {
+    title: 'Invitar a amigos',
+    text: 'Obtener descuentos al invitar a otras personas a unirse a la plataforma.',
+    icon: 'M15 19v-1a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v1M8.5 10a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7ZM19 8v6M22 11h-6',
+  },
+];
+
+const heuristics = [
+  {
+    image: h01,
+    title: 'Visibilidad del estado del sistema',
+    text: 'El sistema debe mantener siempre informado al usuario, con una respuesta adecuada y en un tiempo razonable. Unas migas de pan o los pasos de un proceso ayudan a saber dónde se está en cada momento.',
+    alt: 'Registro por pasos con barra de progreso, validación de campos y aviso de error de conexión',
+  },
+  {
+    image: h02,
+    title: 'Coincidencia entre el sistema y el mundo real',
+    text: 'Hablar el mismo idioma que los usuarios, con palabras y conceptos que les resulten familiares, y ordenar la información de forma natural y lógica.',
+    alt: 'Pantallas de gastos deducibles explicados con ejemplos cotidianos',
+  },
+  {
+    image: h03,
+    title: 'Control y libertad del usuario',
+    text: 'Ofrecer siempre una forma de volver, eliminar, deshacer o editar.',
+    alt: 'Pantallas de gastos con botón para volver y opción de añadir o guardar',
+  },
+  {
+    image: h04,
+    title: 'Consistencia y estándares',
+    text: 'Los usuarios no deberían preguntarse si palabras, situaciones o acciones distintas significan lo mismo. Si un botón de acción es verde, debe verse igual en todas las pantallas.',
+    alt: 'Flujo del plan de ahorro con el mismo botón principal en todas las pantallas',
+  },
+  {
+    image: h05,
+    title: 'Prevención de errores',
+    text: 'Antes de diseñar buenos mensajes de error, hay que intentar evitarlos. En los formularios, explicar bien los requisitos de cada campo.',
+    alt: 'Formulario con los requisitos de cada campo indicados de antemano',
+  },
+  {
+    image: h06,
+    title: 'Reconocer mejor que recordar',
+    text: 'Evitar que el usuario tenga que memorizar objetos, acciones u opciones: deben estar visibles para no tener que recordar información de un paso a otro.',
+    alt: 'Resumen de ahorro con la información del paso anterior siempre visible',
+  },
+  {
+    image: h07,
+    title: 'Flexibilidad y eficiencia de uso',
+    text: 'Los atajos, invisibles para quien empieza, aceleran la interacción de los usuarios expertos. Así el sistema sirve a ambos.',
+    alt: 'Pantalla de ahorro con accesos rápidos',
+  },
+  {
+    image: h08,
+    title: 'Diseño estético y minimalista',
+    text: 'Menos es más: cada dato extra compite con la información importante y le resta jerarquía.',
+    alt: 'Pantallas limpias con la información esencial',
+  },
+  {
+    image: h09,
+    title: 'Reconocer, diagnosticar y recuperarse de errores',
+    text: 'Un lenguaje común y llano ayuda a identificar el problema y sugiere una solución.',
+    alt: 'Mensajes de error claros con la solución propuesta',
+  },
+  {
+    image: h10,
+    title: 'Ayuda y documentación',
+    text: 'Lo ideal es que la app se use sin documentación. Aun así, un buen buscador, un asistente o unas buenas preguntas frecuentes ayudan en caso de duda.',
+    alt: 'Pantallas de ayuda con buscador, información y preguntas frecuentes',
+  },
+];
+
+const wireframeUrl =
+  'https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Ffile%2F1dLWx1SeuifhFIy1qPpWbL%2FIn99%3Ftype%3Ddesign%26node-id%3D429%253A3313%26mode%3Ddesign%26t%3DpjP2GdHnyhqN5NwE-1';
+const prototypeUrl =
+  'https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fproto%2F1dLWx1SeuifhFIy1qPpWbL%2FIn99%3Fpage-id%3D9%253A2%26type%3Ddesign%26node-id%3D54-4388%26viewport%3D496%252C139%252C0.06%26t%3D1FwWBAwpaamPtpI8-1%26scaling%3Dcontain%26starting-point-node-id%3D53%253A2854%26mode%3Ddesign';
+---
+
+<CaseStudy
+  slug="in99"
+  name="in99"
+  tagline="Una calculadora de ahorro móvil para una startup de servicios profesionales."
+  cover={cover}
+  description="in99 ofrece servicios profesionales exclusivamente online. Gracias a una nueva alianza con entidades financieras, quiere acercar a sus clientes los productos de esas instituciones."
+  brief="Diseñar una app móvil que funcione como calculadora de ahorro: que permita calcular y planificar los ahorros en función de distintas variables financieras."
+  details={[
+    { label: 'Cliente', value: 'in99' },
+    { label: 'Rol', value: 'Diseñadora UX/UI' },
+    { label: 'Ubicación', value: 'Madrid, España' },
+    { label: 'Tipo', value: 'App móvil fintech' },
+  ]}
+  sections={sections}
+>
+  <CaseSection id="reto" number={1} title="El reto">
+    <p class="callout">
+      Equilibrar la complejidad financiera con la usabilidad: una herramienta flexible, clara y accesible que, además,
+      cumpla la normativa financiera y proteja la privacidad de los datos personales.
+    </p>
+    <figure>
+      <Image src={reto} alt="Balanza sobre una mesa de trabajo: el equilibrio entre complejidad y usabilidad" widths={[880, reto.width]} sizes="(max-width: 1024px) 92vw, 880px" />
+    </figure>
+  </CaseSection>
+
+  <CaseSection id="proceso" number={2} title="Proceso de diseño">
+    <p>Seguí un proceso de Design Thinking en cinco fases, de la investigación a la validación.</p>
+    <ol class="steps">
+      {
+        process.map((step, index) => (
+          <li>
+            <span class="steps__number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+            <h4>{step.title}</h4>
+            <p>{step.text}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </CaseSection>
+
+  <CaseSection id="persona" number={3} title="User persona">
+    <div class="persona">
+      <figure class="persona-photo">
+        <Image src={antonio} alt="Antonio Valdés, user persona del proyecto" widths={[300, 542]} sizes="(max-width: 760px) 70vw, 260px" />
+        <figcaption>“El ahorro para la educación de mis hijos es mi prioridad”.</figcaption>
+      </figure>
+      <div>
+        <h4>Antonio Valdés</h4>
+        <dl class="facts">
+          <dt>Edad</dt><dd>44 años</dd>
+          <dt>Ubicación</dt><dd>Madrid, España</dd>
+          <dt>Ocupación</dt><dd>Director de orquesta, autónomo</dd>
+          <dt>Familia</dt><dd>Casado, con 2 hijos y 1 en camino</dd>
+        </dl>
+        <p style="margin-top: 14px">
+          Trabaja bajo el Régimen Especial de Trabajadores Autónomos. Con el tercer bebé en camino pasarán a ser familia
+          numerosa, y su principal preocupación es ahorrar para la educación de sus hijos. Le gustan la música clásica y la
+          danza contemporánea.
+        </p>
+      </div>
+    </div>
+    <ul class="cards">
+      <li class="card">
+        <h4>Necesidades</h4>
+        Ahorrar dinero, equilibrar gastos y ahorro sin renunciar al estilo de vida de su familia y mejorar su situación
+        económica.
+      </li>
+      <li class="card">
+        <h4>Puntos de dolor</h4>
+        Necesita una solución flexible y sin burocracia que le ayude, de forma práctica, a ahorrar y mantener el estilo de
+        vida familiar.
+      </li>
+      <li class="card">
+        <h4>Perfil digital</h4>
+        Se maneja con soltura en internet, redes sociales, compras online y aplicaciones móviles.
+      </li>
+    </ul>
+  </CaseSection>
+
+  <CaseSection id="empatia" number={4} title="Mapa de empatía">
+    <div class="empathy">
+      {
+        empathy.map((quadrant) => (
+          <div class="empathy__quadrant">
+            <h4>{quadrant.title}</h4>
+            <p class="empathy__hint">{quadrant.hint}</p>
+            <ul>
+              {quadrant.items.map((item) => <li>{item}</li>)}
+            </ul>
+          </div>
+        ))
+      }
+      <Image class="empathy__photo" src={antonio} alt="" widths={[200, 400]} sizes="160px" />
+    </div>
+    <div class="pains-gains">
+      <div class="pains-gains__col">
+        <h4>Dolores</h4>
+        <p class="empathy__hint">Miedos, frustraciones y obstáculos</p>
+        <ul>
+          <li>Su situación económica con 3 hijos</li>
+          <li>Todo lo que paga en la declaración de la renta</li>
+          <li>Que se complique el parto</li>
+        </ul>
+      </div>
+      <div class="pains-gains__col pains-gains__col--gains">
+        <h4>Ganancias</h4>
+        <p class="empathy__hint">Deseos, necesidades y logros</p>
+        <ul>
+          <li>Mantener su calidad de vida y la de su familia</li>
+          <li>El bebé en camino</li>
+          <li>El premio de la orquesta</li>
+        </ul>
+      </div>
+    </div>
+  </CaseSection>
+
+  <CaseSection id="hmw-jtbd" number={5} title="How Might We y Jobs To Be Done">
+    <p>
+      Las preguntas <strong>How Might We (HMW)</strong> convierten los retos difíciles en oportunidades creativas. La teoría
+      de <strong>Jobs To Be Done (JTBD)</strong> sostiene que las personas no compran productos: buscan soluciones a los
+      problemas de su vida.
+    </p>
+    <div class="voice">
+      <Image class="voice__image" src={idea} alt="" widths={[300, 600]} sizes="(max-width: 760px) 40vw, 220px" />
+      <blockquote>
+        <p>
+          “Cuando haga la declaración de la renta este año quiero pagar menos y ahorrar para la universidad de mis hijos,
+          tener dinero para lo que necesite el bebé que viene y planificar las vacaciones de verano”.
+        </p>
+        <cite>Antonio Valdés</cite>
+      </blockquote>
+    </div>
+    <h3>How Might We…</h3>
+    <ul class="cards cards--2">
+      <li class="card"><h4>HMW</h4>¿Cómo podemos ayudar a Antonio a pagar menos en su declaración de la renta?</li>
+      <li class="card"><h4>HMW</h4>¿Cómo podemos ayudar a Antonio a controlar los gastos del nuevo bebé?</li>
+      <li class="card"><h4>HMW</h4>¿Cómo podemos ayudar a Antonio a ahorrar para la universidad de sus hijos?</li>
+      <li class="card"><h4>HMW</h4>¿Cómo podemos ayudar a Antonio a planificar los gastos de sus vacaciones de verano?</li>
+    </ul>
+    <h3>Jobs To Be Done</h3>
+    <ul class="cards">
+      <li class="card">
+        <h4>JTBD</h4>
+        Si Antonio paga menos en la declaración de la renta, tendrá más dinero disponible para sus planes de ahorro.
+      </li>
+      <li class="card">
+        <h4>JTBD</h4>
+        Si Antonio controla los gastos del bebé que está por nacer, podrá planificar sin problemas las vacaciones de
+        verano.
+      </li>
+    </ul>
+  </CaseSection>
+
+  <CaseSection id="hipotesis" number={6} title="Hipótesis y experimento">
+    <h3>Hipótesis</h3>
+    <p class="callout">
+      Usuarios como Antonio, de familias numerosas y con dificultades económicas, buscan estrategias para pagar menos
+      impuestos, ahorrar para necesidades futuras y mantener su nivel de vida y el de su familia.
+    </p>
+    <h3>Experimento</h3>
+    <p>
+      El experimento se centra en <strong>optimizar el cálculo de gastos deducibles</strong> para maximizar el ahorro en su
+      actividad económica:
+    </p>
+    <ul class="list">
+      <li>Una consulta de gastos para registrar y categorizar los gastos asociados a la llegada del bebé.</li>
+      <li>Conexión con sus bancos para un registro detallado.</li>
+      <li>Una calculadora de gastos deducibles que muestra el ahorro acumulado, con acceso a los detalles fiscales y a la estimación de pagos futuros.</li>
+      <li>Asesoría fiscal, modelos de declaración y soporte para resolver consultas con Hacienda.</li>
+      <li>Descuentos por invitar a amigos a unirse a la plataforma.</li>
+    </ul>
+    <figure>
+      <Image src={experimento} alt="Mano introduciendo una moneda en una hucha" widths={[880, 1760]} sizes="(max-width: 1024px) 92vw, 880px" />
+    </figure>
+  </CaseSection>
+
+  <CaseSection id="solucion" number={7} title="La solución">
+    <p>
+      Una <strong>calculadora de ahorro</strong> que ayuda a planificar y gestionar productos financieros para maximizar el
+      rendimiento de las inversiones, adaptada al perfil y las metas de cada persona. Sus funciones clave:
+    </p>
+    <ul class="features">
+      {
+        features.map((feature) => (
+          <li>
+            <span class="features__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d={feature.icon} />
+              </svg>
+            </span>
+            <h4>{feature.title}</h4>
+            <p>{feature.text}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </CaseSection>
+
+  <CaseSection id="flujo" number={8} title="Flujo de usuario">
+    <p>Estos son los pasos que sigue el usuario al usar la calculadora.</p>
+    <figure class="zoomable">
+      <Image src={flujo} alt="Diagrama del flujo de usuario de la calculadora de ahorro" widths={[880, flujo.width]} sizes="(max-width: 1024px) 92vw, 880px" />
+      <figcaption>
+        <a class="link-arrow" href={flujo.src} target="_blank" rel="noopener noreferrer">
+          Ver el diagrama a tamaño completo
+          <span class="visually-hidden">(se abre en una pestaña nueva)</span>
+        </a>
+      </figcaption>
+    </figure>
+  </CaseSection>
+
+  <CaseSection id="wireframes" number={9} title="Wireframes">
+    <p>
+      Los wireframes de baja fidelidad representan la estructura básica de la interfaz: se centran en la disposición de
+      los elementos, la funcionalidad y la organización del contenido, sin detalles visuales.
+    </p>
+    <div class="prototype">
+      <iframe src={wireframeUrl} title="Wireframes de in99 en Figma" loading="lazy" allowfullscreen></iframe>
+    </div>
+  </CaseSection>
+
+  <CaseSection id="prototipo" number={10} title="Prototipo en alta fidelidad">
+    <p>
+      Explora el <strong>prototipo interactivo</strong>: el inicio de sesión y el camino feliz, la contratación de un plan
+      de ahorro y la conexión con el banco.
+    </p>
+    <div class="prototype">
+      <iframe src={prototypeUrl} title="Prototipo interactivo de in99 en Figma" loading="lazy" allowfullscreen></iframe>
+    </div>
+  </CaseSection>
+
+  <CaseSection id="heuristicas" number={11} title="Análisis heurístico">
+    <p>
+      Para definir la UX evalué la interfaz con las <strong>10 heurísticas de usabilidad de Jakob Nielsen</strong>, pautas
+      que ayudan a detectar problemas potenciales y mejorar la experiencia. Así se aplica cada una en in99:
+    </p>
+    <div class="heuristics" data-heuristics>
+      <ol class="heuristics__track" data-track>
+        {
+          heuristics.map((heuristic, index) => (
+            <li class="heuristics__slide" aria-label={`${index + 1} de ${heuristics.length}`}>
+              <div class="heuristics__media">
+                <Image src={heuristic.image} alt={heuristic.alt} widths={[700, heuristic.image.width]} sizes="(max-width: 760px) 90vw, 700px" />
+              </div>
+              <div class="heuristics__copy">
+                <span class="heuristics__number">{String(index + 1).padStart(2, '0')}</span>
+                <h4>{heuristic.title}</h4>
+                <p>{heuristic.text}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+      <div class="heuristics__controls">
+        <button type="button" class="heuristics__button" data-prev aria-label="Heurística anterior">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6" /></svg>
+        </button>
+        <p class="heuristics__count" aria-live="polite"><span data-current>1</span> / {heuristics.length}</p>
+        <button type="button" class="heuristics__button" data-next aria-label="Heurística siguiente">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6" /></svg>
+        </button>
+      </div>
+    </div>
+  </CaseSection>
+
+  <CaseSection id="pruebas" number={12} title="Próximo paso: probar con usuarios">
+    <p>
+      Con la solución definida, toca validarla sin olvidar que <strong>no somos el usuario final</strong>. Estos son los
+      métodos propuestos:
+    </p>
+    <ul class="cards">
+      <li class="card">
+        <h4>Test de percepción</h4>
+        Mostrar una pantalla durante 2 a 5 segundos y preguntar después qué se ha entendido de ella.
+      </li>
+      <li class="card">
+        <h4>Mapas de calor y grabaciones</h4>
+        Observar cómo se desplazan los usuarios y qué zonas captan su atención mientras usan la app.
+      </li>
+      <li class="card">
+        <h4>Test con usuarios</h4>
+        Probar con personas reales para alinear el diseño con sus expectativas y corregir errores antes del lanzamiento.
+      </li>
+    </ul>
+  </CaseSection>
+</CaseStudy>
+
+<script>
+  for (const root of document.querySelectorAll<HTMLElement>('[data-heuristics]')) {
+    const track = root.querySelector<HTMLElement>('[data-track]')!;
+    const slides = [...track.children] as HTMLElement[];
+    const current = root.querySelector('[data-current]')!;
+    const prev = root.querySelector<HTMLButtonElement>('[data-prev]')!;
+    const next = root.querySelector<HTMLButtonElement>('[data-next]')!;
+    let index = 0;
+
+    const update = () => {
+      current.textContent = String(index + 1);
+      prev.disabled = index === 0;
+      next.disabled = index === slides.length - 1;
+    };
+
+    const go = (to: number) => {
+      index = Math.max(0, Math.min(slides.length - 1, to));
+      track.scrollTo({ left: slides[index].offsetLeft - track.offsetLeft, behavior: 'smooth' });
+      update();
+    };
+
+    prev.addEventListener('click', () => go(index - 1));
+    next.addEventListener('click', () => go(index + 1));
+
+    // Keep the counter in sync when the user swipes; wait until scrolling settles
+    // so a smooth scroll triggered by the buttons doesn't reset the index midway.
+    let settle: number | undefined;
+    track.addEventListener('scroll', () => {
+      clearTimeout(settle);
+      settle = window.setTimeout(() => {
+        const nearest = Math.round(track.scrollLeft / track.clientWidth);
+        if (nearest !== index) {
+          index = nearest;
+          update();
+        }
+      }, 150);
+    }, { passive: true });
+
+    update();
+  }
+</script>
+
+<style>
+  /* Proceso */
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 12px;
+    padding: 0;
+    list-style: none;
+  }
+
+  .steps li {
+    padding: 20px 18px;
+    border-radius: 8px;
+    background: var(--purple-06);
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .steps__number {
+    color: var(--fuchsia);
+    font-size: 13px;
+    font-weight: var(--fw-semibold);
+  }
+
+  .steps h4 {
+    margin-block: 4px 6px;
+    color: var(--purple);
+    font-size: 16px;
+    font-weight: var(--fw-semibold);
+  }
+
+  /* Four questions read better as a 2 × 2 grid than as 3 + 1 */
+  ul.cards.cards--2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  /* Persona */
+  .persona-photo figcaption {
+    margin-top: 10px;
+    color: var(--purple);
+    font-size: 14px;
+    font-style: italic;
+    font-weight: var(--fw-medium);
+    text-align: left;
+  }
+
+  /* Mapa de empatía: four quadrants around the persona */
+  .empathy {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .empathy__quadrant {
+    padding: 24px;
+    border-radius: 8px;
+    background: var(--surface);
+  }
+
+  .empathy__quadrant:nth-child(2),
+  .empathy__quadrant:nth-child(4) {
+    text-align: right;
+  }
+
+  .empathy__quadrant:nth-child(3),
+  .empathy__quadrant:nth-child(4) {
+    padding-top: 72px;
+  }
+
+  .empathy__quadrant:nth-child(1),
+  .empathy__quadrant:nth-child(2) {
+    padding-bottom: 72px;
+  }
+
+  .empathy h4,
+  .pains-gains h4 {
+    color: var(--purple);
+    font-size: 18px;
+    font-weight: var(--fw-semibold);
+  }
+
+  .empathy__quadrant:nth-child(even) h4 {
+    color: var(--fuchsia);
+  }
+
+  .empathy__hint {
+    margin-bottom: 12px;
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: var(--fw-light);
+  }
+
+  .empathy ul,
+  .pains-gains ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 0;
+    list-style: none;
+  }
+
+  .empathy__quadrant:nth-child(even) ul {
+    justify-content: flex-end;
+  }
+
+  .empathy li,
+  .pains-gains li {
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: var(--purple);
+    color: var(--white);
+    font-size: 13px;
+    font-weight: var(--fw-medium);
+    line-height: 1.4;
+  }
+
+  .empathy__quadrant:nth-child(even) li {
+    background: var(--fuchsia);
+  }
+
+  .empathy :global(.empathy__photo) {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 132px;
+    height: 132px;
+    border: 6px solid var(--white);
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center 20%;
+    transform: translate(-50%, -50%);
+  }
+
+  .pains-gains {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .pains-gains__col {
+    padding: 24px;
+    border: 1px solid var(--line);
+    border-top: 4px solid var(--purple);
+    border-radius: 8px;
+  }
+
+  .pains-gains__col li {
+    border: 1px solid var(--purple-24);
+    background: var(--purple-06);
+    color: var(--purple);
+  }
+
+  .pains-gains__col--gains {
+    border-top-color: var(--fuchsia);
+  }
+
+  .pains-gains__col--gains h4 {
+    color: var(--fuchsia);
+  }
+
+  .pains-gains__col--gains li {
+    border-color: rgb(201 0 157 / 0.3);
+    background: var(--fuchsia-12);
+    color: var(--fuchsia);
+  }
+
+  /* Voz del usuario */
+  .voice {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    align-items: center;
+    gap: 28px;
+    padding: 24px;
+    border-radius: var(--radius);
+    background: var(--purple);
+    color: var(--white);
+  }
+
+  .voice :global(.voice__image) {
+    width: 100%;
+    height: 220px;
+    border-radius: 8px;
+    object-fit: cover;
+  }
+
+  .voice blockquote p {
+    font-size: clamp(17px, 1.6vw, 20px);
+    font-weight: var(--fw-medium);
+    line-height: 1.5;
+  }
+
+  .voice cite {
+    display: block;
+    margin-top: 12px;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: var(--fw-light);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* Funciones clave */
+  .features {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    padding: 0;
+    list-style: none;
+  }
+
+  .features li {
+    padding: 24px;
+    border-radius: 8px;
+    background: var(--purple-06);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .features__icon {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 14px;
+    border-radius: 12px;
+    background: var(--purple);
+    color: var(--white);
+  }
+
+  .features li:nth-child(even) .features__icon {
+    background: var(--fuchsia);
+  }
+
+  .features__icon svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .features h4 {
+    margin-bottom: 6px;
+    color: var(--ink);
+    font-size: 16px;
+    font-weight: var(--fw-semibold);
+  }
+
+  .zoomable figcaption {
+    text-align: left;
+  }
+
+  /* Heurísticas: carrusel con scroll-snap */
+  .heuristics {
+    display: grid;
+    gap: 16px;
+  }
+
+  .heuristics__track {
+    display: grid;
+    grid-auto-columns: 100%;
+    grid-auto-flow: column;
+    overflow-x: auto;
+    padding: 0;
+    list-style: none;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    border-radius: var(--radius);
+  }
+
+  .heuristics__track::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Example on top at full width (some are wide flows), explanation below */
+  .heuristics__slide {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    scroll-snap-align: start;
+    background: var(--surface);
+  }
+
+  .heuristics__media {
+    display: grid;
+    place-items: center;
+    height: clamp(280px, 34vw, 420px);
+    padding: 24px;
+    border: 1px solid var(--line);
+    border-bottom: 0;
+    border-radius: var(--radius) var(--radius) 0 0;
+    background: var(--white);
+  }
+
+  .heuristics__media :global(img) {
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    max-height: 100%;
+  }
+
+  .heuristics__copy {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    column-gap: 20px;
+    padding: 24px 28px 28px;
+  }
+
+  .heuristics__copy .heuristics__number {
+    grid-row: span 2;
+  }
+
+  .heuristics__number {
+    color: var(--fuchsia);
+    font-size: 40px;
+    font-weight: var(--fw-bold);
+    line-height: 1;
+  }
+
+  .heuristics__copy h4 {
+    margin-bottom: 6px;
+    color: var(--purple);
+    font-size: 20px;
+    font-weight: var(--fw-semibold);
+  }
+
+  .heuristics__copy p {
+    font-size: 15px;
+  }
+
+  .heuristics__controls {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 16px;
+  }
+
+  .heuristics__count {
+    min-width: 56px;
+    color: var(--ink);
+    font-size: 14px;
+    font-weight: var(--fw-medium);
+    text-align: center;
+  }
+
+  .heuristics__button {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border: 2px solid var(--purple);
+    border-radius: 50%;
+    background: var(--white);
+    color: var(--purple);
+    cursor: pointer;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease;
+  }
+
+  .heuristics__button:hover:not(:disabled) {
+    background: var(--purple);
+    color: var(--white);
+  }
+
+  .heuristics__button:disabled {
+    opacity: 0.35;
+    cursor: default;
+  }
+
+  .heuristics__button svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  @media (max-width: 1100px) {
+    .steps {
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    }
+  }
+
+  @media (max-width: 760px) {
+    .empathy,
+    .pains-gains,
+    .features,
+    ul.cards.cards--2 {
+      grid-template-columns: 1fr;
+    }
+
+    .empathy__quadrant:nth-child(n) {
+      padding: 20px;
+      text-align: left;
+    }
+
+    .empathy__quadrant:nth-child(even) ul {
+      justify-content: flex-start;
+    }
+
+    .empathy :global(.empathy__photo) {
+      display: none;
+    }
+
+    .voice {
+      grid-template-columns: 1fr;
+    }
+
+    .voice :global(.voice__image) {
+      height: 160px;
+    }
+
+    .heuristics__media {
+      height: 300px;
+      padding: 16px;
+    }
+
+    .heuristics__copy {
+      grid-template-columns: 1fr;
+      padding: 20px;
+    }
+
+    .heuristics__copy .heuristics__number {
+      grid-row: auto;
+      margin-bottom: 8px;
+      font-size: 28px;
+    }
+  }
+</style>

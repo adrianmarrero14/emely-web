@@ -16,10 +16,10 @@ import { projects, site } from '../data/site';
   <section class="intro container" aria-labelledby="intro-title">
     <div class="intro__copy">
       <p class="eyebrow">Sobre mí</p>
-      <h2 id="intro-title" class="title-lg">Diseño interfaces que <span class="text-purple">cuentan historias</span></h2>
+      <h2 id="intro-title" class="title-lg">Producto, estrategia y <span class="text-purple">sistemas de diseño</span></h2>
       <p class="lead">
-        Soy diseñadora UX/UI y de producto. Uno mi formación en diseño gráfico con la investigación de usuarios para crear
-        interfaces atractivas, funcionales y fáciles de usar.
+        Soy Senior Product & UX/UI Designer. Lidero productos de principio a fin, de la investigación al handoff, y uno
+        mi base en diseño gráfico con la estrategia de producto para crear interfaces claras, accesibles y escalables.
       </p>
       <dl class="intro__facts">
         <div>
@@ -67,11 +67,11 @@ import { projects, site } from '../data/site';
         sizes="(max-width: 760px) 100vw, 70vw"
       />
       <div class="projects-banner__tint" aria-hidden="true"></div>
-      <blockquote class="quote projects-banner__quote">
-        <p>“¿Quieres que tus usuarios se enamoren de tus diseños? Enamórate de tus usuarios”.</p>
-        <cite>Dana Chisnell</cite>
-      </blockquote>
     </div>
+    <blockquote class="quote projects-banner__quote">
+      <p>“¿Quieres que tus usuarios se enamoren de tus diseños? Enamórate de tus usuarios”.</p>
+      <cite>Dana Chisnell</cite>
+    </blockquote>
   </section>
 
   <section class="featured" aria-label="Proyectos destacados">
@@ -149,28 +149,27 @@ import { projects, site } from '../data/site';
   }
 
   /* Banner de proyectos */
+  /* Outer columns match the container edges, so the label and the quote line up with every other section */
   .projects-banner {
     display: grid;
-    grid-template-columns: calc(33.33% - 10px) 1fr;
+    grid-template-columns: var(--edge) calc((100% - 2 * var(--edge)) / 3) minmax(0, 1fr) var(--edge);
     min-height: 363px;
   }
 
   .projects-banner__label {
+    grid-area: 1 / 2;
     display: grid;
     align-content: center;
     justify-items: start;
     gap: 12px;
-    padding: 48px var(--gutter);
+    padding-block: 48px;
     padding-right: 32px;
   }
 
   .projects-banner__media {
+    grid-area: 1 / 3 / 2 / 5;
     position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
     overflow: hidden;
-    padding: 48px clamp(24px, 8.8vw, 126px) 48px 24px;
     background: var(--purple);
   }
 
@@ -194,8 +193,13 @@ import { projects, site } from '../data/site';
   }
 
   .projects-banner__quote {
+    grid-area: 1 / 3;
     position: relative;
+    align-self: center;
+    justify-self: end;
     max-width: 375px;
+    padding-block: 48px;
+    padding-left: 24px;
   }
 
   /* Rejilla de proyectos */
@@ -208,8 +212,6 @@ import { projects, site } from '../data/site';
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: clamp(20px, 3vw, 40px);
-    max-width: var(--content-width);
-    margin-inline: auto;
     padding: 0;
     list-style: none;
   }
@@ -232,15 +234,22 @@ import { projects, site } from '../data/site';
     }
 
     .projects-banner {
-      grid-template-columns: 1fr;
+      grid-template-columns: var(--gutter) minmax(0, 1fr) var(--gutter);
     }
 
     .projects-banner__label {
+      grid-area: 1 / 2;
       padding-block: 56px 32px;
+      padding-right: 0;
     }
 
     .projects-banner__media {
+      grid-area: 2 / 1 / 3 / 4;
       min-height: 300px;
+    }
+
+    .projects-banner__quote {
+      grid-area: 2 / 2;
     }
 
     .projects-banner__image {

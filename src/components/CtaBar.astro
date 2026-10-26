@@ -40,8 +40,18 @@ const { showProjects = true } = Astro.props;
     align-content: center;
     gap: 6px;
     min-height: 160px;
-    padding: 32px var(--gutter);
+    padding-block: 32px;
+    /* Each half is 50% wide, so (100% - content / 2) puts the text on the container edge */
+    padding-inline: max(var(--gutter), calc(100% - var(--content-width) / 2)) var(--gutter);
     text-decoration: none;
+  }
+
+  .cta__item--projects {
+    padding-inline: var(--gutter) max(var(--gutter), calc(100% - var(--content-width) / 2));
+  }
+
+  .cta--single .cta__item {
+    padding-inline: var(--edge);
   }
 
   .cta__item--message {
@@ -89,8 +99,10 @@ const { showProjects = true } = Astro.props;
       grid-template-columns: 1fr;
     }
 
-    .cta__item {
+    .cta__item,
+    .cta__item--projects {
       min-height: 128px;
+      padding-inline: var(--gutter);
     }
   }
 </style>

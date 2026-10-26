@@ -13,9 +13,9 @@ import portfolioNuva from '../assets/projects/portfolio/nuva.jpg';
 
 export const site = {
   name: 'Emely Aponte',
-  title: 'Emely Aponte | Diseñadora UX/UI en Madrid',
+  title: 'Emely Aponte | Senior Product & UX/UI Designer en Madrid',
   description:
-    'Portafolio de Emely Aponte, diseñadora UX/UI y de producto en Madrid. Casos de estudio de sistemas de diseño, banca móvil y e-commerce.',
+    'Portafolio de Emely Aponte, Senior Product & UX/UI Designer en Madrid. Casos de estudio de sistemas de diseño, banca móvil, fintech y e-commerce.',
   location: 'Madrid, España',
   // The Framer site links two CV files: one from the home page, one from "Acerca de mí".
   cvHome: 'https://drive.google.com/file/d/1UstvP3TviDANhi7TG-Btqu81VbkWWR1_/view?usp=sharing',
@@ -77,10 +77,10 @@ export const projects: Project[] = [
     slug: 'in99',
     name: 'in99',
     category: 'Fintech',
-    summary: 'Calculadora de ahorro para una startup que ofrece servicios profesionales.',
+    summary: 'App móvil de calculadora de ahorro para una startup de servicios profesionales online, de la investigación al prototipo.',
     cover: homeIn99,
     portrait: portfolioIn99,
-    status: 'Caso de estudio en preparación',
+    href: '/proyectos/in99',
   },
 ];
 

@@ -46,55 +46,62 @@ const services = [
   },
 ];
 
-// Bar lengths taken from the Figma file (filled width / 481px track).
-const skills = [
-  { name: 'Figma', level: 85 },
-  { name: 'Photoshop', level: 85 },
-  { name: 'Illustrator', level: 85 },
-  { name: 'Maze', level: 85 },
-  { name: 'InVision', level: 68 },
-  { name: 'InDesign', level: 63 },
-  { name: 'After Effects', level: 49 },
-  { name: 'WordPress', level: 36 },
-  { name: 'HTML', level: 36 },
-  { name: 'CSS', level: 36 },
+const stack = [
+  {
+    title: 'Product Strategy & Research',
+    items: ['User journeys', 'Benchmarking', 'Tests de usabilidad', 'Arquitectura de información', 'Mapas de empatía'],
+  },
+  {
+    title: 'UI, Visual & Design Systems',
+    items: ['Figma: variables avanzadas, auto-layout, componentes y tokens', 'Framer', 'Accesibilidad (WCAG)', 'Visualización de datos'],
+  },
+  {
+    title: 'Herramientas y gestión',
+    items: ['Jira', 'Notion', 'Maze', 'Metodologías ágiles'],
+  },
+  {
+    title: 'AI Tools & Automatización',
+    items: [
+      'Flujos de research optimizados con IA',
+      'Ideación asistida',
+      'Generación de contenido y copys',
+      'Automatización de flujos operativos',
+    ],
+  },
 ];
 
 const experience = [
   {
-    period: '2021',
+    period: 'may. 2026 – actualidad',
+    current: true,
+    company: 'Darien Technology',
+    role: 'Diseñadora de Producto',
+    description:
+      'Conceptualización, arquitectura y escalado del sistema de diseño de PinsXP, con flujos asistidos por IA para la tokenización y una entrega más rápida.',
+  },
+  {
+    period: 'nov. 2024 – mar. 2026',
+    company: 'Finaer',
+    role: 'Diseñadora de Producto',
+    description: 'Liderazgo end-to-end en el diseño de productos inmobiliarios.',
+  },
+  {
+    period: 'ene. 2024 – nov. 2024',
+    company: 'Amaris Consulting',
+    role: 'Diseñadora UX/UI',
+    description: 'Optimización de los flujos críticos de onboarding bancario de OpenBank USA.',
+  },
+  {
+    period: 'sept. 2022 – nov. 2023',
+    company: 'ingg',
+    role: 'Diseñadora de Producto',
+    description: 'Herramientas de visualización de datos y calculadoras financieras.',
+  },
+  {
+    period: 'ene. 2021 – dic. 2022',
     company: 'Darien Technology',
     role: 'Diseñadora UX/UI',
-    description:
-      'Investigación, ideación, prototipado y diseño de los productos digitales de Mercantil Banco Panamá.',
-  },
-  {
-    period: '2019 – 2020',
-    company: 'Lookers Inbound',
-    role: 'Diseñadora gráfica y web',
-    description:
-      'Dirección, diseño y desarrollo de piezas para redes sociales, flyers digitales e impresos, branding e interfaces para la agencia de inbound marketing Lookers.',
-  },
-  {
-    period: '2017 – 2019',
-    company: 'Wikot Technologies',
-    role: 'Diseñadora UX/UI',
-    description:
-      'Investigación, ideación, prototipado y diseño de productos digitales para esta agencia de tecnología y marketing digital.',
-  },
-  {
-    period: '2016 – 2017',
-    company: 'Seis Grados Media',
-    role: 'Diseñadora gráfica digital',
-    description:
-      'Conceptos visuales y piezas para redes sociales (banners, animaciones, 360 y vídeos) para esta agencia de marketing digital.',
-  },
-  {
-    period: '2016',
-    company: 'La Web Mercadeo Interactivo',
-    role: 'Diseñadora gráfica digital junior',
-    description:
-      'Conceptos visuales y piezas para redes sociales (banners, animaciones, 360 y vídeos) para esta agencia de marketing digital.',
+    description: 'Banca online y móvil para Banco Mercantil Panamá.',
   },
 ];
 ---
@@ -103,7 +110,7 @@ const experience = [
   <section class="story container">
     <div class="story__copy">
       <p class="eyebrow">Sobre mí</p>
-      <h1 class="title-xl">Hola, soy Emely. <span class="text-purple">Diseño experiencias digitales con mirada de ilustradora.</span></h1>
+      <h1 class="title-xl">Hola, soy Emely. <span class="text-purple">Diseño productos digitales escalables con foco en usabilidad, estrategia y sistemas de diseño.</span></h1>
       <p class="lead">
         Llevo <strong>10 años en el diseño gráfico y 8 como diseñadora UX/UI</strong>. Esa combinación me permite crear
         interfaces visualmente atractivas y, sobre todo, funcionales.
@@ -167,27 +174,27 @@ const experience = [
     <div class="skills__tint" aria-hidden="true"></div>
     <div class="container skills__inner">
       <div class="skills__intro">
-        <p class="eyebrow skills__eyebrow">Herramientas</p>
-        <h2 id="skills-title" class="title-lg skills__title">Con qué trabajo</h2>
+        <div>
+          <p class="eyebrow skills__eyebrow">Stack y habilidades</p>
+          <h2 id="skills-title" class="title-lg skills__title">Con qué trabajo</h2>
+        </div>
         <p class="skills__note">
-          Creo que el aprendizaje <strong>nunca se detiene</strong>: cada día amplío y perfecciono mis habilidades.
+          Creo que el aprendizaje <strong>nunca se detiene</strong>: cada día amplío y perfecciono mis habilidades, hoy
+          también con herramientas de IA.
         </p>
       </div>
 
-      <ul class="skills__panel">
+      <ul class="skills__grid">
         {
-          skills.map((skill) => (
-            <li>
-              <span class="skills__name">{skill.name}</span>
-              <span
-                class="skills__bar"
-                role="meter"
-                aria-label={`Nivel de ${skill.name}`}
-                aria-valuemin="0"
-                aria-valuemax="100"
-                aria-valuenow={skill.level}
-                style={`--level: ${skill.level}%`}
-              />
+          stack.map((group, index) => (
+            <li class="skills__group">
+              <span class="skills__number" aria-hidden="true">
+                {String(index + 1).padStart(2, '0')}
+              </span>
+              <h3>{group.title}</h3>
+              <ul class="skills__chips">
+                {group.items.map((item) => <li>{item}</li>)}
+              </ul>
             </li>
           ))
         }
@@ -204,12 +211,13 @@ const experience = [
         {
           experience.map((job) => (
             <li class="timeline__item">
-              <p class="timeline__period">{job.period}</p>
-              <div class="timeline__body">
-                <h3 class="timeline__role">{job.role}</h3>
-                <p class="timeline__company">{job.company}</p>
-                <p>{job.description}</p>
-              </div>
+              <p class="timeline__period">
+                {job.period}
+                {job.current && <span class="timeline__badge">Actual</span>}
+              </p>
+              <h3 class="timeline__role">{job.role}</h3>
+              <p class="timeline__company">{job.company}</p>
+              <p>{job.description}</p>
             </li>
           ))
         }
@@ -352,27 +360,26 @@ const experience = [
 
   .skills__bg {
     object-fit: cover;
+    filter: grayscale(1);
   }
 
+  /* Even brand tint so the glass cards read the same over light and dark parts of the photo */
   .skills__tint {
-    background: var(--purple);
-    mix-blend-mode: multiply;
+    background: linear-gradient(120deg, rgb(102 0 191 / 0.94) 0%, rgb(102 0 191 / 0.86) 55%, rgb(201 0 157 / 0.82) 100%);
   }
 
   .skills__inner {
     position: relative;
     display: grid;
-    grid-template-columns: minmax(0, 480px) minmax(0, 600px);
-    justify-content: space-between;
-    align-items: center;
-    gap: 48px;
+    gap: clamp(32px, 4vw, 48px);
     padding-block: clamp(64px, 8vw, 112px);
   }
 
   .skills__intro {
     display: grid;
-    justify-items: start;
-    gap: 16px;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 460px);
+    align-items: end;
+    gap: 24px 48px;
   }
 
   .skills__eyebrow {
@@ -380,6 +387,7 @@ const experience = [
   }
 
   .skills__title {
+    margin-top: 12px;
     color: var(--white);
   }
 
@@ -394,30 +402,54 @@ const experience = [
     color: var(--purple);
   }
 
-  .skills__panel {
+  .skills__grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 22px 40px;
-    padding: clamp(28px, 4vw, 48px);
-    border-radius: var(--radius);
-    background: var(--purple);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 20px;
+    padding: 0;
     list-style: none;
   }
 
-  .skills__name {
-    display: block;
-    margin-bottom: 8px;
-    font-size: 15px;
-    font-weight: var(--fw-medium);
+  /* Glass cards over the purple duotone photo */
+  .skills__group {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 28px 24px;
+    border: 1px solid rgb(255 255 255 / 0.22);
+    border-radius: 16px;
+    background: rgb(255 255 255 / 0.1);
+    backdrop-filter: blur(14px);
   }
 
-  .skills__bar {
-    display: block;
-    height: 8px;
-    border-radius: 60px;
-    background:
-      linear-gradient(var(--fuchsia), var(--fuchsia)) left / var(--level) 100% no-repeat,
-      rgb(255 255 255 / 0.3);
+  .skills__number {
+    font-size: 14px;
+    font-weight: var(--fw-semibold);
+    opacity: 0.75;
+  }
+
+  .skills__group h3 {
+    color: var(--white);
+    font-size: 18px;
+    font-weight: var(--fw-semibold);
+    line-height: 1.3;
+  }
+
+  .skills__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 0;
+    list-style: none;
+  }
+
+  .skills__chips li {
+    padding: 6px 12px;
+    border-radius: 8px;
+    background: rgb(255 255 255 / 0.14);
+    font-size: 13px;
+    font-weight: var(--fw-medium);
+    line-height: 1.4;
   }
 
   /* Trayectoria */
@@ -448,29 +480,31 @@ const experience = [
 
   .timeline {
     display: grid;
-    max-width: 680px;
+    max-width: 720px;
     margin-top: 28px;
     padding: 0;
     list-style: none;
   }
 
+  /* Vertical line with a fuchsia dot per role */
   .timeline__item {
     position: relative;
-    display: grid;
-    grid-template-columns: 120px 1fr;
-    gap: 24px;
-    padding-bottom: 32px;
+    padding: 0 0 36px 36px;
+    font-size: 15px;
   }
 
-  /* Vertical line and dot */
   .timeline__item::before {
     content: '';
     position: absolute;
-    top: 8px;
+    top: 10px;
     bottom: 0;
-    left: 131px;
+    left: 5px;
     width: 2px;
     background: var(--purple-24);
+  }
+
+  .timeline__item:last-child {
+    padding-bottom: 0;
   }
 
   .timeline__item:last-child::before {
@@ -481,7 +515,7 @@ const experience = [
     content: '';
     position: absolute;
     top: 6px;
-    left: 126px;
+    left: 0;
     width: 12px;
     height: 12px;
     border-radius: 50%;
@@ -490,14 +524,23 @@ const experience = [
   }
 
   .timeline__period {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 4px;
     color: var(--purple);
-    font-size: 15px;
+    font-size: 14px;
     font-weight: var(--fw-semibold);
   }
 
-  .timeline__body {
-    padding-left: 24px;
-    font-size: 15px;
+  .timeline__badge {
+    padding: 2px 10px;
+    border-radius: 999px;
+    background: var(--fuchsia);
+    color: var(--white);
+    font-size: 12px;
+    font-weight: var(--fw-medium);
   }
 
   .timeline__role {
@@ -512,6 +555,12 @@ const experience = [
     font-weight: var(--fw-medium);
   }
 
+  @media (max-width: 1100px) {
+    .skills__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
   @media (max-width: 1024px) {
     .story {
       grid-template-columns: 1fr;
@@ -524,7 +573,7 @@ const experience = [
       width: min(calc(100% - 24px), 420px);
     }
 
-    .skills__inner {
+    .skills__intro {
       grid-template-columns: 1fr;
     }
 
@@ -534,27 +583,9 @@ const experience = [
     }
   }
 
-  @media (max-width: 560px) {
-    .skills__panel {
+  @media (max-width: 640px) {
+    .skills__grid {
       grid-template-columns: 1fr;
-    }
-
-    .timeline__item {
-      grid-template-columns: 1fr;
-      gap: 4px;
-      padding-left: 28px;
-    }
-
-    .timeline__item::before {
-      left: 5px;
-    }
-
-    .timeline__item::after {
-      left: 0;
-    }
-
-    .timeline__body {
-      padding-left: 0;
     }
   }
 </style>

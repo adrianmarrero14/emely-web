@@ -32,6 +32,4 @@ En local (`npm run dev` o `npm run preview`) el envío falla a propósito y el f
 
 ## Pendiente
 
-- La trayectoria profesional de "Sobre mí" llega hasta 2021 (viene del diseño de Figma). Conviene actualizarla.
-- El caso de estudio de in99 aún no existe en el Framer: la tarjeta lo indica como "en preparación".
 - Si el sitio pasa a un dominio propio, actualiza `site` en `astro.config.mjs`.

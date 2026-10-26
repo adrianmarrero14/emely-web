@@ -23,9 +23,12 @@
   --fw-semibold: 600;
   --fw-bold: 700;
 
-  --gutter: clamp(20px, 6vw, 96px);
-  --max-width: 1440px;
+  /* Layout: one content width and one gutter shared by every section */
   --content-width: 1200px;
+  --gutter: clamp(20px, 4vw, 40px);
+  --container: calc(var(--content-width) + 2 * var(--gutter));
+  /* Inset that lines up a full-bleed element's content with .container (100% = that element's width) */
+  --edge: max(var(--gutter), calc((100% - var(--content-width)) / 2));
   --header-height: 76px;
   --radius: 10px;
   --shadow: 0 18px 40px -18px rgb(22 22 22 / 0.35);
@@ -130,7 +133,7 @@ a {
 
 .container {
   width: 100%;
-  max-width: var(--max-width);
+  max-width: var(--container);
   margin-inline: auto;
   padding-inline: var(--gutter);
 }
