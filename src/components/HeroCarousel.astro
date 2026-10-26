@@ -293,7 +293,7 @@ const slides = [
     bottom: calc(5.5% - 12px);
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 4px;
     transform: translateX(-50%);
   }
 
@@ -302,30 +302,26 @@ const slides = [
     gap: 4px;
   }
 
-  /* Glass circle, same treatment as the role chip */
+  /* Bare arrow, as quiet as the inactive dots; 44px hit area */
   .hero__arrow {
     display: grid;
     place-items: center;
     width: 44px;
     height: 44px;
     padding: 0;
-    border: 1px solid var(--glass-line);
-    border-radius: 50%;
-    background: rgb(255 255 255 / 0.12);
-    color: var(--white);
+    border: 0;
+    background: none;
+    color: rgb(255 255 255 / 0.5);
     cursor: pointer;
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition: color 0.3s ease;
   }
 
   .hero__arrow:hover {
-    background: var(--white);
-    color: var(--purple);
+    color: var(--white);
   }
 
   .hero__arrow :global(svg) {
-    width: 16px;
+    width: 12px;
     height: auto;
   }
 
