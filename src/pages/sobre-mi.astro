@@ -3,7 +3,7 @@ import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import CtaBar from '../components/CtaBar.astro';
 import ArrowIcon from '../components/ArrowIcon.astro';
-import emelyPhoto from '../assets/about/emely.png';
+import emelyPhoto from '../assets/photos/emely-square.jpg';
 import skillsBg from '../assets/figma/skills-bg.png';
 import skillsSketch from '../assets/figma/skills-sketch.png';
 import { site } from '../data/site';
@@ -149,8 +149,8 @@ const experience = [
       class="story__photo"
       src={emelyPhoto}
       alt="Emely Aponte sonriendo, en blanco y negro"
-      widths={[400, 800]}
-      sizes="(max-width: 900px) 90vw, 40vw"
+      widths={[480, 960, 1440]}
+      sizes="(max-width: 1024px) 420px, 480px"
       loading="eager"
     />
   </section>
@@ -314,6 +314,14 @@ const experience = [
     height: auto;
     border-radius: var(--radius-lg);
     box-shadow: 24px 24px 0 var(--purple);
+    animation: story-photo 1s cubic-bezier(0.2, 0.7, 0.2, 1) 0.2s both;
+  }
+
+  /* The purple block slides out from behind the photo */
+  @keyframes story-photo {
+    from {
+      box-shadow: 0 0 0 var(--purple);
+    }
   }
 
   /* Qué hago */

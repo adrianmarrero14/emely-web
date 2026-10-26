@@ -1,14 +1,41 @@
 ---
 import { Image } from 'astro:assets';
-import hero1 from '../assets/figma/hero-1.png';
-import hero2 from '../assets/figma/hero-2.png';
-import hero3 from '../assets/figma/hero-3.png';
+import hero1 from '../assets/photos/hero-1.jpg';
+import hero2 from '../assets/photos/hero-2.jpg';
+import hero3 from '../assets/photos/hero-3.jpg';
 import ArrowIcon from './ArrowIcon.astro';
 
+// Black-and-white photos tinted in CSS, like the original Figma layers: two brand colours split by a darker band.
+// Band edges (a, b) are fractions of the photo width on desktop and of the viewport on mobile; focus is the face,
+// and lift raises the photo on mobile so the face stays above the headline.
 const slides = [
-  { image: hero1, label: 'Emely Aponte, Senior Product & UX/UI Designer' },
-  { image: hero2, label: 'Me encanta la creación de contenidos y las redes sociales' },
-  { image: hero3, label: 'Me apasiona el mundo gaming, las series y los cómics' },
+  {
+    image: hero1,
+    label: 'Emely Aponte, Senior Product & UX/UI Designer',
+    left: 'var(--purple)',
+    right: 'var(--hero-fuchsia)',
+    band: { a: 0.3, b: 0.46, aMobile: 0.1, bMobile: 0.32 },
+    focus: '62% 28%',
+    lift: '9%',
+  },
+  {
+    image: hero2,
+    label: 'Me encanta la creación de contenidos y las redes sociales',
+    left: 'var(--hero-fuchsia)',
+    right: 'var(--purple)',
+    band: { a: 0.16, b: 0.34, aMobile: 0.06, bMobile: 0.28 },
+    focus: '58% 24%',
+    lift: '6%',
+  },
+  {
+    image: hero3,
+    label: 'Me apasiona el mundo gaming, las series y los cómics',
+    left: 'var(--purple)',
+    right: 'var(--hero-fuchsia)',
+    band: { a: 0.12, b: 0.3, aMobile: 0.04, bMobile: 0.26 },
+    focus: '68% 34%',
+    lift: '14%',
+  },
 ];
 ---
 
@@ -22,17 +49,31 @@ const slides = [
           aria-roledescription="diapositiva"
           aria-label={`${index + 1} de ${slides.length}`}
           aria-hidden={index === 0 ? undefined : 'true'}
+          style={{
+            '--ratio': slide.image.width / slide.image.height,
+            '--left': slide.left,
+            '--right': slide.right,
+            '--a': slide.band.a,
+            '--b': slide.band.b,
+            '--a-mobile': slide.band.aMobile,
+            '--b-mobile': slide.band.bMobile,
+            '--focus': slide.focus,
+            '--lift': slide.lift,
+          }}
           data-slide
         >
-          <Image
-            class="hero__image"
-            src={slide.image}
-            alt=""
-            widths={[640, 960, slide.image.width]}
-            sizes="100vw"
-            loading={index === 0 ? 'eager' : 'lazy'}
-            fetchpriority={index === 0 ? 'high' : undefined}
-          />
+          <div class="hero__stage">
+            <Image
+              class="hero__image"
+              src={slide.image}
+              alt=""
+              widths={[700, 1000, 1400, slide.image.width]}
+              sizes="(max-width: 760px) 700px, min(66vw, 940px)"
+              loading="eager"
+              fetchpriority={index === 0 ? 'high' : 'low'}
+            />
+            <span class="hero__tint" aria-hidden="true"></span>
+          </div>
           <div class="hero__copy container">
             {index === 0 && (
               <h1 class="hero__title hero__title--main">
@@ -152,6 +193,8 @@ const slides = [
 
 <style>
   .hero {
+    --hero-fuchsia: #d500a6;
+    --hero-band: #56007d;
     position: relative;
     height: clamp(600px, 59.4vw, 855px);
     overflow: hidden;
@@ -166,9 +209,11 @@ const slides = [
   }
 
   .hero__slide {
+    isolation: isolate;
+    background: var(--white);
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.8s ease, visibility 0.8s;
+    transition: opacity 0.9s ease, visibility 0.9s;
   }
 
   .hero__slide.is-active {
@@ -176,13 +221,94 @@ const slides = [
     visibility: visible;
   }
 
-  .hero__image {
+  /* Full-height photo anchored to the right, so the head is never cropped on wide screens */
+  .hero__stage {
+    --band-a: var(--a);
+    --band-b: var(--b);
     position: absolute;
-    inset: 0;
+    top: 0;
+    right: 0;
+    height: 100%;
+    aspect-ratio: var(--ratio);
+    container-type: inline-size;
+  }
+
+  .hero__image {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: 70% center;
+    object-position: var(--focus);
+    transform-origin: var(--focus);
+    mask-image: linear-gradient(90deg, transparent, #000 16%);
+  }
+
+  /* One multiply layer recreates the Figma overlay: it reaches far left to colour the empty area,
+     and --reveal grows the band across the photo when the slide comes in */
+  .hero__tint {
+    --band-start: calc(100vw + var(--band-a) * 100cqw);
+    --band-end: calc(var(--band-start) + (var(--band-b) - var(--band-a)) * var(--reveal) * 100cqw);
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: -100vw;
+    background: linear-gradient(
+      90deg,
+      var(--left) var(--band-start),
+      var(--hero-band) var(--band-start) var(--band-end),
+      var(--right) var(--band-end)
+    );
+    mix-blend-mode: multiply;
+  }
+
+  .hero__slide.is-active .hero__stage {
+    animation: hero-band 1.2s cubic-bezier(0.65, 0, 0.35, 1) 0.3s both;
+  }
+
+  /* Slow push-out while the slide is on screen */
+  .hero__slide.is-active .hero__image {
+    animation: hero-zoom 9s cubic-bezier(0.2, 0.6, 0.3, 1) both;
+  }
+
+  .hero__slide.is-active .hero__title > * {
+    animation: hero-rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+
+  .hero__slide.is-active .hero__title > :nth-child(1) {
+    animation-delay: 0.25s;
+  }
+
+  .hero__slide.is-active .hero__title > :nth-child(2) {
+    animation-delay: 0.4s;
+  }
+
+  .hero__slide.is-active .hero__title > :nth-child(3) {
+    animation-delay: 0.55s;
+  }
+
+  @property --reveal {
+    syntax: '<number>';
+    inherits: true;
+    initial-value: 1;
+  }
+
+  @keyframes hero-band {
+    from {
+      --reveal: 0;
+    }
+  }
+
+  @keyframes hero-zoom {
+    from {
+      transform: scale(1.07);
+    }
+  }
+
+  @keyframes hero-rise {
+    from {
+      opacity: 0;
+      transform: translateY(18px);
+    }
   }
 
   /* Bottom padding keeps the headline clear of the persistent buttons */
@@ -345,8 +471,18 @@ const slides = [
       height: 640px;
     }
 
+    .hero__stage {
+      --band-a: var(--a-mobile);
+      --band-b: var(--b-mobile);
+      top: calc(-1 * var(--lift));
+      left: 0;
+      height: auto;
+      bottom: 0;
+      aspect-ratio: auto;
+    }
+
     .hero__image {
-      object-position: 62% center;
+      mask-image: none;
     }
 
     .hero__title--main {
