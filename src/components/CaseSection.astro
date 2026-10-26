@@ -1,0 +1,72 @@
+---
+interface Props {
+  id: string;
+  number: number;
+  title: string;
+  /** Optional design-thinking phase shown above the title, e.g. "Empatizar". */
+  phase?: string;
+}
+
+const { id, number, title, phase } = Astro.props;
+---
+
+<section class="case-section" id={id} aria-labelledby={`${id}-title`}>
+  <header class="case-section__head">
+    <span class="case-section__number" aria-hidden="true">{String(number).padStart(2, '0')}</span>
+    {phase && <p class="case-section__phase">{phase}</p>}
+    <h2 id={`${id}-title`}>{title}</h2>
+  </header>
+  <div class="case-section__body">
+    <slot />
+  </div>
+</section>
+
+<style>
+  .case-section {
+    padding-block: 48px;
+    border-top: 1px solid var(--line);
+    scroll-margin-top: 16px;
+  }
+
+  .case-section:first-child {
+    border-top: 0;
+  }
+
+  .case-section__head {
+    display: grid;
+    gap: 4px;
+    margin-bottom: 24px;
+  }
+
+  .case-section__number {
+    color: var(--fuchsia);
+    font-size: 14px;
+    font-weight: var(--fw-semibold);
+  }
+
+  .case-section__phase {
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: var(--fw-medium);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .case-section h2 {
+    color: var(--purple);
+    font-size: clamp(26px, 2.6vw, 34px);
+    font-weight: var(--fw-bold);
+    letter-spacing: -0.01em;
+  }
+
+  .case-section__body {
+    display: grid;
+    gap: 22px;
+  }
+
+  .case-section__body :global(h3) {
+    margin-top: 8px;
+    font-size: 19px;
+    font-weight: var(--fw-semibold);
+  }
+</style>

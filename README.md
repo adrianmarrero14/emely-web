@@ -14,12 +14,24 @@ Sitio estático hecho con [Astro](https://astro.build). El diseño sale del arch
 
 ## Estructura
 
-- `src/pages/`: Inicio, ¿Quién soy? (`sobre-mi`), ¿Qué hago? (`portafolio`), Contacto y los casos de estudio en `proyectos/`.
-- `src/data/site.ts`: enlaces (CV, LinkedIn, Behance), ID del formulario y datos de los proyectos.
+- `src/pages/`: Inicio, Sobre mí (`sobre-mi`), Proyectos (`proyectos/`, con los casos de PinsXP, Mercantil y CrudeBeauty) y Contacto (`contacto`, más `contacto/gracias`). `/portafolio` redirige a `/proyectos`.
+- `src/layouts/CaseStudy.astro` y `src/components/CaseSection.astro`: plantilla común de los casos de estudio (índice lateral, secciones numeradas, tarjetas, cifras y siguiente proyecto).
+- `src/data/site.ts`: enlaces (CV, LinkedIn, Behance) y datos de los proyectos.
+- `src/styles/global.css`: tokens de diseño. Tipografía única **Poppins** (300/400/500/600/700) y paleta de dos colores: morado `#6600BF` y fucsia `#C9009D`, más neutros.
 - `src/assets/`: imágenes que Astro optimiza (`figma/` viene de Figma y `projects/` del Framer).
-- `public/icons/`: SVG exportados de Figma (logos, flechas, redes).
+- `public/icons/`: SVG exportados de Figma (logos y redes), ajustados a la paleta.
 
-## Pendiente de configurar
+## Formulario de contacto
 
-- **Formulario de contacto**: crea un formulario gratuito en [Formspark](https://formspark.io) y pon su ID en `formsparkId` (`src/data/site.ts`). Hasta entonces, al enviar el formulario se pide al visitante que escriba por LinkedIn.
-- **Dominio**: cuando haya dominio, añade `site` en `astro.config.mjs` para generar las URL canónicas.
+Usa [Netlify Forms](https://docs.netlify.com/forms/setup/): Netlify detecta el formulario `contacto` al desplegar. Para que funcione:
+
+1. En Netlify, activa **Forms → Enable form detection** y vuelve a desplegar.
+2. En **Forms → Form notifications**, añade el email donde Emely quiere recibir los mensajes.
+
+En local (`npm run dev` o `npm run preview`) el envío falla a propósito y el formulario muestra un mensaje de error con el enlace a LinkedIn.
+
+## Pendiente
+
+- La trayectoria profesional de "Sobre mí" llega hasta 2021 (viene del diseño de Figma). Conviene actualizarla.
+- El caso de estudio de in99 aún no existe en el Framer: la tarjeta lo indica como "en preparación".
+- Si el sitio pasa a un dominio propio, actualiza `site` en `astro.config.mjs`.

@@ -1,27 +1,34 @@
 :root {
-  /* Colors from the Figma file */
+  /* Brand: only two colors. Everything else is a neutral or an opacity variation of them. */
   --purple: #6600bf;
-  --purple-dark: #48138e;
-  --magenta: #c9009d;
-  --magenta-dark: #b01c90;
-  --text: #505050;
-  --text-strong: #000;
-  --sand: #f1efec;
-  --track: #c8c8c8;
-  --input-bg: #f5f5ff;
-  --placeholder: #9f9f9f;
+  --fuchsia: #c9009d;
+  --purple-06: rgb(102 0 191 / 0.06);
+  --purple-12: rgb(102 0 191 / 0.12);
+  --purple-24: rgb(102 0 191 / 0.24);
+  --fuchsia-12: rgb(201 0 157 / 0.12);
+
+  /* Neutrals */
   --white: #fff;
+  --ink: #161616;
+  --text: #474747;
+  --muted: #6b6b6b;
+  --line: #e4e4e4;
+  --surface: #f5f5f5;
 
-  /* Typefaces. Avenir Next ships with Apple devices; Nunito Sans is the closest free fallback. */
-  --font-body: 'Avenir Next', Avenir, 'Nunito Sans', system-ui, sans-serif;
-  --font-nav: 'Raleway', system-ui, sans-serif;
-  --font-display: 'Londrina Solid', 'Avenir Next', system-ui, sans-serif;
-  --font-heading: 'Poppins', system-ui, sans-serif;
-  --font-footer: 'Alata', 'Avenir Next', system-ui, sans-serif;
+  /* Typography: Poppins only */
+  --font: 'Poppins', sans-serif;
+  --fw-light: 300;
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
 
-  --gutter: clamp(16px, 6.5vw, 98px);
+  --gutter: clamp(20px, 6vw, 96px);
   --max-width: 1440px;
-  --header-height: 72px;
+  --content-width: 1200px;
+  --header-height: 76px;
+  --radius: 10px;
+  --shadow: 0 18px 40px -18px rgb(22 22 22 / 0.35);
 }
 
 *,
@@ -32,6 +39,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 24px;
   -webkit-text-size-adjust: 100%;
 }
 
@@ -39,20 +47,38 @@ html {
   html {
     scroll-behavior: auto;
   }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
 }
 
 body {
   margin: 0;
   background: var(--white);
   color: var(--text);
-  font-family: var(--font-body);
-  font-size: 18px;
-  line-height: 1.4;
+  font-family: var(--font);
+  font-weight: var(--fw-regular);
+  font-size: 16px;
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
 }
 
 img,
-svg {
+svg,
+picture {
   display: block;
   max-width: 100%;
 }
@@ -63,17 +89,42 @@ h3,
 h4,
 p,
 ul,
+ol,
+dl,
+dd,
 figure,
 blockquote {
   margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  color: var(--ink);
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+strong {
+  font-weight: var(--fw-semibold);
 }
 
 a {
   color: inherit;
 }
 
+::selection {
+  background: var(--fuchsia);
+  color: var(--white);
+}
+
 :focus-visible {
-  outline: 3px solid var(--magenta);
+  outline: 3px solid var(--fuchsia);
   outline-offset: 3px;
 }
 
@@ -93,76 +144,214 @@ a {
   white-space: nowrap;
 }
 
-/* Section titles set in Londrina Solid ("Proyectos", "Experiencias laborales") */
-.display-title {
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: clamp(34px, 3.2vw, 45px);
-  line-height: 1.33;
-  color: var(--purple);
+.skip-link {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 100;
+  padding: 10px 16px;
+  border-radius: var(--radius);
+  background: var(--purple);
+  color: var(--white);
+  font-weight: var(--fw-medium);
+  text-decoration: none;
+  transform: translateY(-200%);
 }
 
-/* Poppins Bold headings ("¡Mandame un mensaje!", "Un poco de mi historia.") */
-.heading {
-  font-family: var(--font-heading);
-  font-weight: 700;
-  color: var(--purple);
+.skip-link:focus {
+  transform: none;
 }
 
-/* "¡Ir al portafolio ya!  →" */
-.arrow-link {
+/* ---------- Type ---------- */
+
+/* Small label above titles: "Caso de estudio", "Proyectos" */
+.eyebrow {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  font-size: 18px;
-  text-decoration: none;
+  color: var(--fuchsia);
+  font-size: 13px;
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0.14em;
+  line-height: 1.4;
+  text-transform: uppercase;
 }
 
-.arrow-link img {
-  transition: transform 0.2s ease;
+.eyebrow::before {
+  content: '';
+  width: 28px;
+  height: 3px;
+  border-radius: 3px;
+  background: currentColor;
 }
 
-.arrow-link:hover img,
-.arrow-link:focus-visible img {
-  transform: translateX(4px);
+.title-xl {
+  font-size: clamp(36px, 5vw, 64px);
+  font-weight: var(--fw-bold);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
 }
 
-/* Dark purple button ("Descargar CV", "¡Enviar un mensaje!") */
-.button {
+.title-lg {
+  font-size: clamp(28px, 3.3vw, 44px);
+  font-weight: var(--fw-bold);
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+}
+
+.title-md {
+  font-size: clamp(22px, 2vw, 28px);
+  font-weight: var(--fw-semibold);
+  line-height: 1.3;
+}
+
+.text-purple {
+  color: var(--purple);
+}
+
+.lead {
+  color: var(--text);
+  font-size: clamp(17px, 1.4vw, 19px);
+  font-weight: var(--fw-light);
+  line-height: 1.7;
+}
+
+/* ---------- Buttons and links ---------- */
+
+.btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  min-height: 54px;
-  padding: 0 32px;
-  border: 0;
-  background: var(--purple-dark);
+  gap: 10px;
+  min-height: 52px;
+  padding: 0 26px;
+  border: 2px solid var(--purple);
+  border-radius: var(--radius);
+  background: var(--purple);
   color: var(--white);
-  font-family: var(--font-display);
-  font-size: 16px;
+  font-family: var(--font);
+  font-size: 15px;
+  font-weight: var(--fw-semibold);
   line-height: 1;
   text-decoration: none;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
 }
 
-.button:hover,
-.button:focus-visible {
+.btn:hover,
+.btn:focus-visible {
+  border-color: var(--fuchsia);
+  background: var(--fuchsia);
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn svg {
+  width: 18px;
+  height: 18px;
+  transition: transform 0.2s ease;
+}
+
+.btn:hover svg,
+.btn:focus-visible svg {
+  transform: translateX(3px);
+}
+
+/* Outline variant for secondary actions */
+.btn--ghost {
+  background: transparent;
+  color: var(--purple);
+}
+
+.btn--ghost:hover,
+.btn--ghost:focus-visible {
+  border-color: var(--purple);
   background: var(--purple);
+  color: var(--white);
+}
+
+/* White button on purple or fuchsia backgrounds */
+.btn--light {
+  border-color: var(--white);
+  background: var(--white);
+  color: var(--purple);
+}
+
+.btn--light:hover,
+.btn--light:focus-visible {
+  border-color: var(--white);
+  background: transparent;
+  color: var(--white);
+}
+
+/* Outline button on purple or fuchsia backgrounds */
+.btn--outline-light {
+  border-color: var(--white);
+  background: transparent;
+  color: var(--white);
+}
+
+.btn--outline-light:hover,
+.btn--outline-light:focus-visible {
+  border-color: var(--white);
+  background: var(--white);
+  color: var(--purple);
+}
+
+/* Text link with an arrow: "Ver caso de estudio →" */
+.link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--purple);
+  font-weight: var(--fw-semibold);
+  text-decoration: none;
+}
+
+.link-arrow svg {
+  width: 18px;
+  height: 18px;
+  transition: transform 0.2s ease;
+}
+
+.link-arrow:hover svg,
+.link-arrow:focus-visible svg {
+  transform: translateX(4px);
+}
+
+/* Tag shown on project cards */
+.tag {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: var(--purple-12);
+  color: var(--purple);
+  font-size: 12px;
+  font-weight: var(--fw-medium);
+  line-height: 1.6;
 }
 
 /* Quote over a duotone photo (Dana Chisnell, Neville Brody) */
 .quote {
-  font-family: var(--font-body);
-  font-weight: 700;
-  font-size: clamp(18px, 1.7vw, 24px);
-  line-height: 1.37;
   color: var(--white);
+  font-size: clamp(18px, 1.7vw, 24px);
+  font-weight: var(--fw-semibold);
+  line-height: 1.45;
   text-align: right;
 }
 
 .quote cite {
   display: block;
-  margin-top: 1.4em;
+  margin-top: 1em;
+  font-size: 0.75em;
   font-style: normal;
+  font-weight: var(--fw-light);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }

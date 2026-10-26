@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import CaseStudy from '../../layouts/CaseStudy.astro';
+import CaseSection from '../../components/CaseSection.astro';
 import cover from '../../assets/projects/home/pinsxp.jpg';
 import reto1 from '../../assets/projects/pinsxp/reto-1.png';
 import reto2 from '../../assets/projects/pinsxp/reto-2.png';
@@ -8,138 +9,132 @@ import reto3 from '../../assets/projects/pinsxp/reto-3.png';
 import compass1 from '../../assets/projects/pinsxp/compass-1.png';
 import compass2 from '../../assets/projects/pinsxp/compass-2.png';
 import impacto from '../../assets/projects/pinsxp/impacto.jpg';
+
+const sections = [
+  { id: 'reto', title: 'El reto' },
+  { id: 'solucion', title: 'La solución: Compass' },
+  { id: 'impacto', title: 'El impacto' },
+  { id: 'proximos-pasos', title: 'Próximos pasos' },
+];
 ---
 
 <CaseStudy
+  slug="pinsxp"
   name="PinsXP"
-  tagline="Escalando un Design System complejo con IA"
+  tagline="Cómo escalé un sistema de diseño complejo con ayuda de la IA."
   cover={cover}
-  description="Lideré la conceptualización, arquitectura y escalado del sistema de diseño “Compass” para PinsXP, una plataforma social para guardar, compartir y conectar momentos y lugares. Integré flujos de trabajo asistidos por IA para unificar y acelerar la creación de nuevas experiencias de usuario."
+  description="Lideré la conceptualización, la arquitectura y el escalado de Compass, el sistema de diseño de PinsXP: una plataforma social para guardar, compartir y conectar momentos y lugares. Integré flujos de trabajo asistidos por IA para unificar y acelerar el diseño de nuevas experiencias."
+  brief="Diseñar un sistema de diseño que garantice una experiencia visual coherente y escalable en todos los productos digitales de PinsXP."
   details={[
     { label: 'Cliente', value: 'PinsXP' },
-    { label: 'Rol', value: 'Lead Product Designer / Diseñadora de Producto' },
+    { label: 'Rol', value: 'Lead Product Designer' },
     { label: 'Ubicación', value: 'Madrid, España' },
-    {
-      label: 'Brief',
-      value: 'Diseñar un Sistema de Diseño para PinsXP manteniendo una consistencia visual y escalable para todos sus productos digitales.',
-    },
+    { label: 'Tipo', value: 'Sistema de diseño' },
   ]}
+  sections={sections}
 >
-  <section>
-    <h2>El reto</h2>
+  <CaseSection id="reto" number={1} title="El reto">
     <p>
-      PinsXP es una aplicación donde los usuarios guardan lugares favoritos, crean itinerarios de viajes o planes y
-      comparten momentos en grupo con amigos. A medida que la startup crecía, diseñar nuevas pantallas y flujos de
-      forma aislada generaba inconsistencias visuales y ralentizaba el desarrollo.
+      En PinsXP, los usuarios guardan sus lugares favoritos, crean itinerarios de viaje o planes y comparten momentos en
+      grupo con sus amigos. A medida que la startup crecía, diseñar pantallas y flujos de forma aislada empezó a generar{' '}
+      <strong>inconsistencias visuales y a ralentizar el desarrollo</strong>.
     </p>
     <div class="gallery" style="--cols: 3">
       <Image src={reto1} alt="Pantallas de PinsXP antes del sistema de diseño" widths={[600, reto1.width]} sizes="(max-width: 760px) 92vw, 300px" />
-      <Image src={reto2} alt="Detalle de componentes inconsistentes" />
-      <Image src={reto3} alt="Detalle de una pantalla de la app" />
+      <Image src={reto2} alt="Detalle de componentes sin estandarizar" />
+      <Image src={reto3} alt="Pantalla de la app con un estado complejo" />
     </div>
     <h3>El problema</h3>
-    <ul>
-      <li>
-        Había una desconexión inicial y falta de estandarización en los componentes que ralentizaba la creación de
-        nuevos flujos y pantallas.
+    <ul class="cards">
+      <li class="card">
+        <h4>Componentes sin estándar</h4>
+        La falta de estandarización ralentizaba la creación de nuevos flujos y pantallas.
       </li>
-      <li>
-        Necesitábamos estandarizar cómo se estructuran y muestran elementos cotidianos de la app (como tarjetas de
-        lugares guardados, creación de grupos o listados de planes).
+      <li class="card">
+        <h4>Elementos cotidianos dispares</h4>
+        Tarjetas de lugares guardados, creación de grupos o listados de planes se resolvían de formas distintas.
       </li>
-      <li>
-        La gestión de componentes complejos (como estados vacíos cuando el usuario aún no tiene grupos o la adaptación
-        automática entre modo claro y oscuro) consumía demasiado tiempo operativo y creaba fricción con el equipo de
-        ingeniería.
+      <li class="card">
+        <h4>Fricción con ingeniería</h4>
+        Gestionar estados vacíos o el cambio entre modo claro y oscuro consumía demasiado tiempo operativo.
       </li>
     </ul>
-  </section>
+  </CaseSection>
 
-  <section>
-    <h2>La solución</h2>
-    <h3>El Sistema de Diseño “Compass” (estrategia y arquitectura)</h3>
+  <CaseSection id="solucion" number={2} title="La solución: Compass">
+    <p>Diseñé la estrategia y la arquitectura de un sistema de diseño pensado para crecer con el producto.</p>
     <div class="gallery" style="--cols: 2">
       <Image src={compass1} alt="Arquitectura de componentes de Compass" widths={[728, compass1.width]} sizes="(max-width: 760px) 92vw, 440px" />
-      <Image src={compass2} alt="Ejemplo de componentes de Compass" widths={[420, compass2.width]} sizes="(max-width: 760px) 92vw, 440px" />
+      <Image src={compass2} alt="Componentes de Compass en modo claro y oscuro" widths={[420, compass2.width]} sizes="(max-width: 760px) 92vw, 440px" />
     </div>
-
-    <h3>El origen de “Compass” (la brújula del producto)</h3>
-    <p>
-      Nombré al sistema <strong>Compass</strong> porque actúa exactamente como una brújula: guía tanto a diseño como a
-      ingeniería en una sola dirección, asegurando que guardar, compartir y descubrir lugares mantenga siempre el mismo
-      pulso visual y de usabilidad.
+    <p class="callout">
+      Lo llamé <strong>Compass</strong> porque funciona como una brújula: guía a diseño e ingeniería en una misma
+      dirección para que guardar, compartir y descubrir lugares mantenga siempre el mismo pulso visual y de usabilidad.
     </p>
+    <ul class="cards">
+      <li class="card">
+        <h4>Primitivas y semánticas</h4>
+        Separé los valores base (primitivas) de la capa con propósito funcional (semánticas). Así, el cambio entre modo
+        claro y oscuro se gestiona de forma limpia y automatizada.
+      </li>
+      <li class="card">
+        <h4>Asistencia con Claude</h4>
+        Integré Claude como asistente estratégico para definir y alinear las reglas de diseño, la nomenclatura y las
+        especificaciones técnicas del sistema de forma ágil y rigurosa.
+      </li>
+      <li class="card">
+        <h4>Handoff a desarrollo</h4>
+        Cada componente nuevo se entrega documentado: desbordamiento de texto, restricciones de tamaño y todos sus estados
+        (cargando, vacío, error, éxito y deshabilitado).
+      </li>
+    </ul>
+  </CaseSection>
 
-    <h3>Arquitectura limpia de componentes en Figma</h3>
-    <p>
-      Organicé librerías avanzadas utilizando componentes con propiedades claras (tipo, color y tamaño), aplicando
-      nomenclaturas estandarizadas y fáciles de entender para que la librería fuera sumamente resistente a futuros
-      cambios de diseño.
-    </p>
-
-    <h3>Reglas de calidad y automatización con IA</h3>
-    <p>
-      Para mantener un estándar impecable, establecí directrices estrictas de redacción y consistencia visual (cuidando
-      las mayúsculas en términos clave de la app como <strong>Moments</strong> o <strong>Itineraries</strong>), además
-      de pautas claras de accesibilidad.
-    </p>
-
-    <h3>Especificaciones y entrega a desarrollo (handoff)</h3>
-    <p>
-      Integré normas rigurosas para cada componente nuevo, documentando comportamientos ante desbordamientos de texto,
-      restricciones de tamaño y todos los estados posibles (cargando, vacío, con error, éxito o deshabilitado) antes de
-      entregarlo a código.
-    </p>
-  </section>
-
-  <section>
-    <h2>El impacto en los nuevos flujos</h2>
+  <CaseSection id="impacto" number={3} title="El impacto">
     <figure>
-      <Image src={impacto} alt="Nuevos flujos de PinsXP construidos con Compass" widths={[880, 1760]} sizes="(max-width: 960px) 92vw, 880px" />
+      <Image src={impacto} alt="Nuevos flujos de PinsXP construidos con Compass" widths={[880, 1760]} sizes="(max-width: 1024px) 92vw, 880px" />
     </figure>
-    <h3>De la fricción a la modularidad</h3>
-    <p>
-      Gracias a <strong>Compass</strong>, la creación de nuevos flujos sociales (como compartir colecciones o coordinar
-      planes en grupo) pasó de ser un proceso artesanal a un sistema modular y predecible.
-    </p>
-    <h3>Sinergia total con ingeniería</h3>
-    <p>
-      Al alinear perfectamente las variables de diseño con la estructura que usa el equipo de desarrollo, se redujo al
-      mínimo el margen de error y el tiempo de revisión en código.
-    </p>
-    <h3>Consistencia en la experiencia de usuario</h3>
-    <p>
-      Cada pantalla de la app refleja ahora una interfaz cohesiva, accesible y optimizada para que los usuarios guarden
-      y compartan sus experiencias sin fricción.
-    </p>
-  </section>
+    <ul class="cards">
+      <li class="card">
+        <h4>De la fricción a la modularidad</h4>
+        Crear flujos sociales nuevos, como compartir colecciones o coordinar planes en grupo, pasó de ser un proceso
+        artesanal a uno modular y predecible.
+      </li>
+      <li class="card">
+        <h4>Sinergia total con ingeniería</h4>
+        Alinear las variables de diseño con la estructura del equipo de desarrollo redujo al mínimo los errores y el tiempo
+        de revisión en código.
+      </li>
+      <li class="card">
+        <h4>Una experiencia coherente</h4>
+        Cada pantalla refleja ahora una interfaz cohesiva, accesible y optimizada para guardar y compartir experiencias sin
+        fricción.
+      </li>
+    </ul>
+  </CaseSection>
 
-  <section>
-    <h2>Próximos pasos</h2>
-    <h3>Escalado de componentes a la versión web (desktop y responsive)</h3>
+  <CaseSection id="proximos-pasos" number={4} title="Próximos pasos">
+    <h3>Llevar Compass a la web (desktop y responsive)</h3>
     <p>
-      <strong>El reto web:</strong> a medida que PinsXP crece, los usuarios necesitan gestionar sus itinerarios y
-      colecciones compartidas de forma más cómoda desde pantallas grandes, lo que exige llevar el ecosistema de diseño
-      móvil a una experiencia web robusta y responsiva.
+      A medida que PinsXP crece, los usuarios necesitan gestionar sus itinerarios y colecciones compartidas con más
+      comodidad desde pantallas grandes. El reto: trasladar el ecosistema móvil a una experiencia web robusta y responsive.
     </p>
-    <h3>Adaptación y coherencia multiplataforma</h3>
-    <ul>
-      <li>
-        <strong>Sistema de grillas y breakpoints:</strong> se definirá una nueva capa de componentes en Figma adaptados a
-        la web, estableciendo sistemas de retícula flexibles, breakpoints claros y densidades de información optimizadas
-        para pantallas de escritorio (sin perder la paridad visual con la app móvil).
+    <ul class="cards">
+      <li class="card">
+        <h4>Retícula y breakpoints</h4>
+        Una nueva capa de componentes web en Figma con retículas flexibles, breakpoints claros y densidades de información
+        pensadas para escritorio, sin perder la paridad visual con la app.
       </li>
-      <li>
-        <strong>Componentes web-ready (inspirados en shadcn/ui):</strong> se traducirán los componentes móviles de
-        Compass a patrones web complejos (tablas de gestión de itinerarios, menús desplegables de grupos, modales
-        anidados y navegación lateral), asegurando que los patrones de interacción se sientan nativos tanto en web como en
-        mobile.
+      <li class="card">
+        <h4>Componentes web-ready</h4>
+        Inspirados en shadcn/ui: tablas de itinerarios, menús desplegables de grupos, modales anidados y navegación lateral
+        que se sientan nativos en web y en móvil.
       </li>
-      <li>
-        <strong>Consistencia de marca:</strong> mantener la misma filosofía de “brújula” visual, garantizando que el
-        usuario experimente la misma fluidez al recordar y compartir momentos, ya sea desde su navegador móvil o desde el
+      <li class="card">
+        <h4>Coherencia de marca</h4>
+        La misma filosofía de brújula para que recordar y compartir momentos sea igual de fluido en el móvil y en el
         ordenador.
       </li>
     </ul>
-  </section>
+  </CaseSection>
 </CaseStudy>

@@ -1,84 +1,96 @@
 ---
-import { site } from '../data/site';
+import ArrowIcon from './ArrowIcon.astro';
+
+interface Props {
+  /** Hide the "see projects" half when the page is already about projects. */
+  showProjects?: boolean;
+}
+
+const { showProjects = true } = Astro.props;
 ---
 
-<section class="cta" aria-label="Siguientes pasos">
+<section class:list={['cta', { 'cta--single': !showProjects }]} aria-label="Siguientes pasos">
   <a class="cta__item cta__item--message" href="/contacto">
-    ¡Enviar un mensaje!
-    <img src="/icons/arrow-white-20.svg" width="20" height="15.0007" alt="" />
+    <span class="cta__kicker">¿Hablamos?</span>
+    <span class="cta__label">Envíame un mensaje <ArrowIcon /></span>
   </a>
-  <a class="cta__item cta__item--portfolio" href="/portafolio">
-    Ver el portafolio primero
-    <img src="/icons/arrow-white-20.svg" width="20" height="15.0007" alt="" />
-  </a>
-  <ul class="cta__item cta__item--social">
-    <li>
-      <a href={site.behance} target="_blank" rel="noopener noreferrer">
-        <img src="/icons/behance-white.svg" width="27" height="27" alt="Behance" />
+  {
+    showProjects && (
+      <a class="cta__item cta__item--projects" href="/proyectos">
+        <span class="cta__kicker">¿Quieres ver más?</span>
+        <span class="cta__label">Explora mis proyectos <ArrowIcon /></span>
       </a>
-    </li>
-    <li>
-      <a href={site.linkedin} target="_blank" rel="noopener noreferrer">
-        <img src="/icons/linkedin-white.svg" width="27" height="27" alt="LinkedIn" />
-      </a>
-    </li>
-  </ul>
+    )
+  }
 </section>
 
 <style>
   .cta {
     display: grid;
-    grid-template-columns: 458fr 614fr 368fr;
+    grid-template-columns: 1fr 1fr;
     color: var(--white);
-    font-family: var(--font-display);
-    font-size: clamp(26px, 2.5vw, 36px);
+  }
+
+  .cta--single {
+    grid-template-columns: 1fr;
   }
 
   .cta__item {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    min-height: 122px;
-    margin: 0;
-    padding: 24px clamp(24px, 5.1vw, 74px);
+    display: grid;
+    align-content: center;
+    gap: 6px;
+    min-height: 160px;
+    padding: 32px var(--gutter);
     text-decoration: none;
   }
 
-  .cta__item img {
+  .cta__item--message {
+    background: var(--fuchsia);
+  }
+
+  .cta__item--projects {
+    background: var(--purple);
+  }
+
+  .cta__kicker {
+    font-size: 14px;
+    font-weight: var(--fw-light);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .cta__label {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    font-size: clamp(24px, 2.6vw, 36px);
+    font-weight: var(--fw-semibold);
+    line-height: 1.2;
+  }
+
+  .cta__label svg {
+    width: 26px;
+    height: 20px;
     transition: transform 0.2s ease;
   }
 
-  a.cta__item:hover img,
-  a.cta__item:focus-visible img {
-    transform: translateX(4px);
+  .cta__item:hover .cta__label svg,
+  .cta__item:focus-visible .cta__label svg {
+    transform: translateX(6px);
   }
 
-  .cta__item--message {
-    background: var(--purple-dark);
+  .cta__item:focus-visible {
+    outline-color: var(--white);
+    outline-offset: -8px;
   }
 
-  .cta__item--portfolio {
-    background: var(--magenta);
-  }
-
-  .cta__item--social {
-    justify-content: flex-end;
-    gap: 24px;
-    background: var(--magenta-dark);
-    list-style: none;
-  }
-
-  @media (max-width: 1024px) {
+  @media (max-width: 760px) {
     .cta {
       grid-template-columns: 1fr;
     }
 
     .cta__item {
-      min-height: 96px;
-    }
-
-    .cta__item--social {
-      justify-content: flex-start;
+      min-height: 128px;
     }
   }
 </style>

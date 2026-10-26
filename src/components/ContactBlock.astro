@@ -1,5 +1,6 @@
 ---
 import { Image } from 'astro:assets';
+import ArrowIcon from './ArrowIcon.astro';
 import contactPhoto from '../assets/figma/contact-photo.png';
 import { site } from '../data/site';
 ---
@@ -13,16 +14,16 @@ import { site } from '../data/site';
     sizes="100vw"
   />
   <div class="container contact-block__copy">
-    <h2 id="contact-block-title" class="heading contact-block__title">¡Mandame un mensaje!</h2>
-    <img class="contact-block__logo" src="/icons/logo-stacked-180.svg" width="180" height="92.0712" alt="Emely Aponte" />
-    <a class="arrow-link contact-block__email" href="/contacto">
-      Escríbeme desde el formulario
-      <img src="/icons/arrow-purple-30.svg" width="30" height="22.501" alt="" />
-    </a>
+    <p class="eyebrow">Contacto</p>
+    <h2 id="contact-block-title" class="contact-block__title">¡Mándame un mensaje!</h2>
+    <p class="contact-block__text">
+      ¿Tienes un proyecto en mente, una vacante o simplemente quieres conversar sobre diseño? Me encantará leerte.
+    </p>
+    <a class="btn" href="/contacto">Escribirme <ArrowIcon /></a>
+
     <div class="contact-block__social">
       <p>
-        <strong>¡Descubre más sobre mi trayectoria profesional y proyectos en mis redes sociales!</strong>
-        Conéctate conmigo para estar al tanto de novedades, contenido relevante y oportunidades interesantes.
+        <strong>Sigue mi trayectoria.</strong> En mis redes comparto novedades, proyectos y oportunidades.
       </p>
       <ul>
         <li>
@@ -47,7 +48,6 @@ import { site } from '../data/site';
     position: relative;
     min-height: clamp(560px, 49vw, 707px);
     overflow: hidden;
-    color: var(--text-strong);
   }
 
   .contact-block__photo {
@@ -66,44 +66,41 @@ import { site } from '../data/site';
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    padding-block: clamp(64px, 11vw, 159px) 72px;
-    padding-left: clamp(16px, 4.5vw, 65px);
+    gap: 18px;
+    padding-block: clamp(64px, 9vw, 128px) 72px;
   }
 
   .contact-block__title {
-    max-width: 514px;
-    font-size: clamp(44px, 5vw, 72px);
-    line-height: 0.97;
+    max-width: 520px;
+    color: var(--purple);
+    font-size: clamp(40px, 4.6vw, 64px);
+    font-weight: var(--fw-bold);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
   }
 
-  .contact-block__logo {
-    width: 180px;
-    height: auto;
-    margin-top: clamp(40px, 5vw, 67px);
-  }
-
-  .contact-block__email {
-    margin-top: 32px;
-    gap: 16px;
+  .contact-block__text {
+    max-width: 420px;
+    font-size: 17px;
+    font-weight: var(--fw-light);
   }
 
   .contact-block__social {
     max-width: 420px;
-    margin-top: 40px;
-    font-size: 15px;
-    color: var(--text);
+    margin-top: 28px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    font-size: 14px;
   }
 
   .contact-block__social strong {
-    display: block;
-    margin-bottom: 4px;
-    color: var(--purple-dark);
+    color: var(--ink);
   }
 
   .contact-block__social ul {
     display: flex;
     gap: 24px;
-    margin-top: 16px;
+    margin-top: 14px;
     padding: 0;
     list-style: none;
   }
@@ -112,18 +109,19 @@ import { site } from '../data/site';
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    color: var(--purple-dark);
-    font-weight: 700;
+    color: var(--purple);
+    font-weight: var(--fw-semibold);
     text-decoration: none;
   }
 
   .contact-block__social a img {
     width: 36px;
     height: auto;
+    transition: transform 0.2s ease;
   }
 
-  .contact-block__social a:hover {
-    text-decoration: underline;
+  .contact-block__social a:hover img {
+    transform: scale(1.08);
   }
 
   @media (max-width: 900px) {

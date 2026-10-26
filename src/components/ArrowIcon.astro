@@ -1,0 +1,22 @@
+---
+// Arrow from the Figma file, drawn with currentColor so it follows the text color.
+interface Props {
+  direction?: 'right' | 'left';
+}
+
+const { direction = 'right' } = Astro.props;
+---
+
+<svg
+  viewBox="0 0 20 15.0007"
+  width="20"
+  height="15"
+  aria-hidden="true"
+  focusable="false"
+  style={direction === 'left' ? 'rotate: 180deg' : undefined}
+>
+  <path
+    fill="currentColor"
+    d="M19.38 6.10818L13.13 0.481933C12.36 -0.210567 11.1737 -0.150567 10.4813 0.621933C9.78875 1.39068 9.85125 2.57693 10.6213 3.26943L13.2375 5.62568H1.875C0.83875 5.62568 0 6.46443 0 7.50068C0 8.53693 0.83875 9.37568 1.875 9.37568H13.24L10.62 11.7319C9.85 12.4257 9.7875 13.6107 10.48 14.3794C10.8512 14.7907 11.3625 15.0007 11.875 15.0007C12.3225 15.0007 12.7713 14.8419 13.1287 14.5194L19.3787 8.89568C19.7738 8.54068 20 8.03318 20 7.50193C20 6.97068 19.7738 6.46318 19.38 6.10818Z"
+  ></path>
+</svg>

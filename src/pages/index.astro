@@ -2,123 +2,179 @@
 import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import HeroCarousel from '../components/HeroCarousel.astro';
-import ProjectsCarousel from '../components/ProjectsCarousel.astro';
+import ProjectCard from '../components/ProjectCard.astro';
 import ContactBlock from '../components/ContactBlock.astro';
+import ArrowIcon from '../components/ArrowIcon.astro';
 import emelyCircle from '../assets/figma/emely-circle.png';
 import projectsBanner from '../assets/figma/projects-banner.png';
-import { site } from '../data/site';
+import { projects, site } from '../data/site';
 ---
 
 <Base headerVariant="overlay">
   <HeroCarousel />
 
-  <section class="cv container" aria-labelledby="cv-title">
-    <div class="cv__copy">
-      <h2 id="cv-title" class="heading cv__title">
-        Echa un ojo a mi currículum y descubre mi experiencia como diseñadora UX/UI
-      </h2>
-      <p>
-        La fusión entre diseño gráfico y experiencia de usuario me permite crear interfaces visualmente
-        atractivas y funcionales. Mi amor por la narrativa visual influye en cómo diseño para contar
-        historias a través de interfaces digitales.
+  <section class="intro container" aria-labelledby="intro-title">
+    <div class="intro__copy">
+      <p class="eyebrow">Sobre mí</p>
+      <h2 id="intro-title" class="title-lg">Diseño interfaces que <span class="text-purple">cuentan historias</span></h2>
+      <p class="lead">
+        Soy diseñadora UX/UI y de producto. Uno mi formación en diseño gráfico con la investigación de usuarios para crear
+        interfaces atractivas, funcionales y fáciles de usar.
       </p>
-      <a class="button" href={site.cvHome} target="_blank" rel="noopener noreferrer">
-        Ver currículum
-        <img src="/icons/arrow-white-small.svg" width="8.84279" height="6.6324" alt="" />
-      </a>
+      <dl class="intro__facts">
+        <div>
+          <dt>Años en UX/UI</dt>
+          <dd>8</dd>
+        </div>
+        <div>
+          <dt>Años en diseño gráfico</dt>
+          <dd>10</dd>
+        </div>
+        <div>
+          <dt>Base</dt>
+          <dd>Madrid</dd>
+        </div>
+      </dl>
+      <div class="intro__actions">
+        <a class="btn" href={site.cvHome} target="_blank" rel="noopener noreferrer">
+          Ver mi currículum <ArrowIcon />
+          <span class="visually-hidden">(se abre en una pestaña nueva)</span>
+        </a>
+        <a class="btn btn--ghost" href="/sobre-mi">Conocer mi historia</a>
+      </div>
     </div>
-    <Image class="cv__photo" src={emelyCircle} alt="Retrato de Emely Aponte" widths={[336, 672]} sizes="(max-width: 760px) 70vw, 400px" />
+    <Image
+      class="intro__photo"
+      src={emelyCircle}
+      alt="Retrato de Emely Aponte"
+      widths={[336, 672]}
+      sizes="(max-width: 760px) 70vw, 400px"
+    />
   </section>
 
-  <section class="projects-intro" aria-labelledby="projects-title">
-    <div class="projects-intro__label">
-      <h2 id="projects-title" class="display-title">Proyectos</h2>
-      <p class="projects-intro__subtitle">Proyectos en los que he trabajado</p>
-      <a class="arrow-link" href="/portafolio">
-        ¡Ir al portafolio ya!
-        <img src="/icons/arrow-purple-20.svg" width="20" height="15.0007" alt="" />
-      </a>
+  <section class="projects-banner" aria-labelledby="projects-title">
+    <div class="projects-banner__label">
+      <p class="eyebrow">Proyectos</p>
+      <h2 id="projects-title" class="title-lg">Casos de estudio</h2>
+      <p>Del problema a la solución: investigación, decisiones de diseño y resultados.</p>
     </div>
-    <div class="projects-intro__banner">
-      <Image class="projects-intro__image" src={projectsBanner} alt="" widths={[640, projectsBanner.width]} sizes="(max-width: 760px) 100vw, 70vw" />
-      <div class="projects-intro__tint" aria-hidden="true"></div>
-      <blockquote class="quote projects-intro__quote">
+    <div class="projects-banner__media">
+      <Image
+        class="projects-banner__image"
+        src={projectsBanner}
+        alt=""
+        widths={[640, projectsBanner.width]}
+        sizes="(max-width: 760px) 100vw, 70vw"
+      />
+      <div class="projects-banner__tint" aria-hidden="true"></div>
+      <blockquote class="quote projects-banner__quote">
         <p>“¿Quieres que tus usuarios se enamoren de tus diseños? Enamórate de tus usuarios”.</p>
         <cite>Dana Chisnell</cite>
       </blockquote>
     </div>
   </section>
 
-  <ProjectsCarousel />
+  <section class="featured" aria-label="Proyectos destacados">
+    <div class="container">
+      <ul class="featured__grid">
+        {
+          projects.map((project) => (
+            <li>
+              <ProjectCard project={project} />
+            </li>
+          ))
+        }
+      </ul>
+      <div class="featured__more">
+        <a class="btn btn--ghost" href="/proyectos">Ver todos los proyectos <ArrowIcon /></a>
+      </div>
+    </div>
+  </section>
 
   <ContactBlock />
 </Base>
 
 <style>
-  .cv {
+  /* Sobre mí */
+  .intro {
     display: grid;
-    grid-template-columns: minmax(0, 650px) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 640px) minmax(0, 1fr);
     align-items: center;
     gap: 48px;
-    min-height: clamp(480px, 38.4vw, 553px);
-    padding-block: 72px;
+    padding-block: clamp(64px, 8vw, 112px);
   }
 
-  .cv__copy {
+  .intro__copy {
+    display: grid;
+    justify-items: start;
+    gap: 20px;
+  }
+
+  .intro__facts {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 24px;
-    font-size: 16px;
+    flex-wrap: wrap;
+    gap: 12px 40px;
+    margin-top: 8px;
   }
 
-  .cv__title {
-    font-size: clamp(26px, 2.5vw, 36px);
-    line-height: 1.25;
+  .intro__facts div {
+    display: flex;
+    flex-direction: column-reverse;
   }
 
-  .cv__copy .button {
+  .intro__facts dt {
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: var(--fw-light);
+  }
+
+  .intro__facts dd {
+    color: var(--purple);
+    font-size: 32px;
+    font-weight: var(--fw-bold);
+    line-height: 1.2;
+  }
+
+  .intro__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
     margin-top: 12px;
-    min-width: 214px;
   }
 
-  .cv__photo {
+  .intro__photo {
     justify-self: end;
     width: min(100%, 400px);
     height: auto;
   }
 
-  .projects-intro {
+  /* Banner de proyectos */
+  .projects-banner {
     display: grid;
     grid-template-columns: calc(33.33% - 10px) 1fr;
     min-height: 363px;
   }
 
-  .projects-intro__label {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
+  .projects-banner__label {
+    display: grid;
+    align-content: center;
+    justify-items: start;
+    gap: 12px;
     padding: 48px var(--gutter);
-    padding-left: clamp(16px, 6vw, 85px);
-    color: var(--text);
+    padding-right: 32px;
   }
 
-  .projects-intro__subtitle {
-    margin-bottom: 14px;
-    font-size: 16px;
-  }
-
-  .projects-intro__banner {
+  .projects-banner__media {
     position: relative;
     display: flex;
     align-items: center;
     justify-content: flex-end;
     overflow: hidden;
     padding: 48px clamp(24px, 8.8vw, 126px) 48px 24px;
+    background: var(--purple);
   }
 
-  .projects-intro__image {
+  .projects-banner__image {
     position: absolute;
     top: -25%;
     left: 0;
@@ -127,48 +183,84 @@ import { site } from '../data/site';
     object-fit: cover;
   }
 
-  .projects-intro__tint {
+  .projects-banner__tint {
     position: absolute;
     top: 0;
     bottom: 0;
     left: 64.9%;
     right: 0;
-    background: var(--magenta);
+    background: var(--fuchsia);
     mix-blend-mode: multiply;
   }
 
-  .projects-intro__quote {
+  .projects-banner__quote {
     position: relative;
     max-width: 375px;
   }
 
-  @media (max-width: 760px) {
-    .cv {
+  /* Rejilla de proyectos */
+  .featured {
+    padding-block: clamp(56px, 7vw, 96px);
+    background: var(--purple-06);
+  }
+
+  .featured__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(20px, 3vw, 40px);
+    max-width: var(--content-width);
+    margin-inline: auto;
+    padding: 0;
+    list-style: none;
+  }
+
+  .featured__more {
+    display: flex;
+    justify-content: center;
+    margin-top: 48px;
+  }
+
+  @media (max-width: 900px) {
+    .intro {
       grid-template-columns: 1fr;
-      padding-block: 56px;
     }
 
-    .cv__photo {
+    .intro__photo {
+      grid-row: 1;
       justify-self: center;
-      width: min(80%, 320px);
+      width: min(70%, 300px);
     }
 
-    .projects-intro {
+    .projects-banner {
       grid-template-columns: 1fr;
     }
 
-    .projects-intro__banner {
+    .projects-banner__label {
+      padding-block: 56px 32px;
+    }
+
+    .projects-banner__media {
       min-height: 300px;
     }
 
-    .projects-intro__image {
+    .projects-banner__image {
       top: 0;
       width: 100%;
       height: 100%;
     }
 
-    .projects-intro__tint {
-      left: 40%;
+    .projects-banner__tint {
+      left: 45%;
+    }
+  }
+
+  @media (max-width: 760px) {
+    .featured__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .intro__actions .btn {
+      flex: 1 1 100%;
     }
   }
 </style>

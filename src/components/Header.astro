@@ -2,7 +2,7 @@
 import { nav } from '../data/site';
 
 interface Props {
-  /** `overlay` sits on top of the home hero with white text; `solid` is the white bar of the inner pages. */
+  /** `overlay` sits on top of the home hero in white; `solid` is the white bar of the inner pages. */
   variant?: 'overlay' | 'solid';
 }
 
@@ -13,6 +13,14 @@ const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWit
 
 <header class:list={['site-header', `site-header--${variant}`]} data-header>
   <div class="site-header__inner">
+    <a href="/" class="site-header__logo">
+      <img
+        src={variant === 'overlay' ? '/icons/logo-white.svg' : '/icons/logo-horizontal.svg'}
+        width="246.4"
+        height="33.9862"
+        alt="Emely Aponte, ir al inicio"
+      />
+    </a>
     <button
       class="site-header__toggle"
       type="button"
@@ -20,7 +28,7 @@ const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWit
       aria-controls="site-nav"
       data-nav-toggle
     >
-      <span class="visually-hidden">Abrir menú</span>
+      <span class="visually-hidden" data-nav-label>Abrir menú</span>
       <span class="site-header__burger" aria-hidden="true"></span>
     </button>
     <nav id="site-nav" class="site-header__nav" aria-label="Principal">
@@ -46,17 +54,24 @@ const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWit
 <script>
   const header = document.querySelector<HTMLElement>('[data-header]');
   const toggle = header?.querySelector<HTMLButtonElement>('[data-nav-toggle]');
+  const label = header?.querySelector<HTMLElement>('[data-nav-label]');
 
-  toggle?.addEventListener('click', () => {
-    const open = toggle.getAttribute('aria-expanded') !== 'true';
-    toggle.setAttribute('aria-expanded', String(open));
-    toggle.querySelector('.visually-hidden')!.textContent = open ? 'Cerrar menú' : 'Abrir menú';
-    header!.dataset.open = String(open);
+  const setOpen = (open: boolean) => {
+    toggle?.setAttribute('aria-expanded', String(open));
+    if (label) label.textContent = open ? 'Cerrar menú' : 'Abrir menú';
+    if (header) header.dataset.open = String(open);
     document.body.style.overflow = open ? 'hidden' : '';
-  });
+  };
 
+  toggle?.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
   document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && header?.dataset.open === 'true') toggle?.click();
+    if (event.key === 'Escape' && header?.dataset.open === 'true') {
+      setOpen(false);
+      toggle?.focus();
+    }
+  });
+  window.matchMedia('(min-width: 761px)').addEventListener('change', (event) => {
+    if (event.matches) setOpen(false);
   });
 </script>
 
@@ -65,13 +80,13 @@ const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWit
     position: relative;
     z-index: 20;
     height: var(--header-height);
-    font-family: var(--font-nav);
-    font-size: 18.4px;
+    font-size: 15px;
   }
 
   .site-header--solid {
+    border-bottom: 1px solid var(--line);
     background: var(--white);
-    color: var(--purple);
+    color: var(--ink);
   }
 
   .site-header--overlay {
@@ -82,34 +97,70 @@ const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWit
 
   .site-header__inner {
     display: flex;
-    justify-content: flex-end;
     align-items: center;
+    justify-content: space-between;
+    gap: 24px;
     max-width: var(--max-width);
     height: 100%;
     margin-inline: auto;
     padding-inline: var(--gutter);
-    padding-right: clamp(16px, 1.8vw, 26px);
+  }
+
+  .site-header__logo {
+    position: relative;
+    z-index: 2;
+    flex: none;
+  }
+
+  .site-header__logo img {
+    width: 168px;
+    height: auto;
   }
 
   .site-header__nav ul {
     display: flex;
-    gap: clamp(24px, 2.6vw, 40px);
+    gap: clamp(20px, 2.6vw, 40px);
     padding: 0;
     list-style: none;
   }
 
   .site-header__nav a {
+    position: relative;
+    display: block;
+    padding-block: 6px;
+    font-weight: var(--fw-regular);
     text-decoration: none;
-    font-weight: 400;
   }
 
-  .site-header__nav a:hover {
-    text-decoration: underline;
-    text-underline-offset: 6px;
+  .site-header__nav a::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--fuchsia);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s ease;
+  }
+
+  .site-header--overlay .site-header__nav a::after {
+    background: currentColor;
+  }
+
+  .site-header__nav a:hover::after,
+  .site-header__nav a.is-active::after {
+    transform: scaleX(1);
   }
 
   .site-header__nav a.is-active {
-    font-weight: 900;
+    font-weight: var(--fw-semibold);
+  }
+
+  .site-header--solid .site-header__nav a.is-active {
+    color: var(--purple);
   }
 
   .site-header__toggle {
@@ -117,6 +168,10 @@ const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWit
   }
 
   @media (max-width: 760px) {
+    .site-header__logo img {
+      width: 140px;
+    }
+
     .site-header__toggle {
       position: relative;
       z-index: 2;
@@ -137,8 +192,11 @@ const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWit
     .site-header__burger::after {
       width: 24px;
       height: 2px;
+      border-radius: 2px;
       background: currentColor;
-      transition: transform 0.2s ease, background-color 0.2s ease;
+      transition:
+        transform 0.2s ease,
+        background-color 0.2s ease;
     }
 
     .site-header__burger {
@@ -176,6 +234,11 @@ const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWit
       transform: translateY(-7px) rotate(-45deg);
     }
 
+    /* Keep the logo legible on the purple menu */
+    .site-header--solid[data-open='true'] .site-header__logo img {
+      filter: brightness(0) invert(1);
+    }
+
     .site-header__nav {
       position: fixed;
       inset: 0;
@@ -185,7 +248,9 @@ const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWit
       color: var(--white);
       opacity: 0;
       visibility: hidden;
-      transition: opacity 0.2s ease, visibility 0.2s;
+      transition:
+        opacity 0.2s ease,
+        visibility 0.2s;
     }
 
     [data-open='true'] .site-header__nav {
@@ -196,8 +261,17 @@ const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWit
     .site-header__nav ul {
       flex-direction: column;
       align-items: center;
-      gap: 28px;
-      font-size: 26px;
+      gap: 24px;
+      font-size: 24px;
+    }
+
+    .site-header__nav a::after,
+    .site-header--solid .site-header__nav a::after {
+      background: var(--white);
+    }
+
+    .site-header--solid .site-header__nav a.is-active {
+      color: var(--white);
     }
   }
 </style>

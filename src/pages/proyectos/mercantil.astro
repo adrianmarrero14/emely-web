@@ -1,0 +1,413 @@
+---
+import { Image } from 'astro:assets';
+import CaseStudy from '../../layouts/CaseStudy.astro';
+import CaseSection from '../../components/CaseSection.astro';
+import ResponsiveFigure from '../../components/ResponsiveFigure.astro';
+import cover from '../../assets/projects/home/mercantil.png';
+import reto from '../../assets/projects/mercantil/reto.png';
+import proceso from '../../assets/projects/mercantil/proceso.png';
+import procesoMobile from '../../assets/projects/mercantil/proceso-mobile.png';
+import persona from '../../assets/projects/mercantil/persona.png';
+import mapaEmpatia from '../../assets/projects/mercantil/mapa-empatia.png';
+import objetivos from '../../assets/projects/mercantil/objetivos.jpg';
+import boceto1 from '../../assets/projects/mercantil/boceto-1.png';
+import boceto2 from '../../assets/projects/mercantil/boceto-2.png';
+import boceto3 from '../../assets/projects/mercantil/boceto-3.png';
+import boceto4 from '../../assets/projects/mercantil/boceto-4.png';
+
+const sections = [
+  { id: 'reto', title: 'El reto' },
+  { id: 'proceso', title: 'Proceso de diseño' },
+  { id: 'persona', title: 'User persona' },
+  { id: 'empatia', title: 'Mapa de empatía' },
+  { id: 'entrevistas', title: 'Entrevistas' },
+  { id: 'datos', title: 'Análisis de datos' },
+  { id: 'objetivos', title: 'Desafíos y objetivos' },
+  { id: 'solucion', title: 'La solución' },
+  { id: 'bocetos', title: 'Prototipado rápido' },
+  { id: 'prototipo', title: 'Prototipo' },
+  { id: 'conclusiones', title: 'Testeo y conclusiones' },
+];
+
+const interviews = [
+  {
+    name: 'Giovanna Gripa',
+    quote:
+      'Es frustrante que la app no ofrezca opciones claras para las transacciones internacionales. Me hace perder tiempo y dinero con comisiones altas.',
+    insight: 'Necesita opciones claras',
+  },
+  {
+    name: 'Anneliesse Istillarte',
+    quote:
+      'Aprecio la aplicación, pero necesita una interfaz más amigable. Sería genial si fuera más intuitiva para usuarios no tan familiarizados con la tecnología.',
+    insight: 'Interfaz amigable (evaluación heurística)',
+  },
+  {
+    name: 'Leonardo Gil Rojas',
+    quote:
+      'Me gustaría ver más opciones para gestionar divisas extranjeras. Sería genial tener herramientas más flexibles para trabajar con mis clientes internacionales.',
+    insight: 'Necesita gestionar sus divisas',
+  },
+];
+
+const data = [
+  {
+    group: 'Patrones de uso',
+    stats: [
+      { value: '70 %', label: 'Frecuencia de acceso', text: 'de los usuarios entra en la app al menos dos veces al día.' },
+      { value: '60 %', label: 'Funciones más usadas', text: 'de las interacciones son transferencias y consultas de saldo.' },
+      { value: '+30 %', label: 'Momento de mayor uso', text: 'de tráfico los viernes por la mañana.' },
+    ],
+  },
+  {
+    group: 'Transacciones',
+    stats: [
+      { value: '45 %', label: 'Tipo de transacción', text: 'son transferencias entre cuentas propias.' },
+      { value: '20 %', label: 'Internacionales', text: 'de las transacciones mensuales, sobre todo a EE. UU. y Colombia.' },
+    ],
+  },
+  {
+    group: 'Perfil de los usuarios',
+    stats: [
+      { value: '55 %', label: 'Ubicación', text: 'vive en Caracas, seguido de Maracaibo con un 20 %.' },
+      { value: '65 %', label: 'Edad y género', text: 'tiene entre 25 y 40 años, con una distribución equitativa entre géneros.' },
+    ],
+  },
+  {
+    group: 'Retención y abandono',
+    stats: [
+      { value: '80 %', label: 'Retención', text: 'de los usuarios vuelve a la app cada semana.' },
+      {
+        value: '25 %',
+        label: 'Punto de abandono',
+        text: 'abandona al intentar una transacción internacional por falta de claridad en las tarifas.',
+      },
+    ],
+  },
+  {
+    group: 'Opiniones de los usuarios',
+    stats: [
+      { value: '70 %', label: 'Reseñas positivas', text: 'destaca la facilidad de uso.' },
+      { value: '30 %', label: 'Reseñas críticas', text: 'pide más claridad en las transacciones internacionales.' },
+      { value: '40 %', label: 'Encuestas', text: 'reclama más herramientas para gestionar divisas extranjeras.' },
+    ],
+  },
+];
+
+const prototypeUrl =
+  'https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fproto%2Ff1PacEZNlH3ijGv34WVe3r%2FMercantil%3Fpage-id%3D0%253A1%26type%3Ddesign%26node-id%3D2-387%26viewport%3D1268%252C513%252C0.25%26t%3DyyxZaTteGqxgxwtr-1%26scaling%3Dscale-down%26starting-point-node-id%3D2%253A3%26mode%3Ddesign';
+---
+
+<CaseStudy
+  slug="mercantil"
+  name="Mercantil Banco"
+  tagline="Rediseño de la banca móvil de Mercantil Banco Panamá para sus clientes en Venezuela."
+  cover={cover}
+  description="Mercantil Banco, S.A. forma parte del sistema financiero de Panamá, donde opera desde hace cuatro décadas. Desde 2007 cuenta con licencia general para ofrecer productos y servicios bancarios a personas y empresas en el mercado local."
+  brief="Rediseñar la aplicación de banca móvil de Mercantil Banco Panamá para los clientes que viven en Venezuela."
+  details={[
+    { label: 'Cliente', value: 'Mercantil Banco' },
+    { label: 'Rol', value: 'Diseñadora UX/UI' },
+    { label: 'Ubicación', value: 'Ciudad de Panamá, Panamá' },
+    { label: 'Tipo', value: 'Banca móvil' },
+  ]}
+  sections={sections}
+>
+  <CaseSection id="reto" number={1} title="El reto">
+    <p class="callout">
+      Lograr un diseño atractivo y profesional que mantuviera la identidad de la marca y el flujo de usuario existente, y
+      que al mismo tiempo se adaptara a las regulaciones, el mercado, las restricciones financieras y las necesidades
+      concretas de los usuarios en Venezuela.
+    </p>
+    <figure>
+      <Image src={reto} alt="Ilustración de Mercantil Banco" widths={[880, 1760]} sizes="(max-width: 1024px) 92vw, 880px" />
+    </figure>
+  </CaseSection>
+
+  <CaseSection id="proceso" number={2} title="Proceso de diseño">
+    <p>
+      Trabajé con la metodología Design Thinking en cinco fases: <strong>empatizar, definir, idear, prototipar y
+      probar</strong>.
+    </p>
+    <ResponsiveFigure desktop={proceso} mobile={procesoMobile} alt="Las cinco fases del proceso: empatizar, definir, idear, prototipar y probar" />
+  </CaseSection>
+
+  <CaseSection id="persona" number={3} phase="Empatizar" title="User persona">
+    <div class="persona">
+      <Image src={persona} alt="Leonardo Gil Rojas, user persona del proyecto" widths={[300, 517]} sizes="(max-width: 760px) 70vw, 260px" />
+      <div>
+        <h4>Leonardo Gil Rojas</h4>
+        <dl class="facts">
+          <dt>Edad</dt><dd>26 años</dd>
+          <dt>Ubicación</dt><dd>Caracas, Venezuela</dd>
+          <dt>Estado civil</dt><dd>Soltero</dd>
+          <dt>Estudios</dt><dd>Escuela Nacional de Arte Dramático de Caracas</dd>
+          <dt>Profesión</dt><dd>Actor de teatro y animador de motion graphics</dd>
+          <dt>Ingresos</dt><dd>600 € brutos al mes</dd>
+        </dl>
+      </div>
+    </div>
+    <h3>Biografía</h3>
+    <p>
+      Leonardo es un apasionado de las artes escénicas y la animación. Tras el instituto, se formó como actor en la
+      Escuela Nacional de Arte Dramático de Caracas. En paralelo, aprendió de forma autodidacta motion graphics y
+      animación por ordenador, lo que le permitió lanzar una exitosa carrera freelance: hoy trabaja para clientes
+      internacionales a través de plataformas en línea.
+    </p>
+    <div class="persona-needs">
+      <div class="card">
+        <h4>Necesidades</h4>
+        <ul class="list">
+          <li>Acceso a servicios financieros internacionales.</li>
+          <li>Seguridad y estabilidad financiera.</li>
+          <li>Facilidad de uso y acceso remoto.</li>
+          <li>Herramientas para manejar divisas, ya que trabaja con clientes internacionales.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>Puntos de dolor</h4>
+        <ul class="list">
+          <li>Restricciones para acceder a divisas extranjeras.</li>
+          <li>Inestabilidad económica.</li>
+          <li>Dificultades para hacer transacciones internacionales.</li>
+          <li>Servicios financieros limitados.</li>
+        </ul>
+      </div>
+    </div>
+  </CaseSection>
+
+  <CaseSection id="empatia" number={4} phase="Empatizar" title="Mapa de empatía">
+    <p>Qué piensa, siente, oye, ve, dice y hace Leonardo, y cuáles son sus frustraciones y motivaciones.</p>
+    <figure class="narrow">
+      <Image
+        src={mapaEmpatia}
+        alt="Mapa de empatía de Leonardo: le preocupa la estabilidad económica, valora la independencia laboral y busca opciones para gestionar sus finanzas"
+        widths={[700, mapaEmpatia.width]}
+        sizes="(max-width: 760px) 92vw, 700px"
+      />
+    </figure>
+  </CaseSection>
+
+  <CaseSection id="entrevistas" number={5} phase="Empatizar" title="Entrevistas">
+    <p>
+      Estas frases resumen las opiniones de usuarios en Venezuela sobre la app de Mercantil Banco Panamá: lo que valoran y
+      lo que se puede mejorar.
+    </p>
+    <ul class="interviews">
+      {
+        interviews.map((interview) => (
+          <li>
+            <blockquote>
+              <p>“{interview.quote}”</p>
+            </blockquote>
+            <p class="interviews__meta">
+              <span>{interview.name}</span>
+              <strong>{interview.insight}</strong>
+            </p>
+          </li>
+        ))
+      }
+    </ul>
+  </CaseSection>
+
+  <CaseSection id="datos" number={6} phase="Empatizar" title="Análisis de datos">
+    <p>
+      Los datos de uso me ayudaron a contextualizar el problema y a orientar el diseño, validando comportamientos que
+      reflejan las necesidades y dificultades reales de los usuarios.
+    </p>
+    {
+      data.map((group) => (
+        <div class="data-group">
+          <h3>{group.group}</h3>
+          <ul class="stats">
+            {group.stats.map((stat) => (
+              <li class="stat">
+                <span>{stat.label}</span>{' '}
+                <strong>{stat.value}</strong>{' '}
+                {stat.text}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
+    <p class="callout">
+      El dato clave: el 25 % de los usuarios abandona al intentar una transacción internacional porque no entiende las
+      tarifas.
+    </p>
+    <figure class="narrow">
+      <img src="/images/mercantil-datos.gif" width="1152" height="648" alt="Animación con los datos de uso de la app" loading="lazy" decoding="async" />
+    </figure>
+  </CaseSection>
+
+  <CaseSection id="objetivos" number={7} phase="Definir" title="Desafíos, oportunidades y objetivos">
+    <p>Con la investigación, resumí así lo que había que mejorar en la aplicación:</p>
+    <div class="cards">
+      <div class="card">
+        <h4>Desafíos</h4>
+        <ul class="list">
+          <li>Dar claridad a las transacciones internacionales.</li>
+          <li>Mejorar la accesibilidad para quienes están menos familiarizados con la tecnología.</li>
+          <li>Garantizar la seguridad y la estabilidad de las operaciones.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>Oportunidades</h4>
+        <ul class="list">
+          <li>Ampliar las herramientas para manejar divisas extranjeras.</li>
+          <li>Simplificar la interfaz para hacerla más intuitiva.</li>
+          <li>Potenciar la experiencia con funcionalidades eficientes.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>Objetivos</h4>
+        <ul class="list">
+          <li><strong>Optimizar las transacciones internacionales</strong> para agilizarlas y reducir tiempos y costes.</li>
+          <li><strong>Mejorar la usabilidad</strong> para que la app sea intuitiva y accesible para todos.</li>
+          <li><strong>Aumentar la confianza y la satisfacción</strong> con una plataforma segura, estable y funcional.</li>
+        </ul>
+      </div>
+    </div>
+    <figure class="narrow">
+      <Image src={objetivos} alt="Ilustración de una persona trabajando con su portátil" widths={[700, 1400]} sizes="(max-width: 760px) 92vw, 700px" />
+    </figure>
+  </CaseSection>
+
+  <CaseSection id="solucion" number={8} phase="Definir" title="La solución">
+    <p>
+      Tras valorar varias alternativas basadas en las necesidades de los usuarios y los desafíos detectados, el equipo
+      eligió la solución más eficaz, centrada en tres frentes de experiencia de usuario y accesibilidad:
+    </p>
+    <ul class="cards">
+      <li class="card">
+        <h4>Transacciones internacionales</h4>
+        Una interfaz clara y detallada para operaciones globales, con tasas, plazos y opciones de conversión visibles.
+      </li>
+      <li class="card">
+        <h4>Usabilidad y accesibilidad</h4>
+        Una interfaz más simple para usuarios menos familiarizados con la tecnología, con iconografía intuitiva y una
+        navegación clara.
+      </li>
+      <li class="card">
+        <h4>Seguridad y estabilidad</h4>
+        Medidas de seguridad reforzadas para proteger la información financiera, y una app más estable que evita bloqueos y
+        errores frecuentes.
+      </li>
+    </ul>
+  </CaseSection>
+
+  <CaseSection id="bocetos" number={9} phase="Idear" title="Prototipado rápido">
+    <p>
+      Exploré soluciones con bocetos rápidos de las pantallas y funciones clave. Estos esquemas me permitieron probar
+      ideas con flexibilidad y agilidad antes de pasar a alta fidelidad.
+    </p>
+    <div class="gallery" style="--cols: 2">
+      <Image src={boceto1} alt="Boceto del flujo de envío: importe, cuenta de destino y comisión" widths={[440, 880]} sizes="(max-width: 760px) 92vw, 440px" />
+      <Image src={boceto2} alt="Boceto de transferencia internacional con detalle de tasas y tiempos" widths={[440, 880]} sizes="(max-width: 760px) 92vw, 440px" />
+      <Image src={boceto3} alt="Boceto del resumen de la operación y la verificación con código de seguridad" widths={[440, 880]} sizes="(max-width: 760px) 92vw, 440px" />
+      <Image src={boceto4} alt="Boceto de la navegación hacia enviar dinero y transferencias internacionales" widths={[440, 880]} sizes="(max-width: 760px) 92vw, 440px" />
+    </div>
+  </CaseSection>
+
+  <CaseSection id="prototipo" number={10} phase="Prototipar" title="Prototipo en alta fidelidad">
+    <p>Explora el <strong>prototipo interactivo</strong> y descubre todas las posibilidades de la nueva experiencia.</p>
+    <div class="prototype">
+      <iframe src={prototypeUrl} title="Prototipo interactivo de Mercantil Banco en Figma" loading="lazy" allowfullscreen></iframe>
+    </div>
+  </CaseSection>
+
+  <CaseSection id="conclusiones" number={11} phase="Probar" title="Testeo y conclusiones">
+    <p>
+      Probé el rediseño en distintas etapas con pruebas de usabilidad y feedback de usuarios con perfiles variados, desde
+      personas poco familiarizadas con la tecnología hasta usuarios expertos.
+    </p>
+    <ul class="cards">
+      <li class="card">
+        <h4>Más claridad</h4>
+        La interfaz resultó más clara y fácil de navegar, sobre todo en las transacciones internacionales. La información
+        sobre tasas, plazos y conversión fue muy valorada, incluso por quienes tenían poca experiencia.
+      </li>
+      <li class="card">
+        <h4>Más accesible</h4>
+        La nueva iconografía y la navegación simplificada permitieron a los usuarios menos tecnológicos moverse por la app
+        con más fluidez y seguridad.
+      </li>
+      <li class="card">
+        <h4>Más confianza</h4>
+        Los usuarios percibieron transacciones más fiables y una disminución significativa de los errores y bloqueos que
+        sufrían antes.
+      </li>
+    </ul>
+    <p class="callout">
+      El resultado: una banca móvil más amigable, funcional y segura para los clientes de Mercantil Banco Panamá en
+      Venezuela, respaldada por los comentarios y resultados de las pruebas.
+    </p>
+  </CaseSection>
+</CaseStudy>
+
+<style>
+  .narrow {
+    max-width: 700px;
+    margin-inline: auto;
+  }
+
+  .persona-needs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .interviews {
+    display: grid;
+    gap: 16px;
+    padding: 0;
+    list-style: none;
+  }
+
+  .interviews li {
+    padding: 22px 24px;
+    border-left: 4px solid var(--purple);
+    border-radius: 0 8px 8px 0;
+    background: var(--surface);
+  }
+
+  .interviews li:nth-child(even) {
+    border-left-color: var(--fuchsia);
+  }
+
+  .interviews blockquote {
+    color: var(--ink);
+    font-size: 17px;
+    font-weight: var(--fw-light);
+    font-style: italic;
+  }
+
+  .interviews__meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 4px 16px;
+    margin-top: 10px;
+    font-size: 14px;
+  }
+
+  .interviews__meta span {
+    color: var(--muted);
+    font-weight: var(--fw-medium);
+  }
+
+  .interviews__meta strong {
+    color: var(--purple);
+  }
+
+  .data-group {
+    display: grid;
+    gap: 12px;
+  }
+
+  @media (max-width: 760px) {
+    .persona-needs {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

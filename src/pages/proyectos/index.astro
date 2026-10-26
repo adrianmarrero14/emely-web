@@ -1,0 +1,266 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import PhoneMockup from '../../components/PhoneMockup.astro';
+import CtaBar from '../../components/CtaBar.astro';
+import portfolioHero from '../../assets/figma/portfolio-hero.png';
+import portfolioDesk from '../../assets/figma/portfolio-desk.png';
+import { projects, upcomingProjects } from '../../data/site';
+---
+
+<Base title="Proyectos" description="Casos de estudio de Emely Aponte: sistema de diseño para PinsXP, banca móvil para Mercantil Banco y e-commerce para CrudeBeauty.">
+  <section class="intro">
+    <Image class="intro__image" src={portfolioHero} alt="" widths={[640, portfolioHero.width]} sizes="100vw" loading="eager" />
+    <div class="intro__veil" aria-hidden="true"></div>
+    <div class="intro__block intro__block--purple" aria-hidden="true"></div>
+    <div class="intro__block intro__block--fuchsia" aria-hidden="true"></div>
+    <div class="container intro__copy">
+      <p class="eyebrow">Proyectos</p>
+      <h1 class="title-xl intro__title">Una muestra de <span class="text-purple">mi trabajo</span></h1>
+      <p class="lead intro__lead">
+        Cada caso de estudio recorre el proceso completo: contexto, investigación, decisiones de diseño y resultados.
+      </p>
+    </div>
+  </section>
+
+  <section class="cases" aria-labelledby="cases-title">
+    <div class="container">
+      <h2 id="cases-title" class="visually-hidden">Casos de estudio</h2>
+      <ul class="cases__grid">
+        {
+          projects.map((project) => (
+            <li>
+              <ProjectCard project={project} />
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="quote-band" aria-label="Cita">
+    <Image class="quote-band__image" src={portfolioDesk} alt="" widths={[700, 1000, 1400]} sizes="100vw" />
+    <div class="quote-band__tint" aria-hidden="true"></div>
+    <div class="container quote-band__inner">
+      <blockquote class="quote">
+        <p>“El diseño digital es como una pintura al óleo, excepto que la pintura nunca se seca”.</p>
+        <cite>Neville Brody</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <section class="upcoming" aria-labelledby="upcoming-title">
+    <div class="container upcoming__head">
+      <p class="eyebrow">Próximamente</p>
+      <h2 id="upcoming-title" class="title-lg">En construcción</h2>
+      <p class="lead">Pronto podrás ver estos casos de estudio completos.</p>
+    </div>
+    <ul class="upcoming__grid">
+      {
+        upcomingProjects.map((project) => (
+          <li class="upcoming__tile">
+            <PhoneMockup screen={project.portrait} alt="" class="upcoming__phone" />
+            <h3>{project.name}</h3>
+            <p>{project.category}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <CtaBar showProjects={false} />
+</Base>
+
+<style>
+  /* Cabecera con portátil */
+  .intro {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-height: clamp(520px, 48vw, 690px);
+    overflow: hidden;
+    background: var(--surface);
+  }
+
+  .intro__image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 60% center;
+  }
+
+  .intro__block {
+    position: absolute;
+    mix-blend-mode: multiply;
+  }
+
+  .intro__block--purple {
+    top: 0;
+    left: 36.25%;
+    width: 18.7%;
+    height: 49%;
+    background: var(--purple);
+  }
+
+  .intro__block--fuchsia {
+    top: 28.3%;
+    right: -0.6%;
+    width: 19.3%;
+    height: 52.2%;
+    background: var(--fuchsia);
+  }
+
+  .intro__veil {
+    display: none;
+  }
+
+  .intro__copy {
+    position: relative;
+    display: grid;
+    justify-items: start;
+    gap: 18px;
+    padding-block: 64px;
+  }
+
+  .intro__title {
+    max-width: 460px;
+  }
+
+  .intro__lead {
+    max-width: 400px;
+    color: var(--ink);
+  }
+
+  /* Casos de estudio */
+  .cases {
+    padding-block: clamp(56px, 7vw, 96px);
+    background: var(--purple-06);
+  }
+
+  .cases__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(20px, 3vw, 40px);
+    max-width: var(--content-width);
+    margin-inline: auto;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* Cita */
+  .quote-band {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .quote-band__image,
+  .quote-band__tint {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .quote-band__image {
+    object-fit: cover;
+    transform: scaleY(-1);
+  }
+
+  .quote-band__tint {
+    background: var(--purple);
+    mix-blend-mode: multiply;
+  }
+
+  .quote-band__inner {
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    padding-block: clamp(80px, 12vw, 160px);
+  }
+
+  .quote-band blockquote {
+    max-width: 440px;
+  }
+
+  /* Próximamente */
+  .upcoming {
+    padding-top: clamp(56px, 7vw, 96px);
+  }
+
+  .upcoming__head {
+    display: grid;
+    justify-items: start;
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+
+  .upcoming__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .upcoming__tile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 48px 24px 56px;
+    background: var(--fuchsia);
+    color: var(--white);
+    text-align: center;
+  }
+
+  .upcoming__tile:nth-child(even) {
+    background: var(--purple);
+  }
+
+  .upcoming__tile :global(.upcoming__phone) {
+    width: min(100%, 340px);
+  }
+
+  .upcoming__tile h3 {
+    margin-top: 8px;
+    color: var(--white);
+    font-size: 24px;
+    font-weight: var(--fw-semibold);
+  }
+
+  .upcoming__tile p {
+    font-weight: var(--fw-light);
+  }
+
+  @media (max-width: 760px) {
+    .intro {
+      align-items: flex-end;
+    }
+
+    .intro__veil {
+      display: block;
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgb(255 255 255 / 0.95) 45%, rgb(255 255 255 / 0) 80%);
+    }
+
+    .intro__block--purple {
+      left: 58%;
+      width: 30%;
+      height: 26%;
+    }
+
+    .intro__block--fuchsia {
+      top: 12%;
+      width: 24%;
+      height: 26%;
+    }
+
+    .cases__grid,
+    .upcoming__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

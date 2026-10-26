@@ -1,13 +1,41 @@
 ---
+import { nav, site } from '../data/site';
+
 const year = new Date().getFullYear();
 ---
 
 <footer class="site-footer">
   <div class="container site-footer__inner">
-    <p>Copyright © {year} Emely Aponte</p>
-    <a href="/" class="site-footer__logo">
-      <img src="/icons/logo-white.svg" width="246.4" height="33.9862" alt="Emely Aponte, ir al inicio" />
-    </a>
+    <div class="site-footer__brand">
+      <a href="/" class="site-footer__logo">
+        <img src="/icons/logo-white.svg" width="246.4" height="33.9862" alt="Emely Aponte, ir al inicio" />
+      </a>
+      <p>Diseñadora UX/UI · {site.location}</p>
+    </div>
+
+    <nav aria-label="Pie de página">
+      <ul class="site-footer__links">
+        {nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+      </ul>
+    </nav>
+
+    <ul class="site-footer__social" aria-label="Redes sociales">
+      <li>
+        <a href={site.linkedin} target="_blank" rel="noopener noreferrer">
+          <img src="/icons/linkedin-white.svg" width="27" height="27" alt="" />
+          LinkedIn
+        </a>
+      </li>
+      <li>
+        <a href={site.behance} target="_blank" rel="noopener noreferrer">
+          <img src="/icons/behance-white.svg" width="27" height="27" alt="" />
+          Behance
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="container site-footer__legal">
+    <p>© {year} Emely Aponte. Todos los derechos reservados.</p>
   </div>
 </footer>
 
@@ -15,22 +43,73 @@ const year = new Date().getFullYear();
   .site-footer {
     background: var(--purple);
     color: var(--white);
-    font-family: var(--font-footer);
-    font-size: 18px;
+    font-size: 14px;
   }
 
   .site-footer__inner {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 24px;
-    min-height: 144px;
-    padding-block: 32px;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    gap: 32px;
+    padding-block: 56px 40px;
   }
 
   .site-footer__logo img {
-    width: clamp(180px, 17vw, 246px);
+    width: 200px;
     height: auto;
+  }
+
+  .site-footer__brand p {
+    margin-top: 14px;
+    font-weight: var(--fw-light);
+    opacity: 0.85;
+  }
+
+  .site-footer__links,
+  .site-footer__social {
+    display: grid;
+    align-content: start;
+    gap: 10px;
+    padding: 0;
+    list-style: none;
+  }
+
+  .site-footer a {
+    text-decoration: none;
+  }
+
+  .site-footer__links a:hover,
+  .site-footer__social a:hover {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  .site-footer__social a {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: var(--fw-medium);
+  }
+
+  .site-footer__social img {
+    width: 24px;
+    height: 24px;
+  }
+
+  .site-footer__legal {
+    padding-block: 20px 28px;
+    border-top: 1px solid rgb(255 255 255 / 0.2);
+    font-size: 13px;
+    font-weight: var(--fw-light);
+    opacity: 0.85;
+  }
+
+  @media (max-width: 760px) {
+    .site-footer__inner {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .site-footer__brand {
+      grid-column: 1 / -1;
+    }
   }
 </style>

@@ -2,6 +2,10 @@
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
-  // Set the production URL here once the site has a domain (enables canonical URLs).
-  // site: 'https://example.com',
+  redirects: {
+    // Old URL of the projects page
+    '/portafolio': '/proyectos',
+  },
+  // Production URL, used for canonical links. Change it when the site gets its own domain.
+  site: 'https://endearing-pasca-3b9ea3.netlify.app',
 });
