@@ -20,9 +20,9 @@ const topics = ['Un proyecto', 'Una oferta de trabajo', 'Una colaboración', 'Ot
     />
 
     <div class="container contact__inner">
-      <div class="contact__panel">
+      <div class="panel contact__panel">
         <p class="eyebrow">Contacto</p>
-        <h1 class="contact__title">¡Mándame un mensaje!</h1>
+        <h1 class="contact__title">¡Mándame un <span class="highlight highlight--soft">mensaje</span>!</h1>
         <p class="contact__intro">
           ¿Tienes una pregunta, un comentario o simplemente te apetece conversar? Escríbeme: estaré encantada de
           leerte y te responderé lo antes posible.
@@ -197,9 +197,9 @@ const topics = ['Un proyecto', 'Una oferta de trabajo', 'Una colaboración', 'Ot
     gap: 18px;
     width: min(100%, 560px);
     padding: clamp(28px, 4vw, 48px);
-    border-radius: var(--radius);
-    background: var(--white);
-    box-shadow: var(--shadow);
+    background: rgb(255 255 255 / 0.92);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
   }
 
   .contact__title {
@@ -322,8 +322,10 @@ const topics = ['Un proyecto', 'Una oferta de trabajo', 'Una colaboración', 'Ot
   }
 
   .chip span {
-    display: inline-block;
-    padding: 8px 16px;
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 8px 18px;
     border: 1.5px solid var(--line);
     border-radius: 999px;
     font-size: 14px;
@@ -389,7 +391,7 @@ const topics = ['Un proyecto', 'Una oferta de trabajo', 'Una colaboración', 'Ot
     gap: 12px;
     margin-top: 8px;
     padding: 20px 0 0;
-    border-top: 1px solid var(--line);
+    border-top: 1px solid var(--panel-line);
     list-style: none;
   }
 
@@ -397,6 +399,7 @@ const topics = ['Un proyecto', 'Una oferta de trabajo', 'Una colaboración', 'Ot
     display: flex;
     align-items: center;
     gap: 12px;
+    min-height: 48px;
     font-size: 13px;
     line-height: 1.4;
     text-decoration: none;
@@ -445,8 +448,7 @@ const topics = ['Un proyecto', 'Una oferta de trabajo', 'Una colaboración', 'Ot
 
     .contact__panel {
       width: 100%;
-      padding: 0;
-      box-shadow: none;
+      padding: 24px 20px;
     }
   }
 

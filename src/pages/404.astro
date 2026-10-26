@@ -8,7 +8,7 @@ import ArrowIcon from '../components/ArrowIcon.astro';
     <p class="not-found__code" aria-hidden="true">404</p>
     <h1 class="title-lg">No encuentro esta página</h1>
     <p class="lead">Puede que el enlace haya cambiado o que la dirección tenga un error. Prueba desde aquí:</p>
-    <div class="not-found__actions">
+    <div class="actions not-found__actions">
       <a class="btn" href="/proyectos">Ver proyectos <ArrowIcon /></a>
       <a class="btn btn--ghost" href="/">Ir al inicio</a>
     </div>
@@ -31,9 +31,6 @@ import ArrowIcon from '../components/ArrowIcon.astro';
   }
 
   .not-found__actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
     margin-top: 12px;
   }
 </style>

@@ -14,31 +14,35 @@ import { site } from '../data/site';
     sizes="100vw"
   />
   <div class="container contact-block__copy">
-    <p class="eyebrow">Contacto</p>
-    <h2 id="contact-block-title" class="contact-block__title">¡Mándame un mensaje!</h2>
-    <p class="contact-block__text">
-      ¿Tienes un proyecto en mente, una vacante o simplemente quieres conversar sobre diseño? Me encantará leerte.
-    </p>
-    <a class="btn" href="/contacto">Escribirme <ArrowIcon /></a>
-
-    <div class="contact-block__social">
-      <p>
-        <strong>Sigue mi trayectoria.</strong> En mis redes comparto novedades, proyectos y oportunidades.
+    <div class="panel contact-block__card">
+      <p class="eyebrow">Contacto</p>
+      <h2 id="contact-block-title" class="contact-block__title">¡Mándame un mensaje!</h2>
+      <p class="contact-block__text">
+        ¿Tienes un proyecto en mente, una vacante o simplemente quieres conversar sobre diseño? Me encantará leerte.
       </p>
-      <ul>
-        <li>
-          <a href={site.linkedin} target="_blank" rel="noopener noreferrer">
-            <img src="/icons/linkedin-purple.svg" width="44.3852" height="44.3852" alt="" />
-            LinkedIn
-          </a>
-        </li>
-        <li>
-          <a href={site.behance} target="_blank" rel="noopener noreferrer">
-            <img src="/icons/behance-purple.svg" width="45.0577" height="45.0577" alt="" />
-            Behance
-          </a>
-        </li>
-      </ul>
+      <div class="actions">
+        <a class="btn" href="/contacto">Escribirme <ArrowIcon /></a>
+      </div>
+
+      <div class="contact-block__social">
+        <p>
+          <strong>Sigue mi trayectoria.</strong> En mis redes comparto novedades, proyectos y oportunidades.
+        </p>
+        <ul>
+          <li>
+            <a href={site.linkedin} target="_blank" rel="noopener noreferrer">
+              <img src="/icons/linkedin-purple.svg" width="44.3852" height="44.3852" alt="" />
+              LinkedIn
+            </a>
+          </li>
+          <li>
+            <a href={site.behance} target="_blank" rel="noopener noreferrer">
+              <img src="/icons/behance-purple.svg" width="45.0577" height="45.0577" alt="" />
+              Behance
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </section>
@@ -63,11 +67,19 @@ import { site } from '../data/site';
 
   .contact-block__copy {
     position: relative;
+    padding-block: clamp(56px, 8vw, 112px) 72px;
+  }
+
+  .contact-block__card {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 18px;
-    padding-block: clamp(64px, 9vw, 128px) 72px;
+    max-width: 520px;
+    padding: clamp(28px, 4vw, 48px);
+    background: rgb(255 255 255 / 0.9);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
   }
 
   .contact-block__title {
@@ -87,9 +99,10 @@ import { site } from '../data/site';
 
   .contact-block__social {
     max-width: 420px;
-    margin-top: 28px;
+    width: 100%;
+    margin-top: 12px;
     padding-top: 24px;
-    border-top: 1px solid var(--line);
+    border-top: 1px solid var(--panel-line);
     font-size: 14px;
   }
 
@@ -109,6 +122,7 @@ import { site } from '../data/site';
     display: inline-flex;
     align-items: center;
     gap: 10px;
+    min-height: 44px;
     color: var(--purple);
     font-weight: var(--fw-semibold);
     text-decoration: none;
@@ -140,7 +154,11 @@ import { site } from '../data/site';
     }
 
     .contact-block__copy {
-      padding-block: 56px;
+      padding-block: 40px 24px;
+    }
+
+    .contact-block__card {
+      max-width: none;
     }
   }
 </style>

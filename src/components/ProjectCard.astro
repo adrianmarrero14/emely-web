@@ -11,7 +11,7 @@ interface Props {
 const { project, headingLevel: Heading = 'h3' } = Astro.props;
 ---
 
-<article class:list={['project-card', { 'project-card--linked': project.href }]}>
+<article class:list={['panel', 'project-card', { 'project-card--linked': project.href }]}>
   <div class="project-card__media">
     <Image
       src={project.cover}
@@ -45,18 +45,17 @@ const { project, headingLevel: Heading = 'h3' } = Astro.props;
     flex-direction: column;
     height: 100%;
     overflow: hidden;
-    border-radius: var(--radius);
-    background: var(--white);
-    box-shadow: var(--shadow);
     transition:
       transform 0.25s ease,
+      border-color 0.25s ease,
       box-shadow 0.25s ease;
   }
 
   .project-card--linked:hover,
   .project-card--linked:focus-within {
     transform: translateY(-4px);
-    box-shadow: 0 26px 50px -20px rgb(22 22 22 / 0.45);
+    border-color: var(--purple-24);
+    box-shadow: 0 32px 60px -30px rgb(102 0 191 / 0.5);
   }
 
   .project-card__media {
@@ -83,7 +82,7 @@ const { project, headingLevel: Heading = 'h3' } = Astro.props;
     align-items: flex-start;
     gap: 10px;
     padding: 24px 26px 28px;
-    border-top: 4px solid var(--fuchsia);
+    border-top: 1px solid var(--panel-line);
   }
 
   .project-card__title {

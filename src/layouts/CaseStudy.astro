@@ -27,25 +27,29 @@ const next = published[(index + 1) % published.length];
 ---
 
 <Base title={`${name}, caso de estudio`} description={`${tagline} ${description}`}>
-  <header class="case-hero">
+  <header class="case-hero brand-surface">
+    <div class="brand-surface__tint" aria-hidden="true"></div>
+    <div class="case-hero__shape" aria-hidden="true"></div>
     <div class="container case-hero__inner">
       <a class="case-hero__back" href="/proyectos">
         <ArrowIcon direction="left" />
         Todos los proyectos
       </a>
-      <p class="eyebrow case-hero__eyebrow">Caso de estudio</p>
-      <h1 class="title-xl case-hero__title">{name}</h1>
-      <p class="case-hero__tagline">{tagline}</p>
-      <dl class="case-hero__meta">
-        {
-          details.map((detail) => (
-            <div>
-              <dt>{detail.label}</dt>
-              <dd>{detail.value}</dd>
-            </div>
-          ))
-        }
-      </dl>
+      <div class="glass case-hero__panel">
+        <p class="eyebrow">Caso de estudio</p>
+        <h1 class="title-xl">{name}</h1>
+        <p class="case-hero__tagline">{tagline}</p>
+        <dl class="case-hero__meta">
+          {
+            details.map((detail) => (
+              <div>
+                <dt>{detail.label}</dt>
+                <dd>{detail.value}</dd>
+              </div>
+            ))
+          }
+        </dl>
+      </div>
     </div>
   </header>
 
@@ -60,11 +64,12 @@ const next = published[(index + 1) % published.length];
   </div>
 
   <section class="container case-summary" aria-label="Resumen">
-    <div class="case-summary__item">
+    <div class="panel case-summary__item">
       <h2>Descripción</h2>
       <p>{description}</p>
     </div>
-    <div class="case-summary__item case-summary__item--brief">
+    <div class="case-summary__item case-summary__item--brief brand-surface">
+      <div class="brand-surface__tint" aria-hidden="true"></div>
       <h2>El encargo</h2>
       <p>{brief}</p>
     </div>
@@ -131,39 +136,35 @@ const next = published[(index + 1) % published.length];
 </script>
 
 <style>
-  /* Cabecera */
+  /* Cabecera: same duotone and glass panel as the /proyectos banner */
   .case-hero {
-    position: relative;
-    overflow: hidden;
-    padding-block: 40px 200px;
-    background: var(--purple);
-    color: var(--white);
+    padding-block: 32px 200px;
   }
 
-  /* Fuchsia block echoing the duotone banners of the Figma design */
-  .case-hero::after {
-    content: '';
+  .case-hero__shape {
     position: absolute;
-    top: 0;
-    right: 0;
-    width: 22%;
-    height: 100%;
+    top: 18%;
+    right: 7%;
+    width: clamp(110px, 14vw, 210px);
+    aspect-ratio: 1;
+    border-radius: 24px;
     background: var(--fuchsia);
+    box-shadow: 0 30px 60px -20px rgb(22 22 22 / 0.45);
+    transform: rotate(8deg);
   }
 
   .case-hero__inner {
     position: relative;
-    z-index: 1;
     display: grid;
     justify-items: start;
-    gap: 16px;
+    gap: 24px;
   }
 
   .case-hero__back {
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    margin-bottom: 32px;
+    min-height: 44px;
     font-size: 14px;
     font-weight: var(--fw-medium);
     text-decoration: none;
@@ -174,16 +175,16 @@ const next = published[(index + 1) % published.length];
     text-underline-offset: 4px;
   }
 
-  .case-hero__eyebrow {
-    color: var(--white);
-  }
-
-  .case-hero__title {
-    color: var(--white);
+  .case-hero__panel {
+    display: grid;
+    justify-items: start;
+    gap: 16px;
+    max-width: 720px;
+    padding: clamp(26px, 4vw, 44px);
   }
 
   .case-hero__tagline {
-    max-width: 680px;
+    max-width: 640px;
     font-size: clamp(18px, 1.8vw, 24px);
     font-weight: var(--fw-light);
     line-height: 1.45;
@@ -193,7 +194,10 @@ const next = published[(index + 1) % published.length];
     display: flex;
     flex-wrap: wrap;
     gap: 16px 40px;
-    margin-top: 16px;
+    width: 100%;
+    margin-top: 8px;
+    padding-top: 20px;
+    border-top: 1px solid var(--glass-line);
   }
 
   .case-hero__meta dt {
@@ -217,8 +221,9 @@ const next = published[(index + 1) % published.length];
   .case-cover img {
     width: 100%;
     height: auto;
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
+    border: 1px solid var(--panel-line);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--panel-shadow);
   }
 
   /* Resumen */
@@ -231,13 +236,14 @@ const next = published[(index + 1) % published.length];
 
   .case-summary__item {
     padding: 28px 32px;
-    border-radius: var(--radius);
-    background: var(--surface);
   }
 
   .case-summary__item--brief {
-    background: var(--purple);
-    color: var(--white);
+    border-radius: var(--radius-lg);
+  }
+
+  .case-summary__item--brief > :not(.brand-surface__tint) {
+    position: relative;
   }
 
   .case-summary__item h2 {
@@ -370,8 +376,9 @@ const next = published[(index + 1) % published.length];
   /* Highlighted statement */
   .case-body :global(.callout) {
     padding: 20px 24px;
+    border: 1px solid rgb(201 0 157 / 0.3);
     border-left: 4px solid var(--fuchsia);
-    border-radius: 0 8px 8px 0;
+    border-radius: var(--radius-md);
     background: var(--fuchsia-12);
     color: var(--ink);
     font-weight: var(--fw-medium);
@@ -388,23 +395,30 @@ const next = published[(index + 1) % published.length];
 
   .case-body :global(.card) {
     padding: 22px 22px 24px;
-    border: 1px solid var(--line);
-    border-top: 4px solid var(--purple);
-    border-radius: 8px;
+    border: 1px solid var(--panel-line);
+    border-radius: var(--radius-md);
     background: var(--white);
+    box-shadow: var(--panel-shadow);
     font-size: 15px;
     line-height: 1.6;
   }
 
-  .case-body :global(.card:nth-child(even)) {
-    border-top-color: var(--fuchsia);
-  }
-
+  /* Fuchsia dash above each card title, like the eyebrow */
   .case-body :global(.card h4) {
     margin-bottom: 6px;
     color: var(--purple);
     font-size: 16px;
     font-weight: var(--fw-semibold);
+  }
+
+  .case-body :global(.card h4::before) {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 3px;
+    margin-bottom: 12px;
+    border-radius: 3px;
+    background: var(--fuchsia);
   }
 
   /* Numbers from research */
@@ -418,7 +432,8 @@ const next = published[(index + 1) % published.length];
 
   .case-body :global(.stat) {
     padding: 20px;
-    border-radius: 8px;
+    border: 1px solid var(--panel-line);
+    border-radius: var(--radius-md);
     background: var(--purple-06);
     font-size: 14px;
     line-height: 1.5;
@@ -453,8 +468,10 @@ const next = published[(index + 1) % published.length];
     align-items: start;
     gap: 28px;
     padding: 24px;
-    border-radius: var(--radius);
-    background: var(--surface);
+    border: 1px solid var(--panel-line);
+    border-radius: var(--radius-lg);
+    background: var(--white);
+    box-shadow: var(--panel-shadow);
   }
 
   .case-body :global(.persona img) {
@@ -486,8 +503,8 @@ const next = published[(index + 1) % published.length];
   .case-body :global(.prototype) {
     aspect-ratio: 3 / 2;
     overflow: hidden;
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
+    border: 1px solid var(--panel-line);
+    border-radius: var(--radius-lg);
   }
 
   .case-body :global(.prototype iframe) {
@@ -553,6 +570,16 @@ const next = published[(index + 1) % published.length];
   @media (max-width: 760px) {
     .case-hero {
       padding-bottom: 120px;
+    }
+
+    .case-hero__shape {
+      top: 24px;
+      right: var(--gutter);
+      width: 72px;
+    }
+
+    .case-hero__inner {
+      gap: 16px;
     }
 
     .case-cover {

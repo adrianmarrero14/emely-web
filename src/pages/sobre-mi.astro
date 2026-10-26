@@ -52,18 +52,18 @@ const stack = [
     items: ['User journeys', 'Benchmarking', 'Tests de usabilidad', 'Arquitectura de información', 'Mapas de empatía'],
   },
   {
-    title: 'UI, Visual & Design Systems',
-    items: ['Figma: variables avanzadas, auto-layout, componentes y tokens', 'Framer', 'Accesibilidad (WCAG)', 'Visualización de datos'],
+    title: 'UI & Visual & Design Systems',
+    items: ['Figma (variables avanzadas, auto-layout, componentes, tokens)', 'Framer', 'Accesibilidad (WCAG)', 'Visualización de datos'],
   },
   {
-    title: 'Herramientas y gestión',
+    title: 'Herramientas y Gestión',
     items: ['Jira', 'Notion', 'Maze', 'Metodologías ágiles'],
   },
   {
     title: 'AI Tools & Automatización',
     items: [
-      'Flujos de research optimizados con IA',
-      'Ideación asistida',
+      'Optimización de flujos de research',
+      'Ideación',
       'Generación de contenido y copys',
       'Automatización de flujos operativos',
     ],
@@ -77,13 +77,14 @@ const experience = [
     company: 'Darien Technology',
     role: 'Diseñadora de Producto',
     description:
-      'Conceptualización, arquitectura y escalado del sistema de diseño de PinsXP, con flujos asistidos por IA para la tokenización y una entrega más rápida.',
+      'Conceptualización, arquitectura y escalado del sistema de diseño de PinsXP (startup americana), con flujos asistidos por IA para la tokenización, la coherencia visual y la velocidad de entrega.',
+    caseStudy: '/proyectos/pinsxp',
   },
   {
     period: 'nov. 2024 – mar. 2026',
     company: 'Finaer',
     role: 'Diseñadora de Producto',
-    description: 'Liderazgo end-to-end en el diseño de productos inmobiliarios.',
+    description: 'Liderazgo del proceso de diseño end-to-end, en colaboración con ingeniería, de productos inmobiliarios.',
   },
   {
     period: 'ene. 2024 – nov. 2024',
@@ -95,13 +96,21 @@ const experience = [
     period: 'sept. 2022 – nov. 2023',
     company: 'ingg',
     role: 'Diseñadora de Producto',
-    description: 'Herramientas de visualización de datos y calculadoras financieras.',
+    description: 'Diseño de herramientas de visualización de datos y calculadoras financieras.',
+    caseStudy: '/proyectos/in99',
   },
   {
     period: 'ene. 2021 – dic. 2022',
     company: 'Darien Technology',
     role: 'Diseñadora UX/UI',
-    description: 'Banca online y móvil para Banco Mercantil Panamá.',
+    description: 'Experiencias digitales para la banca online y móvil de Banco Mercantil Panamá.',
+    caseStudy: '/proyectos/mercantil',
+  },
+  {
+    period: 'ene. 2019 – ene. 2020',
+    company: 'Lookers Inbound',
+    role: 'Diseñadora UX/UI',
+    description: 'Creación de piezas digitales y contenido visual para web y redes sociales.',
   },
 ];
 ---
@@ -110,13 +119,13 @@ const experience = [
   <section class="story container">
     <div class="story__copy">
       <p class="eyebrow">Sobre mí</p>
-      <h1 class="title-xl">Hola, soy Emely. <span class="text-purple">Diseño productos digitales escalables con foco en usabilidad, estrategia y sistemas de diseño.</span></h1>
+      <h1 class="title-xl">Hola, soy Emely. <span class="text-purple">Diseño productos digitales escalables con foco en usabilidad, estrategia y <span class="highlight highlight--soft">sistemas de diseño</span>.</span></h1>
       <p class="lead">
         Llevo <strong>10 años en el diseño gráfico y 8 como diseñadora UX/UI</strong>. Esa combinación me permite crear
         interfaces visualmente atractivas y, sobre todo, funcionales.
       </p>
 
-      <ul class="story__chapters">
+      <ul class="panel story__chapters">
         {
           story.map((chapter) => (
             <li>
@@ -127,7 +136,7 @@ const experience = [
         }
       </ul>
 
-      <div class="story__actions">
+      <div class="actions story__actions">
         <a class="btn" href={site.cvAbout} target="_blank" rel="noopener noreferrer">
           Ver mi currículum <ArrowIcon />
           <span class="visually-hidden">(se abre en una pestaña nueva)</span>
@@ -149,12 +158,12 @@ const experience = [
   <section class="services" aria-labelledby="services-title">
     <div class="container">
       <p class="eyebrow">Qué hago</p>
-      <h2 id="services-title" class="title-lg">Del descubrimiento a la entrega</h2>
+      <h2 id="services-title" class="title-lg">Del descubrimiento a la <span class="highlight highlight--soft">entrega</span></h2>
       <p class="lead services__lead">Acompaño todo el ciclo de diseño de un producto digital.</p>
       <ol class="services__grid">
         {
           services.map((service, index) => (
-            <li class="service">
+            <li class="panel service">
               <span class="service__number" aria-hidden="true">
                 {String(index + 1).padStart(2, '0')}
               </span>
@@ -169,16 +178,16 @@ const experience = [
     </div>
   </section>
 
-  <section class="skills" aria-labelledby="skills-title">
-    <Image class="skills__bg" src={skillsBg} alt="" widths={[800, 1440, skillsBg.width]} sizes="100vw" />
-    <div class="skills__tint" aria-hidden="true"></div>
+  <section class="skills brand-surface" aria-labelledby="skills-title">
+    <Image class="brand-surface__photo" src={skillsBg} alt="" widths={[800, 1440, skillsBg.width]} sizes="100vw" />
+    <div class="brand-surface__tint skills__tint" aria-hidden="true"></div>
     <div class="container skills__inner">
       <div class="skills__intro">
         <div>
           <p class="eyebrow skills__eyebrow">Stack y habilidades</p>
-          <h2 id="skills-title" class="title-lg skills__title">Con qué trabajo</h2>
+          <h2 id="skills-title" class="title-lg skills__title">Con qué <span class="highlight">trabajo</span></h2>
         </div>
-        <p class="skills__note">
+        <p class="glass skills__note">
           Creo que el aprendizaje <strong>nunca se detiene</strong>: cada día amplío y perfecciono mis habilidades, hoy
           también con herramientas de IA.
         </p>
@@ -187,7 +196,7 @@ const experience = [
       <ul class="skills__grid">
         {
           stack.map((group, index) => (
-            <li class="skills__group">
+            <li class="glass skills__group">
               <span class="skills__number" aria-hidden="true">
                 {String(index + 1).padStart(2, '0')}
               </span>
@@ -206,18 +215,25 @@ const experience = [
     <Image class="experience__sketch" src={skillsSketch} alt="" widths={[651, 1302]} sizes="45vw" />
     <div class="container experience__inner">
       <p class="eyebrow">Experiencia</p>
-      <h2 id="experience-title" class="title-lg">Trayectoria profesional</h2>
+      <h2 id="experience-title" class="title-lg">Trayectoria <span class="highlight highlight--soft">profesional</span></h2>
       <ol class="timeline">
         {
           experience.map((job) => (
             <li class="timeline__item">
-              <p class="timeline__period">
-                {job.period}
-                {job.current && <span class="timeline__badge">Actual</span>}
-              </p>
-              <h3 class="timeline__role">{job.role}</h3>
-              <p class="timeline__company">{job.company}</p>
-              <p>{job.description}</p>
+              <div class="panel timeline__card">
+                <p class="timeline__period">
+                  {job.period}
+                  {job.current && <span class="timeline__badge">Actual</span>}
+                </p>
+                <h3 class="timeline__role">{job.role}</h3>
+                <p class="timeline__company">{job.company}</p>
+                <p>{job.description}</p>
+                {job.caseStudy && (
+                  <a class="link-arrow timeline__link" href={job.caseStudy}>
+                    Ver caso de estudio <ArrowIcon />
+                  </a>
+                )}
+              </div>
             </li>
           ))
         }
@@ -250,15 +266,30 @@ const experience = [
 
   .story__chapters {
     display: grid;
-    gap: 22px;
+    width: 100%;
     margin-top: 12px;
-    padding: 0;
+    padding: 4px clamp(20px, 3vw, 32px);
     list-style: none;
   }
 
+  /* Fuchsia dash before each chapter, like the eyebrow */
   .story__chapters li {
-    padding-left: 20px;
-    border-left: 3px solid var(--fuchsia);
+    padding-block: 18px;
+  }
+
+  .story__chapters li + li {
+    border-top: 1px solid var(--panel-line);
+  }
+
+  .story__chapters h2::before {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 3px;
+    margin-right: 10px;
+    border-radius: 3px;
+    background: var(--fuchsia);
+    vertical-align: middle;
   }
 
   .story__chapters h2 {
@@ -272,9 +303,6 @@ const experience = [
   }
 
   .story__actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
     margin-top: 8px;
   }
 
@@ -284,7 +312,7 @@ const experience = [
     justify-self: end;
     width: min(calc(100% - 24px), 480px);
     height: auto;
-    border-radius: var(--radius);
+    border-radius: var(--radius-lg);
     box-shadow: 24px 24px 0 var(--purple);
   }
 
@@ -313,9 +341,6 @@ const experience = [
 
   .service {
     padding: 28px 24px;
-    border-radius: var(--radius);
-    background: var(--white);
-    box-shadow: var(--shadow);
   }
 
   .service__number {
@@ -344,26 +369,7 @@ const experience = [
   }
 
   /* Herramientas */
-  .skills {
-    position: relative;
-    overflow: hidden;
-    color: var(--white);
-  }
-
-  .skills__bg,
-  .skills__tint {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-  }
-
-  .skills__bg {
-    object-fit: cover;
-    filter: grayscale(1);
-  }
-
-  /* Even brand tint so the glass cards read the same over light and dark parts of the photo */
+  /* Denser tint than the banner so the cards read the same over light and dark parts of the photo */
   .skills__tint {
     background: linear-gradient(120deg, rgb(102 0 191 / 0.94) 0%, rgb(102 0 191 / 0.86) 55%, rgb(201 0 157 / 0.82) 100%);
   }
@@ -392,14 +398,13 @@ const experience = [
   }
 
   .skills__note {
-    padding: 16px 20px;
-    border-radius: var(--radius);
-    background: rgb(255 255 255 / 0.95);
-    color: var(--text);
+    padding: 20px 24px;
+    border-radius: var(--radius-md);
+    font-weight: var(--fw-light);
   }
 
   .skills__note strong {
-    color: var(--purple);
+    font-weight: var(--fw-semibold);
   }
 
   .skills__grid {
@@ -416,10 +421,6 @@ const experience = [
     flex-direction: column;
     gap: 14px;
     padding: 28px 24px;
-    border: 1px solid rgb(255 255 255 / 0.22);
-    border-radius: 16px;
-    background: rgb(255 255 255 / 0.1);
-    backdrop-filter: blur(14px);
   }
 
   .skills__number {
@@ -480,27 +481,41 @@ const experience = [
 
   .timeline {
     display: grid;
-    max-width: 720px;
+    width: 100%;
+    max-width: 760px;
     margin-top: 28px;
     padding: 0;
     list-style: none;
   }
 
-  /* Vertical line with a fuchsia dot per role */
+  /* Vertical line with a fuchsia dot per role, each role in a panel */
   .timeline__item {
     position: relative;
-    padding: 0 0 36px 36px;
+    padding: 0 0 16px 36px;
     font-size: 15px;
   }
 
   .timeline__item::before {
     content: '';
     position: absolute;
-    top: 10px;
-    bottom: 0;
+    top: 30px;
+    bottom: -30px;
     left: 5px;
     width: 2px;
     background: var(--purple-24);
+  }
+
+  .timeline__card {
+    padding: 22px 26px 24px;
+  }
+
+  .timeline__item:first-child .timeline__card {
+    border-color: var(--purple-24);
+  }
+
+  .timeline__link {
+    margin-top: 6px;
+    font-size: 14px;
   }
 
   .timeline__item:last-child {
@@ -514,7 +529,7 @@ const experience = [
   .timeline__item::after {
     content: '';
     position: absolute;
-    top: 6px;
+    top: 26px;
     left: 0;
     width: 12px;
     height: 12px;

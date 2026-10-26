@@ -16,12 +16,12 @@ import { projects, site } from '../data/site';
   <section class="intro container" aria-labelledby="intro-title">
     <div class="intro__copy">
       <p class="eyebrow">Sobre mí</p>
-      <h2 id="intro-title" class="title-lg">Producto, estrategia y <span class="text-purple">sistemas de diseño</span></h2>
+      <h2 id="intro-title" class="title-lg">Producto, estrategia y <span class="text-purple highlight highlight--soft">sistemas de diseño</span></h2>
       <p class="lead">
         Soy Senior Product & UX/UI Designer. Lidero productos de principio a fin, de la investigación al handoff, y uno
         mi base en diseño gráfico con la estrategia de producto para crear interfaces claras, accesibles y escalables.
       </p>
-      <dl class="intro__facts">
+      <dl class="panel intro__facts">
         <div>
           <dt>Años en UX/UI</dt>
           <dd>8</dd>
@@ -35,7 +35,7 @@ import { projects, site } from '../data/site';
           <dd>Madrid</dd>
         </div>
       </dl>
-      <div class="intro__actions">
+      <div class="actions intro__actions">
         <a class="btn" href={site.cvHome} target="_blank" rel="noopener noreferrer">
           Ver mi currículum <ArrowIcon />
           <span class="visually-hidden">(se abre en una pestaña nueva)</span>
@@ -68,7 +68,7 @@ import { projects, site } from '../data/site';
       />
       <div class="projects-banner__tint" aria-hidden="true"></div>
     </div>
-    <blockquote class="quote projects-banner__quote">
+    <blockquote class="glass quote projects-banner__quote">
       <p>“¿Quieres que tus usuarios se enamoren de tus diseños? Enamórate de tus usuarios”.</p>
       <cite>Dana Chisnell</cite>
     </blockquote>
@@ -85,7 +85,7 @@ import { projects, site } from '../data/site';
           ))
         }
       </ul>
-      <div class="featured__more">
+      <div class="actions featured__more">
         <a class="btn btn--ghost" href="/proyectos">Ver todos los proyectos <ArrowIcon /></a>
       </div>
     </div>
@@ -111,15 +111,23 @@ import { projects, site } from '../data/site';
   }
 
   .intro__facts {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px 40px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    width: 100%;
     margin-top: 8px;
+    padding: 20px 0;
   }
 
+  /* Number on top of each label, all numbers on the same line */
   .intro__facts div {
     display: flex;
     flex-direction: column-reverse;
+    justify-content: flex-end;
+    padding-inline: 24px;
+  }
+
+  .intro__facts div + div {
+    border-left: 1px solid var(--panel-line);
   }
 
   .intro__facts dt {
@@ -136,9 +144,6 @@ import { projects, site } from '../data/site';
   }
 
   .intro__actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
     margin-top: 12px;
   }
 
@@ -197,9 +202,9 @@ import { projects, site } from '../data/site';
     position: relative;
     align-self: center;
     justify-self: end;
-    max-width: 375px;
-    padding-block: 48px;
-    padding-left: 24px;
+    max-width: 400px;
+    margin-block: 40px;
+    padding: clamp(22px, 2.6vw, 32px);
   }
 
   /* Rejilla de proyectos */
@@ -217,7 +222,6 @@ import { projects, site } from '../data/site';
   }
 
   .featured__more {
-    display: flex;
     justify-content: center;
     margin-top: 48px;
   }
@@ -268,8 +272,18 @@ import { projects, site } from '../data/site';
       grid-template-columns: 1fr;
     }
 
-    .intro__actions .btn {
-      flex: 1 1 100%;
+    .intro__facts div {
+      padding-inline: 12px;
+    }
+
+    .intro__facts dd {
+      font-size: 22px;
+    }
+
+    .projects-banner__quote {
+      justify-self: stretch;
+      max-width: none;
+      margin-block: 32px;
     }
   }
 </style>

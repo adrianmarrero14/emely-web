@@ -41,7 +41,7 @@ const slides = [
                 </span>
                 <span class="hero__headline">
                   Diseño experiencias digitales <em>end-to-end</em> que transforman procesos complejos en{' '}
-                  <span class="hero__highlight">interfaces intuitivas</span>.
+                  <span class="highlight">interfaces intuitivas</span>.
                 </span>
               </h1>
             )}
@@ -69,7 +69,7 @@ const slides = [
     }
   </div>
 
-  <div class="hero__actions container">
+  <div class="actions hero__actions container">
     <a class="btn btn--light" href="/proyectos">Ver proyectos <ArrowIcon /></a>
     <a class="btn btn--outline-light" href="/contacto">Hablemos</a>
   </div>
@@ -234,11 +234,22 @@ const slides = [
     max-width: min(640px, 52%);
   }
 
+  /* Glass chip, same treatment as the panels across the site */
   .hero__tag--role {
     margin: 0;
-    padding: 6px 14px;
+    padding: 8px 16px;
+    border: 1px solid var(--glass-line);
+    border-radius: 999px;
+    background: rgb(255 255 255 / 0.12);
+    color: var(--white);
     font-size: clamp(13px, 1.1vw, 16px);
     font-weight: var(--fw-medium);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+  }
+
+  .hero__tag--role strong {
+    color: var(--white);
   }
 
   .hero__headline {
@@ -253,36 +264,27 @@ const slides = [
     font-weight: var(--fw-light);
   }
 
-  /* Fuchsia marker under the key words */
-  .hero__highlight {
-    background: linear-gradient(transparent 70%, var(--fuchsia) 70% 92%, transparent 92%);
-    box-decoration-break: clone;
-    -webkit-box-decoration-break: clone;
-  }
-
   .hero__actions {
     position: absolute;
     right: 0;
     bottom: 24%;
     left: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
   }
 
   .hero__dots {
     position: absolute;
     left: 50%;
-    bottom: 5.5%;
+    bottom: calc(5.5% - 12px);
     display: flex;
     gap: 4px;
     transform: translateX(-50%);
   }
 
+  /* 44px tall hit area around a 4px bar */
   .hero__dot {
     width: 36px;
-    height: 19px;
-    padding: 8px 0;
+    height: 44px;
+    padding: 20px 0;
     border: 0;
     background: rgb(255 255 255 / 0.5) content-box;
     cursor: pointer;
@@ -294,6 +296,10 @@ const slides = [
   }
 
   @media (max-width: 760px) {
+    .hero {
+      height: 640px;
+    }
+
     .hero__image {
       object-position: 62% center;
     }
@@ -304,20 +310,15 @@ const slides = [
 
     .hero__copy {
       align-items: flex-end;
-      padding-bottom: 168px;
+      padding-bottom: 212px;
     }
 
     .hero__actions {
-      bottom: 64px;
-    }
-
-    .hero__actions .btn {
-      min-height: 46px;
-      padding-inline: 18px;
+      bottom: 60px;
     }
 
     .hero__dots {
-      bottom: 20px;
+      bottom: 8px;
     }
 
     .hero__title {

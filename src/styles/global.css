@@ -31,7 +31,18 @@
   --edge: max(var(--gutter), calc((100% - var(--content-width)) / 2));
   --header-height: 76px;
   --radius: 10px;
-  --shadow: 0 18px 40px -18px rgb(22 22 22 / 0.35);
+
+  /* Surfaces: the visual language of the /proyectos banner, reused by every section */
+  --radius-lg: 20px;
+  --radius-md: 16px;
+  --glass-bg: rgb(255 255 255 / 0.08);
+  --glass-line: rgb(255 255 255 / 0.22);
+  --glass-shadow: 0 40px 80px -40px rgb(22 22 22 / 0.6);
+  --panel-line: var(--purple-12);
+  --panel-shadow: 0 24px 48px -32px rgb(102 0 191 / 0.35);
+  /* Purple where text sits, opening to fuchsia: over a grayscale photo or on its own */
+  --brand-tint: linear-gradient(100deg, rgb(102 0 191 / 0.94) 0%, rgb(102 0 191 / 0.6) 42%, rgb(201 0 157 / 0.45) 100%);
+  --brand-gradient: linear-gradient(115deg, var(--purple) 0%, var(--purple) 45%, var(--fuchsia) 100%);
 }
 
 *,
@@ -165,6 +176,73 @@ a {
   transform: none;
 }
 
+/* ---------- Surfaces ---------- */
+
+/* Translucent card for purple or photo backgrounds */
+.glass {
+  border: 1px solid var(--glass-line);
+  border-radius: var(--radius-lg);
+  background: var(--glass-bg);
+  box-shadow: var(--glass-shadow);
+  color: var(--white);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.glass :is(h1, h2, h3, h4) {
+  color: var(--white);
+}
+
+.glass .eyebrow {
+  color: var(--white);
+}
+
+/* The same card on light backgrounds: white, thin purple border, soft purple shadow */
+.panel {
+  border: 1px solid var(--panel-line);
+  border-radius: var(--radius-lg);
+  background: var(--white);
+  box-shadow: var(--panel-shadow);
+}
+
+/* Brand section: purple base, optional grayscale photo multiplied in, purple-to-fuchsia tint on top.
+   Content after the tint needs position: relative to sit above it. */
+.brand-surface {
+  position: relative;
+  overflow: hidden;
+  background: var(--purple);
+  color: var(--white);
+}
+
+.brand-surface__photo,
+.brand-surface__tint {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.brand-surface__photo {
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.1);
+  mix-blend-mode: multiply;
+}
+
+.brand-surface__tint {
+  background: var(--brand-tint);
+}
+
+/* Fuchsia marker under key words; the soft variant keeps dark text readable on white */
+.highlight {
+  background: linear-gradient(transparent 66%, var(--fuchsia) 66% 90%, transparent 90%);
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+.highlight--soft {
+  background: linear-gradient(transparent 62%, rgb(201 0 157 / 0.22) 62% 92%, transparent 92%);
+}
+
 /* ---------- Type ---------- */
 
 /* Small label above titles: "Caso de estudio", "Proyectos" */
@@ -229,6 +307,7 @@ a {
   min-height: 52px;
   padding: 0 26px;
   border: 2px solid var(--purple);
+  text-align: center;
   border-radius: var(--radius);
   background: var(--purple);
   color: var(--white);
@@ -307,11 +386,34 @@ a {
   color: var(--purple);
 }
 
+/* Row of buttons. On phones every button takes the full width at the same height. */
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+@media (max-width: 760px) {
+  .btn {
+    width: 100%;
+    min-height: 52px;
+    padding-inline: 20px;
+  }
+
+  .actions {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+}
+
 /* Text link with an arrow: "Ver caso de estudio →" */
 .link-arrow {
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  min-height: 44px;
   color: var(--purple);
   font-weight: var(--fw-semibold);
   text-decoration: none;

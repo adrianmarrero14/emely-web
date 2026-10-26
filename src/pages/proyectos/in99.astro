@@ -2,12 +2,17 @@
 import { Image } from 'astro:assets';
 import CaseStudy from '../../layouts/CaseStudy.astro';
 import CaseSection from '../../components/CaseSection.astro';
+import PhoneMockup from '../../components/PhoneMockup.astro';
+import ArrowIcon from '../../components/ArrowIcon.astro';
 import cover from '../../assets/projects/home/in99.png';
-import reto from '../../assets/projects/in99/reto.png';
 import antonio from '../../assets/projects/in99/antonio.jpg';
 import idea from '../../assets/projects/in99/idea.jpg';
-import experimento from '../../assets/projects/in99/experimento.png';
 import flujo from '../../assets/projects/in99/flujo.png';
+import wireframes from '../../assets/projects/in99/wireframes.png';
+import protoLogin from '../../assets/projects/in99/proto-login.png';
+import protoHome from '../../assets/projects/in99/proto-home.png';
+import protoGastos from '../../assets/projects/in99/proto-gastos.png';
+import protoResumen from '../../assets/projects/in99/proto-resumen.png';
 import h01 from '../../assets/projects/in99/heuristica-01.png';
 import h02 from '../../assets/projects/in99/heuristica-02.png';
 import h03 from '../../assets/projects/in99/heuristica-03.png';
@@ -146,10 +151,23 @@ const heuristics = [
   },
 ];
 
-const wireframeUrl =
-  'https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Ffile%2F1dLWx1SeuifhFIy1qPpWbL%2FIn99%3Ftype%3Ddesign%26node-id%3D429%253A3313%26mode%3Ddesign%26t%3DpjP2GdHnyhqN5NwE-1';
-const prototypeUrl =
-  'https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fproto%2F1dLWx1SeuifhFIy1qPpWbL%2FIn99%3Fpage-id%3D9%253A2%26type%3Ddesign%26node-id%3D54-4388%26viewport%3D496%252C139%252C0.06%26t%3D1FwWBAwpaamPtpI8-1%26scaling%3Dcontain%26starting-point-node-id%3D53%253A2854%26mode%3Ddesign';
+// Static exports from the Figma file fill the layout on every device; the live file opens in a new tab.
+const wireframesLink = 'https://www.figma.com/design/1dLWx1SeuifhFIy1qPpWbL/In99?node-id=429-3313';
+const prototypeLink =
+  'https://www.figma.com/proto/1dLWx1SeuifhFIy1qPpWbL/In99?page-id=9%3A2&node-id=54-4388&starting-point-node-id=53%3A2854&scaling=scale-down';
+
+const screens = [
+  { image: protoLogin, alt: 'Inicio de sesión con correo, contraseña y huella' },
+  { image: protoHome, alt: 'Inicio con ingresos, gastos, impuestos y previsión del mes' },
+  { image: protoGastos, alt: 'Registro de un gasto deducible con su explicación fiscal' },
+  { image: protoResumen, alt: 'Resumen mensual del ahorro por categorías' },
+];
+
+const challenge = [
+  { title: 'Complejidad financiera', text: 'Ingresos, gastos deducibles, impuestos y productos de ahorro en una sola herramienta.' },
+  { title: 'Usabilidad', text: 'Una interfaz clara y flexible para personas que no son expertas en finanzas.' },
+  { title: 'Normativa y privacidad', text: 'Cumplir la regulación financiera y proteger los datos personales.' },
+];
 ---
 
 <CaseStudy
@@ -172,9 +190,16 @@ const prototypeUrl =
       Equilibrar la complejidad financiera con la usabilidad: una herramienta flexible, clara y accesible que, además,
       cumpla la normativa financiera y proteja la privacidad de los datos personales.
     </p>
-    <figure>
-      <Image src={reto} alt="Balanza sobre una mesa de trabajo: el equilibrio entre complejidad y usabilidad" widths={[880, reto.width]} sizes="(max-width: 1024px) 92vw, 880px" />
-    </figure>
+    <ul class="cards">
+      {
+        challenge.map((item) => (
+          <li class="card">
+            <h4>{item.title}</h4>
+            {item.text}
+          </li>
+        ))
+      }
+    </ul>
   </CaseSection>
 
   <CaseSection id="proceso" number={2} title="Proceso de diseño">
@@ -274,9 +299,10 @@ const prototypeUrl =
       de <strong>Jobs To Be Done (JTBD)</strong> sostiene que las personas no compran productos: buscan soluciones a los
       problemas de su vida.
     </p>
-    <div class="voice">
+    <div class="voice brand-surface">
+      <div class="brand-surface__tint" aria-hidden="true"></div>
       <Image class="voice__image" src={idea} alt="" widths={[300, 600]} sizes="(max-width: 760px) 40vw, 220px" />
-      <blockquote>
+      <blockquote class="glass voice__quote">
         <p>
           “Cuando haga la declaración de la renta este año quiero pagar menos y ahorrar para la universidad de mis hijos,
           tener dinero para lo que necesite el bebé que viene y planificar las vacaciones de verano”.
@@ -323,9 +349,6 @@ const prototypeUrl =
       <li>Asesoría fiscal, modelos de declaración y soporte para resolver consultas con Hacienda.</li>
       <li>Descuentos por invitar a amigos a unirse a la plataforma.</li>
     </ul>
-    <figure>
-      <Image src={experimento} alt="Mano introduciendo una moneda en una hucha" widths={[880, 1760]} sizes="(max-width: 1024px) 92vw, 880px" />
-    </figure>
   </CaseSection>
 
   <CaseSection id="solucion" number={7} title="La solución">
@@ -368,18 +391,40 @@ const prototypeUrl =
       Los wireframes de baja fidelidad representan la estructura básica de la interfaz: se centran en la disposición de
       los elementos, la funcionalidad y la organización del contenido, sin detalles visuales.
     </p>
-    <div class="prototype">
-      <iframe src={wireframeUrl} title="Wireframes de in99 en Figma" loading="lazy" allowfullscreen></iframe>
+    <figure class="wireframes">
+      <Image src={wireframes} alt="Mapa de wireframes de in99: registro, inicio, ingresos, gastos, productos, invitar amigos y perfil" widths={[880, wireframes.width]} sizes="(max-width: 1024px) 92vw, 880px" />
+    </figure>
+    <div class="actions">
+      <a class="btn btn--ghost" href={wireframesLink} target="_blank" rel="noopener noreferrer">
+        Ver los wireframes en Figma <ArrowIcon />
+        <span class="visually-hidden">(se abre en una pestaña nueva)</span>
+      </a>
     </div>
   </CaseSection>
 
   <CaseSection id="prototipo" number={10} title="Prototipo en alta fidelidad">
     <p>
-      Explora el <strong>prototipo interactivo</strong>: el inicio de sesión y el camino feliz, la contratación de un plan
-      de ahorro y la conexión con el banco.
+      El <strong>prototipo interactivo</strong> recorre el inicio de sesión y el camino feliz, la contratación de un plan de
+      ahorro y la conexión con el banco.
     </p>
-    <div class="prototype">
-      <iframe src={prototypeUrl} title="Prototipo interactivo de in99 en Figma" loading="lazy" allowfullscreen></iframe>
+    <div class="showcase brand-surface">
+      <div class="brand-surface__tint" aria-hidden="true"></div>
+      <ul class="showcase__screens">
+        {
+          screens.map((screen) => (
+            <li>
+              <PhoneMockup screen={screen.image} alt={screen.alt} />
+            </li>
+          ))
+        }
+      </ul>
+      <div class="glass showcase__cta">
+        <p>Pruébalo tú: navega por las pantallas como lo haría Antonio.</p>
+        <a class="btn btn--light" href={prototypeLink} target="_blank" rel="noopener noreferrer">
+          Abrir el prototipo en Figma <ArrowIcon />
+          <span class="visually-hidden">(se abre en una pestaña nueva)</span>
+        </a>
+      </div>
     </div>
   </CaseSection>
 
@@ -493,7 +538,8 @@ const prototypeUrl =
 
   .steps li {
     padding: 20px 18px;
-    border-radius: 8px;
+    border: 1px solid var(--panel-line);
+    border-radius: var(--radius-md);
     background: var(--purple-06);
     font-size: 14px;
     line-height: 1.55;
@@ -537,8 +583,9 @@ const prototypeUrl =
 
   .empathy__quadrant {
     padding: 24px;
-    border-radius: 8px;
-    background: var(--surface);
+    border: 1px solid var(--panel-line);
+    border-radius: var(--radius-md);
+    background: var(--purple-06);
   }
 
   .empathy__quadrant:nth-child(2),
@@ -623,9 +670,11 @@ const prototypeUrl =
 
   .pains-gains__col {
     padding: 24px;
-    border: 1px solid var(--line);
+    border: 1px solid var(--panel-line);
     border-top: 4px solid var(--purple);
-    border-radius: 8px;
+    border-radius: var(--radius-md);
+    background: var(--white);
+    box-shadow: var(--panel-shadow);
   }
 
   .pains-gains__col li {
@@ -653,18 +702,23 @@ const prototypeUrl =
     display: grid;
     grid-template-columns: 180px 1fr;
     align-items: center;
-    gap: 28px;
+    gap: 24px;
     padding: 24px;
-    border-radius: var(--radius);
-    background: var(--purple);
-    color: var(--white);
+    border-radius: var(--radius-lg);
   }
 
   .voice :global(.voice__image) {
+    position: relative;
     width: 100%;
     height: 220px;
-    border-radius: 8px;
+    border-radius: var(--radius-md);
     object-fit: cover;
+  }
+
+  .voice__quote {
+    position: relative;
+    padding: 24px 28px;
+    border-radius: var(--radius-md);
   }
 
   .voice blockquote p {
@@ -694,8 +748,10 @@ const prototypeUrl =
 
   .features li {
     padding: 24px;
-    border-radius: 8px;
-    background: var(--purple-06);
+    border: 1px solid var(--panel-line);
+    border-radius: var(--radius-md);
+    background: var(--white);
+    box-shadow: var(--panel-shadow);
     font-size: 15px;
     line-height: 1.6;
   }
@@ -731,6 +787,56 @@ const prototypeUrl =
     text-align: left;
   }
 
+  /* Wireframes y prototipo */
+  .wireframes {
+    padding: clamp(12px, 2vw, 24px);
+    border: 1px solid var(--panel-line);
+    border-radius: var(--radius-lg);
+    background: var(--white);
+    box-shadow: var(--panel-shadow);
+  }
+
+  .showcase {
+    display: grid;
+    gap: clamp(24px, 3vw, 36px);
+    padding: clamp(28px, 4vw, 48px) clamp(20px, 3vw, 40px);
+    border-radius: var(--radius-lg);
+  }
+
+  .showcase__screens {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    align-items: start;
+    gap: clamp(12px, 2vw, 24px);
+    padding: 0;
+    list-style: none;
+  }
+
+  /* Staggered like a product shot */
+  .showcase__screens li:nth-child(even) {
+    margin-top: clamp(16px, 3vw, 40px);
+  }
+
+  .showcase__screens :global(.phone) {
+    max-width: none;
+  }
+
+  .showcase__cta {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px 24px;
+    padding: 20px 24px;
+    border-radius: var(--radius-md);
+  }
+
+  .showcase__cta p {
+    font-weight: var(--fw-medium);
+  }
+
   /* Heurísticas: carrusel con scroll-snap */
   .heuristics {
     display: grid;
@@ -743,10 +849,11 @@ const prototypeUrl =
     grid-auto-flow: column;
     overflow-x: auto;
     padding: 0;
+    border: 1px solid var(--panel-line);
     list-style: none;
     scroll-snap-type: x mandatory;
     scrollbar-width: none;
-    border-radius: var(--radius);
+    border-radius: var(--radius-lg);
   }
 
   .heuristics__track::-webkit-scrollbar {
@@ -758,7 +865,7 @@ const prototypeUrl =
     display: grid;
     grid-template-rows: auto 1fr;
     scroll-snap-align: start;
-    background: var(--surface);
+    background: var(--purple-06);
   }
 
   .heuristics__media {
@@ -766,9 +873,7 @@ const prototypeUrl =
     place-items: center;
     height: clamp(280px, 34vw, 420px);
     padding: 24px;
-    border: 1px solid var(--line);
-    border-bottom: 0;
-    border-radius: var(--radius) var(--radius) 0 0;
+    border-bottom: 1px solid var(--panel-line);
     background: var(--white);
   }
 
@@ -886,6 +991,14 @@ const prototypeUrl =
 
     .voice :global(.voice__image) {
       height: 160px;
+    }
+
+    .voice__quote {
+      padding: 20px;
+    }
+
+    .showcase__screens {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .heuristics__media {

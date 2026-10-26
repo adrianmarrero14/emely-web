@@ -8,7 +8,7 @@ import ArrowIcon from '../../components/ArrowIcon.astro';
     <p class="eyebrow">Mensaje enviado</p>
     <h1 class="title-xl">¡Gracias por escribirme!</h1>
     <p class="lead">Tu mensaje ya está en camino. Te responderé lo antes posible.</p>
-    <div class="thanks__actions">
+    <div class="actions thanks__actions">
       <a class="btn" href="/proyectos">Mientras tanto, mira mis proyectos <ArrowIcon /></a>
       <a class="btn btn--ghost" href="/">Volver al inicio</a>
     </div>
@@ -24,9 +24,6 @@ import ArrowIcon from '../../components/ArrowIcon.astro';
   }
 
   .thanks__actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
     margin-top: 12px;
   }
 </style>

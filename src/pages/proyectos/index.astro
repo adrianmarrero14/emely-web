@@ -13,15 +13,15 @@ const inProgress = projects.length - published.length + upcomingProjects.length;
 ---
 
 <Base title="Proyectos" description="Casos de estudio de Emely Aponte: sistema de diseño para PinsXP, banca móvil para Mercantil Banco, e-commerce para CrudeBeauty y una app fintech para in99.">
-  <section class="intro" aria-labelledby="intro-title">
-    <Image class="intro__image" src={portfolioHero} alt="" widths={[640, 1280, portfolioHero.width]} sizes="100vw" loading="eager" />
-    <div class="intro__tint" aria-hidden="true"></div>
+  <section class="intro brand-surface" aria-labelledby="intro-title">
+    <Image class="brand-surface__photo intro__image" src={portfolioHero} alt="" widths={[640, 1280, portfolioHero.width]} sizes="100vw" loading="eager" />
+    <div class="brand-surface__tint" aria-hidden="true"></div>
     <div class="intro__shape intro__shape--fuchsia" aria-hidden="true"></div>
     <div class="intro__shape intro__shape--purple" aria-hidden="true"></div>
     <div class="container intro__inner">
-      <div class="intro__panel">
-        <p class="eyebrow intro__eyebrow">Proyectos</p>
-        <h1 id="intro-title" class="title-xl intro__title">Una muestra de <span class="intro__highlight">mi trabajo</span></h1>
+      <div class="glass intro__panel">
+        <p class="eyebrow">Proyectos</p>
+        <h1 id="intro-title" class="title-xl">Una muestra de <span class="highlight">mi trabajo</span></h1>
         <p class="intro__lead">
           Cada caso de estudio recorre el proceso completo: contexto, investigación, decisiones de diseño y resultados.
         </p>
@@ -58,11 +58,11 @@ const inProgress = projects.length - published.length + upcomingProjects.length;
     </div>
   </section>
 
-  <section class="quote-band" aria-label="Cita">
-    <Image class="quote-band__image" src={portfolioDesk} alt="" widths={[700, 1000, 1400]} sizes="100vw" />
-    <div class="quote-band__tint" aria-hidden="true"></div>
+  <section class="quote-band brand-surface" aria-label="Cita">
+    <Image class="brand-surface__photo quote-band__image" src={portfolioDesk} alt="" widths={[700, 1000, 1400]} sizes="100vw" />
+    <div class="brand-surface__tint quote-band__tint" aria-hidden="true"></div>
     <div class="container quote-band__inner">
-      <blockquote class="quote">
+      <blockquote class="glass quote quote-band__quote">
         <p>“El diseño digital es como una pintura al óleo, excepto que la pintura nunca se seca”.</p>
         <cite>Neville Brody</cite>
       </blockquote>
@@ -72,17 +72,20 @@ const inProgress = projects.length - published.length + upcomingProjects.length;
   <section class="upcoming" aria-labelledby="upcoming-title">
     <div class="container upcoming__head">
       <p class="eyebrow">Próximamente</p>
-      <h2 id="upcoming-title" class="title-lg">En construcción</h2>
+      <h2 id="upcoming-title" class="title-lg">En <span class="highlight highlight--soft">construcción</span></h2>
       <p class="lead">Pronto podrás ver estos casos de estudio completos.</p>
     </div>
     <div class="container">
       <ul class="upcoming__grid">
         {
           upcomingProjects.map((project) => (
-            <li class="upcoming__tile">
+            <li class="upcoming__tile brand-surface">
+              <div class="brand-surface__tint" aria-hidden="true"></div>
               <PhoneMockup screen={project.portrait} alt="" class="upcoming__phone" />
-              <h3>{project.name}</h3>
-              <p>{project.category}</p>
+              <div class="glass upcoming__label">
+                <h3>{project.name}</h3>
+                <p>{project.category}</p>
+              </div>
             </li>
           ))
         }
@@ -94,40 +97,15 @@ const inProgress = projects.length - published.length + upcomingProjects.length;
 </Base>
 
 <style>
-  /* Cabecera: foto en duotono de marca con un panel de cristal y texto blanco */
+  /* Cabecera: foto en duotono de marca con un panel de cristal */
   .intro {
-    position: relative;
     display: flex;
     align-items: center;
     min-height: clamp(520px, 44vw, 640px);
-    overflow: hidden;
-    background: var(--purple);
-    color: var(--white);
   }
 
-  .intro__image,
-  .intro__tint {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-  }
-
-  .intro__image {
-    object-fit: cover;
+  .intro :global(.intro__image) {
     object-position: 60% center;
-    filter: grayscale(1) contrast(1.1);
-    mix-blend-mode: multiply;
-  }
-
-  /* Purple where the text sits, opening to fuchsia on the right */
-  .intro__tint {
-    background: linear-gradient(
-      100deg,
-      rgb(102 0 191 / 0.94) 0%,
-      rgb(102 0 191 / 0.6) 42%,
-      rgb(201 0 157 / 0.45) 100%
-    );
   }
 
   .intro__shape {
@@ -150,7 +128,7 @@ const inProgress = projects.length - published.length + upcomingProjects.length;
     bottom: 12%;
     width: clamp(90px, 11vw, 160px);
     aspect-ratio: 1;
-    border: 1px solid rgb(255 255 255 / 0.3);
+    border: 1px solid var(--glass-line);
     background: rgb(102 0 191 / 0.55);
     backdrop-filter: blur(10px);
     transform: rotate(-6deg);
@@ -167,23 +145,6 @@ const inProgress = projects.length - published.length + upcomingProjects.length;
     gap: 20px;
     max-width: 600px;
     padding: clamp(28px, 4vw, 48px);
-    border: 1px solid rgb(255 255 255 / 0.22);
-    border-radius: 20px;
-    background: rgb(255 255 255 / 0.08);
-    box-shadow: 0 40px 80px -40px rgb(22 22 22 / 0.6);
-    backdrop-filter: blur(18px);
-  }
-
-  .intro__eyebrow,
-  .intro__title {
-    color: var(--white);
-  }
-
-  /* Fuchsia marker under the key words */
-  .intro__highlight {
-    background: linear-gradient(transparent 68%, var(--fuchsia) 68% 90%, transparent 90%);
-    box-decoration-break: clone;
-    -webkit-box-decoration-break: clone;
   }
 
   .intro__lead {
@@ -200,7 +161,7 @@ const inProgress = projects.length - published.length + upcomingProjects.length;
     width: 100%;
     margin-top: 8px;
     padding-top: 22px;
-    border-top: 1px solid rgb(255 255 255 / 0.22);
+    border-top: 1px solid var(--glass-line);
   }
 
   .intro__facts div {
@@ -241,38 +202,25 @@ const inProgress = projects.length - published.length + upcomingProjects.length;
   }
 
   /* Cita */
-  .quote-band {
-    position: relative;
-    overflow: hidden;
-  }
-
-  .quote-band__image,
-  .quote-band__tint {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-  }
-
-  .quote-band__image {
-    object-fit: cover;
+  .quote-band :global(.quote-band__image) {
     transform: scaleY(-1);
   }
 
+  /* The tint mirrors the banner: fuchsia ends under the quote on the right */
   .quote-band__tint {
-    background: var(--purple);
-    mix-blend-mode: multiply;
+    transform: scaleX(-1);
   }
 
   .quote-band__inner {
     position: relative;
     display: flex;
     justify-content: flex-end;
-    padding-block: clamp(80px, 12vw, 160px);
+    padding-block: clamp(64px, 10vw, 136px);
   }
 
-  .quote-band blockquote {
-    max-width: 440px;
+  .quote-band__quote {
+    max-width: 480px;
+    padding: clamp(24px, 3vw, 40px);
   }
 
   /* Próximamente */
@@ -300,30 +248,36 @@ const inProgress = projects.length - published.length + upcomingProjects.length;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 48px 24px 56px;
-    border-radius: var(--radius);
-    background: var(--fuchsia);
-    color: var(--white);
+    gap: 24px;
+    padding: 48px 24px 32px;
+    border-radius: var(--radius-lg);
     text-align: center;
   }
 
-  .upcoming__tile:nth-child(even) {
-    background: var(--purple);
+  .upcoming__tile:nth-child(even) .brand-surface__tint {
+    transform: scaleX(-1);
   }
 
   .upcoming__tile :global(.upcoming__phone) {
+    position: relative;
     width: min(60%, 220px);
-    margin-bottom: 20px;
   }
 
-  .upcoming__tile h3 {
-    margin-top: 8px;
-    color: var(--white);
-    font-size: 24px;
+  .upcoming__label {
+    position: relative;
+    width: 100%;
+    max-width: 320px;
+    padding: 16px 20px;
+    border-radius: var(--radius-md);
+  }
+
+  .upcoming__label h3 {
+    font-size: 22px;
     font-weight: var(--fw-semibold);
   }
 
-  .upcoming__tile p {
+  .upcoming__label p {
+    font-size: 14px;
     font-weight: var(--fw-light);
   }
 
@@ -347,6 +301,10 @@ const inProgress = projects.length - published.length + upcomingProjects.length;
       top: 32px;
       right: var(--gutter);
       width: 96px;
+    }
+
+    .quote-band__inner {
+      justify-content: stretch;
     }
 
     .cases__grid,
