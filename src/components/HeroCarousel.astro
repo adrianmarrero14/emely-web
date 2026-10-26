@@ -74,18 +74,26 @@ const slides = [
     <a class="btn btn--outline-light" href="/contacto">Hablemos</a>
   </div>
 
-  <div class="hero__dots">
-    {
-      slides.map((slide, index) => (
-        <button
-          type="button"
-          class:list={['hero__dot', { 'is-active': index === 0 }]}
-          aria-label={`Ver diapositiva ${index + 1}: ${slide.label}`}
-          aria-current={index === 0 ? 'true' : undefined}
-          data-dot={index}
-        />
-      ))
-    }
+  <div class="hero__controls">
+    <button type="button" class="hero__arrow" aria-label="Diapositiva anterior" data-prev>
+      <ArrowIcon direction="left" />
+    </button>
+    <div class="hero__dots">
+      {
+        slides.map((slide, index) => (
+          <button
+            type="button"
+            class:list={['hero__dot', { 'is-active': index === 0 }]}
+            aria-label={`Ver diapositiva ${index + 1}: ${slide.label}`}
+            aria-current={index === 0 ? 'true' : undefined}
+            data-dot={index}
+          />
+        ))
+      }
+    </div>
+    <button type="button" class="hero__arrow" aria-label="Diapositiva siguiente" data-next>
+      <ArrowIcon />
+    </button>
   </div>
 </section>
 
@@ -126,6 +134,14 @@ const slides = [
         start();
       }),
     );
+    hero.querySelector('[data-prev]')?.addEventListener('click', () => {
+      show(current - 1);
+      start();
+    });
+    hero.querySelector('[data-next]')?.addEventListener('click', () => {
+      show(current + 1);
+      start();
+    });
     hero.addEventListener('mouseenter', stop);
     hero.addEventListener('mouseleave', start);
     hero.addEventListener('focusin', stop);
@@ -271,13 +287,46 @@ const slides = [
     left: 0;
   }
 
-  .hero__dots {
+  .hero__controls {
     position: absolute;
     left: 50%;
     bottom: calc(5.5% - 12px);
     display: flex;
-    gap: 4px;
+    align-items: center;
+    gap: 12px;
     transform: translateX(-50%);
+  }
+
+  .hero__dots {
+    display: flex;
+    gap: 4px;
+  }
+
+  /* Glass circle, same treatment as the role chip */
+  .hero__arrow {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 1px solid var(--glass-line);
+    border-radius: 50%;
+    background: rgb(255 255 255 / 0.12);
+    color: var(--white);
+    cursor: pointer;
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  .hero__arrow:hover {
+    background: var(--white);
+    color: var(--purple);
+  }
+
+  .hero__arrow :global(svg) {
+    width: 16px;
+    height: auto;
   }
 
   /* 44px tall hit area around a 4px bar */
@@ -317,7 +366,7 @@ const slides = [
       bottom: 60px;
     }
 
-    .hero__dots {
+    .hero__controls {
       bottom: 8px;
     }
 
