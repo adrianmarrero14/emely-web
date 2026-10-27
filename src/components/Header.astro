@@ -1,5 +1,6 @@
 ---
 import { nav } from '../data/site';
+import { getAlternates, getLang, languages, path as localizedPath, useTranslations } from '../i18n';
 
 interface Props {
   /** `overlay` sits on top of the home hero in white; `solid` is the white bar of the inner pages. */
@@ -7,18 +8,24 @@ interface Props {
 }
 
 const { variant = 'solid' } = Astro.props;
-const path = Astro.url.pathname.replace(/\/$/, '') || '/';
-const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
+const lang = getLang(Astro.currentLocale);
+const t = useTranslations(lang);
+const trim = (href: string) => href.replace(/\/$/, '') || '/';
+const path = trim(Astro.url.pathname);
+const home = trim(localizedPath('home', lang));
+const isActive = (href: string) => (trim(href) === home ? path === home : path.startsWith(trim(href)));
+const links = nav.map((item) => ({ href: localizedPath(item.route, lang), label: t(item.label) }));
+const alternates = getAlternates(Astro.url.pathname);
 ---
 
 <header class:list={['site-header', `site-header--${variant}`]} data-header>
   <div class="site-header__inner">
-    <a href="/" class="site-header__logo">
+    <a href={localizedPath('home', lang)} class="site-header__logo">
       <img
         src={variant === 'overlay' ? '/icons/logo-white.svg' : '/icons/logo-horizontal.svg'}
         width="246.4"
         height="34.02"
-        alt="Emely Aponte, ir al inicio"
+        alt={t('nav.logo')}
       />
     </a>
     <button
@@ -27,14 +34,16 @@ const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWit
       aria-expanded="false"
       aria-controls="site-nav"
       data-nav-toggle
+      data-open-label={t('nav.open')}
+      data-close-label={t('nav.close')}
     >
-      <span class="visually-hidden" data-nav-label>Abrir menú</span>
+      <span class="visually-hidden" data-nav-label>{t('nav.open')}</span>
       <span class="site-header__burger" aria-hidden="true"></span>
     </button>
-    <nav id="site-nav" class="site-header__nav" aria-label="Principal">
+    <nav id="site-nav" class="site-header__nav" aria-label={t('nav.main')}>
       <ul>
         {
-          nav.map((item) => (
+          links.map((item) => (
             <li>
               <a
                 href={item.href}
@@ -47,6 +56,24 @@ const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWit
           ))
         }
       </ul>
+      <!-- Language switcher: each option points to this same page in the other language -->
+      <div class="lang-switch" role="group" aria-label={t('lang.label')}>
+        {
+          alternates.map((alternate) => (
+            <a
+              class:list={['lang-switch__option', { 'is-current': alternate.lang === lang }]}
+              href={alternate.href}
+              hreflang={alternate.lang}
+              lang={alternate.lang}
+              aria-current={alternate.lang === lang ? 'true' : undefined}
+              title={alternate.translated ? undefined : t('lang.unavailable')}
+            >
+              <span aria-hidden="true">{languages[alternate.lang].label}</span>
+              <span class="visually-hidden">{languages[alternate.lang].name}</span>
+            </a>
+          ))
+        }
+      </div>
     </nav>
   </div>
 </header>
@@ -58,7 +85,7 @@ const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWit
 
   const setOpen = (open: boolean) => {
     toggle?.setAttribute('aria-expanded', String(open));
-    if (label) label.textContent = open ? 'Cerrar menú' : 'Abrir menú';
+    if (label) label.textContent = (open ? toggle?.dataset.closeLabel : toggle?.dataset.openLabel) ?? '';
     if (header) header.dataset.open = String(open);
     document.body.style.overflow = open ? 'hidden' : '';
   };
@@ -117,11 +144,61 @@ const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWit
     height: auto;
   }
 
+  .site-header__nav {
+    display: flex;
+    align-items: center;
+    gap: clamp(20px, 2.6vw, 40px);
+  }
+
   .site-header__nav ul {
     display: flex;
     gap: clamp(20px, 2.6vw, 40px);
     padding: 0;
     list-style: none;
+  }
+
+  /* Language switcher: a quiet two-option pill that follows the header colour */
+  .lang-switch {
+    display: flex;
+    padding: 3px;
+    border: 1px solid color-mix(in srgb, currentColor 28%, transparent);
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: var(--fw-medium);
+    letter-spacing: 0.06em;
+  }
+
+  .site-header__nav .lang-switch__option {
+    display: grid;
+    place-items: center;
+    min-width: 34px;
+    min-height: 26px;
+    padding: 0 8px;
+    border-radius: 999px;
+    opacity: 0.75;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease,
+      opacity 0.2s ease;
+  }
+
+  .site-header__nav .lang-switch__option::after {
+    content: none;
+  }
+
+  .site-header__nav .lang-switch__option:hover {
+    opacity: 1;
+  }
+
+  .site-header__nav .lang-switch__option.is-current {
+    background: var(--purple);
+    color: var(--white);
+    opacity: 1;
+  }
+
+  .site-header--overlay .lang-switch__option.is-current {
+    background: var(--white);
+    color: var(--purple);
   }
 
   .site-header__nav a {
@@ -242,8 +319,9 @@ const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWit
     .site-header__nav {
       position: fixed;
       inset: 0;
-      display: grid;
-      place-items: center;
+      flex-direction: column;
+      justify-content: center;
+      gap: 48px;
       background: var(--purple);
       color: var(--white);
       opacity: 0;
@@ -272,6 +350,20 @@ const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWit
 
     .site-header--solid .site-header__nav a.is-active {
       color: var(--white);
+    }
+
+    .lang-switch {
+      font-size: 15px;
+    }
+
+    .site-header__nav .lang-switch__option {
+      min-width: 52px;
+      min-height: 40px;
+    }
+
+    .site-header__nav .lang-switch__option.is-current {
+      background: var(--white);
+      color: var(--purple);
     }
   }
 </style>

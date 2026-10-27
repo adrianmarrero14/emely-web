@@ -1,0 +1,301 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import ProjectPoster from '../components/ProjectPoster.astro';
+import CtaBar from '../components/CtaBar.astro';
+import portfolioHero from '../assets/figma/portfolio-hero.png';
+import portfolioDesk from '../assets/figma/portfolio-desk.png';
+import { projects, upcomingProjects } from '../data/site';
+import { getLang, useTranslations } from '../i18n';
+
+const lang = getLang(Astro.currentLocale);
+const t = useTranslations(lang);
+
+const copy = {
+  es: {
+    title: 'Proyectos',
+    description:
+      'Casos de estudio de Emely Aponte: sistema de diseño para PinsXP, banca móvil para Mercantil Banco, e-commerce para CrudeBeauty y una app fintech para in99.',
+    heading: ['Una muestra de ', 'mi trabajo'],
+    lead: 'Cada caso de estudio recorre el proceso completo: contexto, investigación, decisiones de diseño y resultados.',
+    published: 'Casos de estudio',
+    inProgress: 'En preparación',
+    sectors: 'Sectores',
+    quoteLabel: 'Cita',
+    quote: '“El diseño digital es como una pintura al óleo, excepto que la pintura nunca se seca”.',
+  },
+  en: {
+    title: 'Projects',
+    description:
+      'Case studies by Emely Aponte: a design system for PinsXP, mobile banking for Mercantil Banco, e-commerce for CrudeBeauty and a fintech app for in99.',
+    heading: ['A selection of ', 'my work'],
+    lead: 'Each case study walks through the whole process: context, research, design decisions and results.',
+    published: 'Case studies',
+    inProgress: 'In progress',
+    sectors: 'Sectors',
+    quoteLabel: 'Quote',
+    quote: '“Digital design is like painting, except the paint never dries.”',
+  },
+}[lang];
+
+// Case studies are only written in Spanish for now
+const hreflang = lang === 'es' ? undefined : 'es';
+const caseStatus = lang === 'es' ? t('common.caseStudy') : `${t('common.caseStudy')} · ES`;
+---
+
+<Base title={copy.title} description={copy.description}>
+  <section class="intro brand-surface" aria-labelledby="intro-title">
+    <Image class="brand-surface__photo intro__image" src={portfolioHero} alt="" widths={[640, 1280, portfolioHero.width]} sizes="100vw" loading="eager" />
+    <div class="brand-surface__tint" aria-hidden="true"></div>
+    <div class="intro__shape intro__shape--fuchsia" aria-hidden="true"></div>
+    <div class="intro__shape intro__shape--purple" aria-hidden="true"></div>
+    <div class="container intro__inner">
+      <div class="glass intro__panel">
+        <p class="eyebrow">{copy.title}</p>
+        <h1 id="intro-title" class="title-xl">{copy.heading[0]}<span class="highlight">{copy.heading[1]}</span></h1>
+        <p class="intro__lead">{copy.lead}</p>
+        <dl class="intro__facts">
+          <div>
+            <dt>{copy.published}</dt>
+            <dd>{projects.length}</dd>
+          </div>
+          <div>
+            <dt>{copy.inProgress}</dt>
+            <dd>{upcomingProjects.length}</dd>
+          </div>
+          <div class="intro__facts-sectors">
+            <dt>{copy.sectors}</dt>
+            <dd>Fintech · Social · E-commerce</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="cases" aria-labelledby="cases-title">
+    <div class="container">
+      <h2 id="cases-title" class="visually-hidden">{copy.published}</h2>
+      <!-- Vertical editorial cards: a grid on large screens, a horizontal swipe on phones -->
+      <ul class="cases__grid">
+        {
+          projects.map((project) => (
+            <li>
+              <ProjectPoster
+                name={project.name}
+                image={project.portrait}
+                focus={project.focus}
+                tag={project.category[lang]}
+                summary={project.summary[lang]}
+                status={caseStatus}
+                href={project.href}
+                hreflang={hreflang}
+              />
+            </li>
+          ))
+        }
+        {
+          upcomingProjects.map((project) => (
+            <li>
+              <ProjectPoster name={project.name} image={project.portrait} focus={project.focus} status={t(project.status)} />
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="quote-band brand-surface" aria-label={copy.quoteLabel}>
+    <Image class="brand-surface__photo quote-band__image" src={portfolioDesk} alt="" widths={[700, 1000, 1400]} sizes="100vw" />
+    <div class="brand-surface__tint quote-band__tint" aria-hidden="true"></div>
+    <div class="container quote-band__inner">
+      <blockquote class="glass quote quote-band__quote">
+        <p>{copy.quote}</p>
+        <cite>Neville Brody</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <CtaBar showProjects={false} />
+</Base>
+
+<style>
+  /* Cabecera: foto en duotono de marca con un panel de cristal */
+  .intro {
+    display: flex;
+    align-items: center;
+    min-height: clamp(520px, 44vw, 640px);
+  }
+
+  .intro :global(.intro__image) {
+    object-position: 60% center;
+  }
+
+  .intro__shape {
+    position: absolute;
+    border-radius: 24px;
+  }
+
+  .intro__shape--fuchsia {
+    top: 14%;
+    right: 6%;
+    width: clamp(120px, 16vw, 230px);
+    aspect-ratio: 1;
+    background: var(--fuchsia);
+    box-shadow: 0 30px 60px -20px rgb(22 22 22 / 0.45);
+    transform: rotate(8deg);
+  }
+
+  .intro__shape--purple {
+    right: 18%;
+    bottom: 12%;
+    width: clamp(90px, 11vw, 160px);
+    aspect-ratio: 1;
+    border: 1px solid var(--glass-line);
+    background: rgb(102 0 191 / 0.55);
+    backdrop-filter: blur(10px);
+    transform: rotate(-6deg);
+  }
+
+  .intro__inner {
+    position: relative;
+    padding-block: clamp(48px, 7vw, 96px);
+  }
+
+  .intro__panel {
+    display: grid;
+    justify-items: start;
+    gap: 20px;
+    max-width: 600px;
+    padding: clamp(28px, 4vw, 48px);
+  }
+
+  .intro__lead {
+    max-width: 460px;
+    font-size: clamp(17px, 1.4vw, 19px);
+    font-weight: var(--fw-light);
+    line-height: 1.7;
+  }
+
+  .intro__facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px 36px;
+    width: 100%;
+    margin-top: 8px;
+    padding-top: 22px;
+    border-top: 1px solid var(--glass-line);
+  }
+
+  .intro__facts div {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  .intro__facts dt {
+    font-size: 13px;
+    font-weight: var(--fw-light);
+    opacity: 0.85;
+  }
+
+  .intro__facts dd {
+    font-size: 30px;
+    font-weight: var(--fw-bold);
+    line-height: 1.2;
+  }
+
+  .intro__facts .intro__facts-sectors dd {
+    padding-top: 10px;
+    font-size: 16px;
+    font-weight: var(--fw-semibold);
+  }
+
+  /* Casos de estudio */
+  .cases {
+    padding-block: clamp(56px, 7vw, 96px);
+    background: var(--purple-06);
+  }
+
+  .cases__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(20px, 2.4vw, 32px);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* Cita */
+  .quote-band :global(.quote-band__image) {
+    transform: scaleY(-1);
+  }
+
+  /* The tint mirrors the banner: fuchsia ends under the quote on the right */
+  .quote-band__tint {
+    transform: scaleX(-1);
+  }
+
+  .quote-band__inner {
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    padding-block: clamp(64px, 10vw, 136px);
+  }
+
+  .quote-band__quote {
+    max-width: 480px;
+    padding: clamp(24px, 3vw, 40px);
+  }
+
+  @media (max-width: 1024px) {
+    .intro__shape--purple {
+      display: none;
+    }
+
+    .cases__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 760px) {
+    .intro {
+      align-items: flex-end;
+      min-height: 0;
+    }
+
+    .intro__inner {
+      padding-top: 140px;
+    }
+
+    .intro__shape--fuchsia {
+      top: 32px;
+      right: var(--gutter);
+      width: 96px;
+    }
+
+    .quote-band__inner {
+      justify-content: stretch;
+    }
+
+    /* Swipeable row that bleeds to the screen edges, with the next card peeking in */
+    .cases__grid {
+      display: flex;
+      gap: 14px;
+      margin-inline: calc(-1 * var(--gutter));
+      padding: 8px var(--gutter) 24px;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scroll-padding-inline: var(--gutter);
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+    }
+
+    .cases__grid::-webkit-scrollbar {
+      display: none;
+    }
+
+    .cases__grid > li {
+      flex: 0 0 78%;
+      scroll-snap-align: start;
+    }
+  }
+</style>

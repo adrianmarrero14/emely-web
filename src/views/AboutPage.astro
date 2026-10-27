@@ -1,0 +1,705 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import CtaBar from '../components/CtaBar.astro';
+import ArrowIcon from '../components/ArrowIcon.astro';
+import emelyPhoto from '../assets/photos/emely-square.jpg';
+import skillsBg from '../assets/figma/skills-bg.png';
+import skillsSketch from '../assets/figma/skills-sketch.png';
+import { site } from '../data/site';
+import { getLang, path, useTranslations } from '../i18n';
+
+const lang = getLang(Astro.currentLocale);
+const t = useTranslations(lang);
+
+const content = {
+  es: {
+    title: 'Sobre mí',
+    description:
+      'Conoce a Emely Aponte: su historia, lo que hace como diseñadora UX/UI, sus herramientas y su trayectoria profesional.',
+    heading: 'Hola, soy Emely.',
+    headingPurple: ['Diseño productos digitales escalables con foco en usabilidad, estrategia y ', 'sistemas de diseño', '.'],
+    lead: 'Llevo <strong>10 años en el diseño gráfico y 8 como diseñadora UX/UI</strong>. Esa combinación me permite crear interfaces visualmente atractivas y, sobre todo, funcionales.',
+    photoAlt: 'Emely Aponte sonriendo, en blanco y negro',
+    story: [
+      {
+        title: 'De Caracas a Madrid',
+        text: 'Nací en Caracas, Venezuela, donde me gradué como diseñadora gráfica. Hoy vivo y trabajo en Madrid, España.',
+      },
+      {
+        title: 'Diseño con narrativa',
+        text: 'Desde pequeña dibujo cómics y escribo historias de fantasía. Esa pasión por la narrativa visual influye en cómo diseño: cada interfaz cuenta una historia.',
+      },
+      {
+        title: 'La ciencia del usuario',
+        text: 'Me formé en usabilidad y diseño de interfaces para productos digitales a través de plataformas de aprendizaje en línea. Así llegué a lo que se conoce como “la ciencia del usuario”.',
+      },
+    ],
+    servicesEyebrow: 'Qué hago',
+    servicesTitle: ['Del descubrimiento a la ', 'entrega'],
+    servicesLead: 'Acompaño todo el ciclo de diseño de un producto digital.',
+    services: [
+      {
+        title: 'Investigación UX',
+        items: ['Entrevistas y encuestas', 'Benchmarks y análisis competitivo', 'User personas, mapas de empatía y user journeys'],
+      },
+      { title: 'Testing', items: ['Pruebas de usabilidad y de deseabilidad', 'Testeo de prototipos y MVP'] },
+      { title: 'Diseño de interfaces', items: ['Wireframes', 'Prototipos de media y alta fidelidad'] },
+      { title: 'Sistemas de diseño', items: ['Guías de estilo y librerías de componentes', 'Especificaciones y entrega a desarrollo'] },
+      { title: 'Metodologías ágiles', items: ['Design Thinking', 'Scrum', 'Kanban'] },
+    ],
+    skillsEyebrow: 'Stack y habilidades',
+    skillsTitle: ['Con qué ', 'trabajo'],
+    skillsNote:
+      'Creo que el aprendizaje <strong>nunca se detiene</strong>: cada día amplío y perfecciono mis habilidades, hoy también con herramientas de IA.',
+    stack: [
+      {
+        title: 'Product Strategy & Research',
+        items: ['User journeys', 'Benchmarking', 'Tests de usabilidad', 'Arquitectura de información', 'Mapas de empatía'],
+      },
+      {
+        title: 'UI & Visual & Design Systems',
+        items: ['Figma (variables avanzadas, auto-layout, componentes, tokens)', 'Framer', 'Accesibilidad (WCAG)', 'Visualización de datos'],
+      },
+      { title: 'Herramientas y Gestión', items: ['Jira', 'Notion', 'Maze', 'Metodologías ágiles'] },
+      {
+        title: 'AI Tools & Automatización',
+        items: ['Optimización de flujos de research', 'Ideación', 'Generación de contenido y copys', 'Automatización de flujos operativos'],
+      },
+    ],
+    experienceEyebrow: 'Experiencia',
+    experienceTitle: ['Trayectoria ', 'profesional'],
+    current: 'Actual',
+    experience: [
+      {
+        period: 'may. 2026 – actualidad',
+        role: 'Diseñadora de Producto',
+        description:
+          'Conceptualización, arquitectura y escalado del sistema de diseño de PinsXP (startup americana), con flujos asistidos por IA para la tokenización, la coherencia visual y la velocidad de entrega.',
+      },
+      {
+        period: 'nov. 2024 – mar. 2026',
+        role: 'Diseñadora de Producto',
+        description: 'Liderazgo del proceso de diseño end-to-end, en colaboración con ingeniería, de productos inmobiliarios.',
+      },
+      {
+        period: 'ene. 2024 – nov. 2024',
+        role: 'Diseñadora UX/UI',
+        description: 'Optimización de los flujos críticos de onboarding bancario de OpenBank USA.',
+      },
+      {
+        period: 'sept. 2022 – nov. 2023',
+        role: 'Diseñadora de Producto',
+        description: 'Diseño de herramientas de visualización de datos y calculadoras financieras.',
+      },
+      {
+        period: 'ene. 2021 – dic. 2022',
+        role: 'Diseñadora UX/UI',
+        description: 'Experiencias digitales para la banca online y móvil de Banco Mercantil Panamá.',
+      },
+      {
+        period: 'ene. 2019 – ene. 2020',
+        role: 'Diseñadora UX/UI',
+        description: 'Creación de piezas digitales y contenido visual para web y redes sociales.',
+      },
+    ],
+  },
+  en: {
+    title: 'About',
+    description:
+      'Meet Emely Aponte: her story, what she does as a UX/UI designer, her tools and her professional background.',
+    heading: 'Hi, I’m Emely.',
+    headingPurple: ['I design scalable digital products with a focus on usability, strategy and ', 'design systems', '.'],
+    lead: 'I have <strong>10 years of experience in graphic design and 8 as a UX/UI designer</strong>. That combination lets me create interfaces that are visually appealing and, above all, functional.',
+    photoAlt: 'Emely Aponte smiling, in black and white',
+    story: [
+      {
+        title: 'From Caracas to Madrid',
+        text: 'I was born in Caracas, Venezuela, where I graduated as a graphic designer. Today I live and work in Madrid, Spain.',
+      },
+      {
+        title: 'Design with a narrative',
+        text: 'I have drawn comics and written fantasy stories since I was a child. That passion for visual storytelling shapes how I design: every interface tells a story.',
+      },
+      {
+        title: 'The science of the user',
+        text: 'I trained in usability and interface design for digital products through online learning platforms. That is how I found what is known as “the science of the user”.',
+      },
+    ],
+    servicesEyebrow: 'What I do',
+    servicesTitle: ['From discovery to ', 'delivery'],
+    servicesLead: 'I take part in the whole design cycle of a digital product.',
+    services: [
+      {
+        title: 'UX research',
+        items: ['Interviews and surveys', 'Benchmarks and competitive analysis', 'User personas, empathy maps and user journeys'],
+      },
+      { title: 'Testing', items: ['Usability and desirability testing', 'Prototype and MVP testing'] },
+      { title: 'Interface design', items: ['Wireframes', 'Mid- and high-fidelity prototypes'] },
+      { title: 'Design systems', items: ['Style guides and component libraries', 'Specs and developer handoff'] },
+      { title: 'Agile methodologies', items: ['Design Thinking', 'Scrum', 'Kanban'] },
+    ],
+    skillsEyebrow: 'Stack and skills',
+    skillsTitle: ['What I ', 'work with'],
+    skillsNote:
+      'I believe learning <strong>never stops</strong>: every day I broaden and sharpen my skills, now with AI tools too.',
+    stack: [
+      {
+        title: 'Product Strategy & Research',
+        items: ['User journeys', 'Benchmarking', 'Usability testing', 'Information architecture', 'Empathy maps'],
+      },
+      {
+        title: 'UI & Visual & Design Systems',
+        items: ['Figma (advanced variables, auto layout, components, tokens)', 'Framer', 'Accessibility (WCAG)', 'Data visualisation'],
+      },
+      { title: 'Tools & Management', items: ['Jira', 'Notion', 'Maze', 'Agile methodologies'] },
+      {
+        title: 'AI Tools & Automation',
+        items: ['Streamlined research workflows', 'Ideation', 'Content and copy generation', 'Automated operational workflows'],
+      },
+    ],
+    experienceEyebrow: 'Experience',
+    experienceTitle: ['Professional ', 'background'],
+    current: 'Current',
+    experience: [
+      {
+        period: 'May 2026 – present',
+        role: 'Product Designer',
+        description:
+          'Concept, architecture and scaling of the PinsXP design system (a US startup), with AI-assisted workflows for tokenisation, visual consistency and delivery speed.',
+      },
+      {
+        period: 'Nov 2024 – Mar 2026',
+        role: 'Product Designer',
+        description: 'Led the end-to-end design process for real estate products, working closely with engineering.',
+      },
+      {
+        period: 'Jan 2024 – Nov 2024',
+        role: 'UX/UI Designer',
+        description: 'Optimised the critical banking onboarding flows of OpenBank USA.',
+      },
+      {
+        period: 'Sep 2022 – Nov 2023',
+        role: 'Product Designer',
+        description: 'Designed data visualisation tools and financial calculators.',
+      },
+      {
+        period: 'Jan 2021 – Dec 2022',
+        role: 'UX/UI Designer',
+        description: 'Digital experiences for the online and mobile banking of Banco Mercantil Panamá.',
+      },
+      {
+        period: 'Jan 2019 – Jan 2020',
+        role: 'UX/UI Designer',
+        description: 'Created digital pieces and visual content for the web and social media.',
+      },
+    ],
+  },
+}[lang];
+
+// Language-independent part of each job, in the same order as `content.experience`
+const jobs = [
+  { company: 'Darien Technology', current: true, caseStudy: '/proyectos/pinsxp' },
+  { company: 'Finaer' },
+  { company: 'Amaris Consulting' },
+  { company: 'in99', caseStudy: '/proyectos/in99' },
+  { company: 'Darien Technology', caseStudy: '/proyectos/mercantil' },
+  { company: 'Lookers Inbound' },
+];
+const experience = jobs.map((job, index) => ({ ...job, ...content.experience[index] }));
+const { story, services, stack } = content;
+// Case studies are only written in Spanish for now
+const hreflang = lang === 'es' ? undefined : 'es';
+---
+
+<Base title={content.title} description={content.description}>
+  <section class="story container">
+    <div class="story__copy">
+      <p class="eyebrow">{content.title}</p>
+      <h1 class="title-xl">{content.heading} <span class="text-purple">{content.headingPurple[0]}<span class="highlight highlight--soft">{content.headingPurple[1]}</span>{content.headingPurple[2]}</span></h1>
+      <p class="lead" set:html={content.lead} />
+
+      <ul class="panel story__chapters">
+        {
+          story.map((chapter) => (
+            <li>
+              <h2>{chapter.title}</h2>
+              <p>{chapter.text}</p>
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="actions story__actions">
+        <a class="btn" href={site.cvAbout} target="_blank" rel="noopener noreferrer">
+          {t('common.cv')} <ArrowIcon />
+          <span class="visually-hidden">{t('common.newTab')}</span>
+        </a>
+        <a class="btn btn--ghost" href={path('projects', lang)}>{t('common.seeProjects')}</a>
+      </div>
+    </div>
+
+    <Image
+      class="story__photo"
+      src={emelyPhoto}
+      alt={content.photoAlt}
+      widths={[480, 960, 1440]}
+      sizes="(max-width: 1024px) 420px, 480px"
+      loading="eager"
+    />
+  </section>
+
+  <section class="services" aria-labelledby="services-title">
+    <div class="container">
+      <p class="eyebrow">{content.servicesEyebrow}</p>
+      <h2 id="services-title" class="title-lg">{content.servicesTitle[0]}<span class="highlight highlight--soft">{content.servicesTitle[1]}</span></h2>
+      <p class="lead services__lead">{content.servicesLead}</p>
+      <ol class="services__grid">
+        {
+          services.map((service, index) => (
+            <li class="panel service">
+              <span class="service__number" aria-hidden="true">
+                {String(index + 1).padStart(2, '0')}
+              </span>
+              <h3>{service.title}</h3>
+              <ul>
+                {service.items.map((item) => <li>{item}</li>)}
+              </ul>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="skills brand-surface" aria-labelledby="skills-title">
+    <Image class="brand-surface__photo" src={skillsBg} alt="" widths={[800, 1440, skillsBg.width]} sizes="100vw" />
+    <div class="brand-surface__tint skills__tint" aria-hidden="true"></div>
+    <div class="container skills__inner">
+      <div class="skills__intro">
+        <div>
+          <p class="eyebrow skills__eyebrow">{content.skillsEyebrow}</p>
+          <h2 id="skills-title" class="title-lg skills__title">{content.skillsTitle[0]}<span class="highlight">{content.skillsTitle[1]}</span></h2>
+        </div>
+        <p class="glass skills__note" set:html={content.skillsNote} />
+      </div>
+
+      <ul class="skills__grid">
+        {
+          stack.map((group, index) => (
+            <li class="glass skills__group">
+              <span class="skills__number" aria-hidden="true">
+                {String(index + 1).padStart(2, '0')}
+              </span>
+              <h3>{group.title}</h3>
+              <ul class="skills__chips">
+                {group.items.map((item) => <li>{item}</li>)}
+              </ul>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="experience" aria-labelledby="experience-title">
+    <Image class="experience__sketch" src={skillsSketch} alt="" widths={[651, 1302]} sizes="45vw" />
+    <div class="container experience__inner">
+      <p class="eyebrow">{content.experienceEyebrow}</p>
+      <h2 id="experience-title" class="title-lg">{content.experienceTitle[0]}<span class="highlight highlight--soft">{content.experienceTitle[1]}</span></h2>
+      <ol class="timeline">
+        {
+          experience.map((job) => (
+            <li class="timeline__item">
+              <div class="panel timeline__card">
+                <p class="timeline__period">
+                  {job.period}
+                  {job.current && <span class="timeline__badge">{content.current}</span>}
+                </p>
+                <h3 class="timeline__role">{job.role}</h3>
+                <p class="timeline__company">{job.company}</p>
+                <p>{job.description}</p>
+                {job.caseStudy && (
+                  <a class="link-arrow timeline__link" href={job.caseStudy} hreflang={hreflang}>
+                    {t('common.seeCaseStudy')} {t('common.inSpanish')} <ArrowIcon />
+                  </a>
+                )}
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <CtaBar />
+</Base>
+
+<style>
+  /* Historia */
+  .story {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    gap: clamp(40px, 7vw, 120px);
+    align-items: start;
+    padding-block: clamp(56px, 7vw, 96px);
+  }
+
+  .story__copy {
+    display: grid;
+    justify-items: start;
+    gap: 22px;
+  }
+
+  .story__copy h1 {
+    font-size: clamp(32px, 4vw, 52px);
+  }
+
+  .story__chapters {
+    display: grid;
+    width: 100%;
+    margin-top: 12px;
+    padding: 4px clamp(20px, 3vw, 32px);
+    list-style: none;
+  }
+
+  /* Fuchsia dash before each chapter, like the eyebrow */
+  .story__chapters li {
+    padding-block: 18px;
+  }
+
+  .story__chapters li + li {
+    border-top: 1px solid var(--panel-line);
+  }
+
+  .story__chapters h2::before {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 3px;
+    margin-right: 10px;
+    border-radius: 3px;
+    background: var(--fuchsia);
+    vertical-align: middle;
+  }
+
+  .story__chapters h2 {
+    margin-bottom: 4px;
+    font-size: 17px;
+    font-weight: var(--fw-semibold);
+  }
+
+  .story__chapters p {
+    font-size: 15px;
+  }
+
+  .story__actions {
+    margin-top: 8px;
+  }
+
+  .story__photo {
+    position: sticky;
+    top: 32px;
+    justify-self: end;
+    width: min(calc(100% - 24px), 480px);
+    height: auto;
+    border-radius: var(--radius-lg);
+    box-shadow: 24px 24px 0 var(--purple);
+    animation: story-photo 1s cubic-bezier(0.2, 0.7, 0.2, 1) 0.2s both;
+  }
+
+  /* The purple block slides out from behind the photo */
+  @keyframes story-photo {
+    from {
+      box-shadow: 0 0 0 var(--purple);
+    }
+  }
+
+  /* Qué hago */
+  .services {
+    padding-block: clamp(64px, 8vw, 112px);
+    background: var(--purple-06);
+  }
+
+  .services__lead {
+    margin-top: 12px;
+  }
+
+  .services .title-lg {
+    margin-top: 12px;
+  }
+
+  .services__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 20px;
+    margin-top: 40px;
+    padding: 0;
+    list-style: none;
+  }
+
+  .service {
+    padding: 28px 24px;
+  }
+
+  .service__number {
+    color: var(--fuchsia);
+    font-size: 14px;
+    font-weight: var(--fw-semibold);
+  }
+
+  .service h3 {
+    margin-block: 6px 12px;
+    color: var(--purple);
+    font-size: 18px;
+    font-weight: var(--fw-semibold);
+  }
+
+  .service ul {
+    display: grid;
+    gap: 6px;
+    padding-left: 18px;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .service li::marker {
+    color: var(--fuchsia);
+  }
+
+  /* Herramientas */
+  /* Denser tint than the banner so the cards read the same over light and dark parts of the photo */
+  .skills__tint {
+    background: linear-gradient(120deg, rgb(102 0 191 / 0.94) 0%, rgb(102 0 191 / 0.86) 55%, rgb(201 0 157 / 0.82) 100%);
+  }
+
+  .skills__inner {
+    position: relative;
+    display: grid;
+    gap: clamp(32px, 4vw, 48px);
+    padding-block: clamp(64px, 8vw, 112px);
+  }
+
+  .skills__intro {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 460px);
+    align-items: end;
+    gap: 24px 48px;
+  }
+
+  .skills__eyebrow {
+    color: var(--white);
+  }
+
+  .skills__title {
+    margin-top: 12px;
+    color: var(--white);
+  }
+
+  .skills__note {
+    padding: 20px 24px;
+    border-radius: var(--radius-md);
+    font-weight: var(--fw-light);
+  }
+
+  .skills__note strong {
+    font-weight: var(--fw-semibold);
+  }
+
+  .skills__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 20px;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* Glass cards over the purple duotone photo */
+  .skills__group {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 28px 24px;
+  }
+
+  .skills__number {
+    font-size: 14px;
+    font-weight: var(--fw-semibold);
+    opacity: 0.75;
+  }
+
+  .skills__group h3 {
+    color: var(--white);
+    font-size: 18px;
+    font-weight: var(--fw-semibold);
+    line-height: 1.3;
+  }
+
+  .skills__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 0;
+    list-style: none;
+  }
+
+  .skills__chips li {
+    padding: 6px 12px;
+    border-radius: 8px;
+    background: rgb(255 255 255 / 0.14);
+    font-size: 13px;
+    font-weight: var(--fw-medium);
+    line-height: 1.4;
+  }
+
+  /* Trayectoria */
+  .experience {
+    position: relative;
+    overflow: hidden;
+    background: var(--surface);
+  }
+
+  .experience__sketch {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 45%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.35;
+    transform: scaleY(-1);
+  }
+
+  .experience__inner {
+    position: relative;
+    display: grid;
+    justify-items: start;
+    gap: 12px;
+    padding-block: clamp(64px, 8vw, 112px);
+  }
+
+  .timeline {
+    display: grid;
+    width: 100%;
+    max-width: 760px;
+    margin-top: 28px;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* Vertical line with a fuchsia dot per role, each role in a panel */
+  .timeline__item {
+    position: relative;
+    padding: 0 0 16px 36px;
+    font-size: 15px;
+  }
+
+  .timeline__item::before {
+    content: '';
+    position: absolute;
+    top: 30px;
+    bottom: -30px;
+    left: 5px;
+    width: 2px;
+    background: var(--purple-24);
+  }
+
+  .timeline__card {
+    padding: 22px 26px 24px;
+  }
+
+  .timeline__item:first-child .timeline__card {
+    border-color: var(--purple-24);
+  }
+
+  .timeline__link {
+    margin-top: 6px;
+    font-size: 14px;
+  }
+
+  .timeline__item:last-child {
+    padding-bottom: 0;
+  }
+
+  .timeline__item:last-child::before {
+    display: none;
+  }
+
+  .timeline__item::after {
+    content: '';
+    position: absolute;
+    top: 26px;
+    left: 0;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--fuchsia);
+    box-shadow: 0 0 0 4px var(--surface);
+  }
+
+  .timeline__period {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 4px;
+    color: var(--purple);
+    font-size: 14px;
+    font-weight: var(--fw-semibold);
+  }
+
+  .timeline__badge {
+    padding: 2px 10px;
+    border-radius: 999px;
+    background: var(--fuchsia);
+    color: var(--white);
+    font-size: 12px;
+    font-weight: var(--fw-medium);
+  }
+
+  .timeline__role {
+    font-size: 18px;
+    font-weight: var(--fw-semibold);
+  }
+
+  .timeline__company {
+    margin-bottom: 6px;
+    color: var(--muted);
+    font-size: 14px;
+    font-weight: var(--fw-medium);
+  }
+
+  @media (max-width: 1100px) {
+    .skills__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .story {
+      grid-template-columns: 1fr;
+    }
+
+    .story__photo {
+      position: static;
+      grid-row: 1;
+      justify-self: start;
+      width: min(calc(100% - 24px), 420px);
+    }
+
+    .skills__intro {
+      grid-template-columns: 1fr;
+    }
+
+    .experience__sketch {
+      width: 100%;
+      opacity: 0.12;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .skills__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

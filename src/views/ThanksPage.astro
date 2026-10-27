@@ -1,0 +1,50 @@
+---
+import Base from '../layouts/Base.astro';
+import ArrowIcon from '../components/ArrowIcon.astro';
+import { getLang, path } from '../i18n';
+
+const lang = getLang(Astro.currentLocale);
+const copy = {
+  es: {
+    title: 'Mensaje enviado',
+    description: 'Gracias por escribir a Emely Aponte.',
+    heading: '¡Gracias por escribirme!',
+    lead: 'Tu mensaje ya está en camino. Te responderé lo antes posible.',
+    projects: 'Mientras tanto, mira mis proyectos',
+    home: 'Volver al inicio',
+  },
+  en: {
+    title: 'Message sent',
+    description: 'Thank you for writing to Emely Aponte.',
+    heading: 'Thank you for your message!',
+    lead: 'Your message is on its way. I will reply as soon as I can.',
+    projects: 'In the meantime, have a look at my projects',
+    home: 'Back to home',
+  },
+}[lang];
+---
+
+<Base title={copy.title} description={copy.description}>
+  <section class="container thanks">
+    <p class="eyebrow">{copy.title}</p>
+    <h1 class="title-xl">{copy.heading}</h1>
+    <p class="lead">{copy.lead}</p>
+    <div class="actions thanks__actions">
+      <a class="btn" href={path('projects', lang)}>{copy.projects} <ArrowIcon /></a>
+      <a class="btn btn--ghost" href={path('home', lang)}>{copy.home}</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .thanks {
+    display: grid;
+    justify-items: start;
+    gap: 18px;
+    padding-block: clamp(80px, 12vw, 160px);
+  }
+
+  .thanks__actions {
+    margin-top: 12px;
+  }
+</style>

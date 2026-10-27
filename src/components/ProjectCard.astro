@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import ArrowIcon from './ArrowIcon.astro';
 import type { Project } from '../data/site';
+import { getLang, useTranslations } from '../i18n';
 
 interface Props {
   project: Project;
@@ -9,9 +10,13 @@ interface Props {
 }
 
 const { project, headingLevel: Heading = 'h3' } = Astro.props;
+const lang = getLang(Astro.currentLocale);
+const t = useTranslations(lang);
+// Case studies are only in Spanish for now
+const hreflang = lang === 'es' ? undefined : 'es';
 ---
 
-<article class:list={['panel', 'project-card', { 'project-card--linked': project.href }]}>
+<article class="panel project-card project-card--linked">
   <div class="project-card__media">
     <Image
       src={project.cover}
@@ -21,20 +26,14 @@ const { project, headingLevel: Heading = 'h3' } = Astro.props;
     />
   </div>
   <div class="project-card__body">
-    <span class="tag">{project.category}</span>
+    <span class="tag">{project.category[lang]}</span>
     <Heading class="project-card__title">
-      {project.href ? <a href={project.href}>{project.name}</a> : project.name}
+      <a href={project.href} hreflang={hreflang}>{project.name}</a>
     </Heading>
-    <p class="project-card__summary">{project.summary}</p>
-    {
-      project.href ? (
-        <span class="link-arrow project-card__cta" aria-hidden="true">
-          Ver caso de estudio <ArrowIcon />
-        </span>
-      ) : (
-        <p class="project-card__status">{project.status}</p>
-      )
-    }
+    <p class="project-card__summary">{project.summary[lang]}</p>
+    <span class="link-arrow project-card__cta" aria-hidden="true">
+      {t('common.seeCaseStudy')} {t('common.inSpanish')} <ArrowIcon />
+    </span>
   </div>
 </article>
 
@@ -117,16 +116,9 @@ const { project, headingLevel: Heading = 'h3' } = Astro.props;
     font-size: 15px;
   }
 
-  .project-card__cta,
-  .project-card__status {
+  .project-card__cta {
     margin-top: auto;
     padding-top: 8px;
     font-size: 15px;
-  }
-
-  .project-card__status {
-    color: var(--muted);
-    font-weight: var(--fw-light);
-    font-style: italic;
   }
 </style>

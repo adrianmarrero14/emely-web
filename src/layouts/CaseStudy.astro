@@ -5,6 +5,7 @@ import Base from './Base.astro';
 import CtaBar from '../components/CtaBar.astro';
 import ArrowIcon from '../components/ArrowIcon.astro';
 import { projects } from '../data/site';
+import { getLang, path, useTranslations } from '../i18n';
 
 interface Props {
   slug: string;
@@ -21,22 +22,24 @@ interface Props {
 
 const { slug, name, tagline, cover, description, brief, details, sections } = Astro.props;
 
+const lang = getLang(Astro.currentLocale);
+const t = useTranslations(lang);
 const published = projects.filter((project) => project.href);
 const index = published.findIndex((project) => project.slug === slug);
 const next = published[(index + 1) % published.length];
 ---
 
-<Base title={`${name}, caso de estudio`} description={`${tagline} ${description}`}>
+<Base title={`${name}, ${t('case.titleSuffix')}`} description={`${tagline} ${description}`}>
   <header class="case-hero brand-surface">
     <div class="brand-surface__tint" aria-hidden="true"></div>
     <div class="case-hero__shape" aria-hidden="true"></div>
     <div class="container case-hero__inner">
-      <a class="case-hero__back" href="/proyectos">
+      <a class="case-hero__back" href={path('projects', lang)}>
         <ArrowIcon direction="left" />
-        Todos los proyectos
+        {t('case.back')}
       </a>
       <div class="glass case-hero__panel">
-        <p class="eyebrow">Caso de estudio</p>
+        <p class="eyebrow">{t('case.eyebrow')}</p>
         <h1 class="title-xl">{name}</h1>
         <p class="case-hero__tagline">{tagline}</p>
         <dl class="case-hero__meta">
@@ -56,28 +59,28 @@ const next = published[(index + 1) % published.length];
   <div class="container case-cover">
     <Image
       src={cover}
-      alt={`Pantallas del proyecto ${name}`}
+      alt={`${t('case.coverAlt')} ${name}`}
       widths={[640, 1024, 1600]}
       sizes="(max-width: 1440px) 92vw, 1200px"
       loading="eager"
     />
   </div>
 
-  <section class="container case-summary" aria-label="Resumen">
+  <section class="container case-summary" aria-label={t('case.summary')}>
     <div class="panel case-summary__item">
-      <h2>Descripción</h2>
+      <h2>{t('case.description')}</h2>
       <p>{description}</p>
     </div>
     <div class="case-summary__item case-summary__item--brief brand-surface">
       <div class="brand-surface__tint" aria-hidden="true"></div>
-      <h2>El encargo</h2>
+      <h2>{t('case.brief')}</h2>
       <p>{brief}</p>
     </div>
   </section>
 
   <div class="container case-layout">
-    <nav class="case-toc" aria-label="Contenido del caso">
-      <p class="case-toc__title">En este caso</p>
+    <nav class="case-toc" aria-label={t('case.tocLabel')}>
+      <p class="case-toc__title">{t('case.toc')}</p>
       <ol>
         {
           sections.map((section, i) => (
@@ -99,13 +102,13 @@ const next = published[(index + 1) % published.length];
 
   {
     next && next.slug !== slug && (
-      <nav class="case-next" aria-label="Siguiente proyecto">
+      <nav class="case-next" aria-label={t('case.nextLabel')}>
         <a class="container case-next__link" href={next.href}>
-          <span class="case-next__label">Siguiente caso de estudio</span>
+          <span class="case-next__label">{t('case.next')}</span>
           <span class="case-next__name">
             {next.name} <ArrowIcon />
           </span>
-          <span class="case-next__summary">{next.summary}</span>
+          <span class="case-next__summary">{next.summary[lang]}</span>
         </a>
       </nav>
     )

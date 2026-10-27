@@ -2,6 +2,7 @@
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { site } from '../data/site';
+import { getAlternates, getLang, useTranslations } from '../i18n';
 import '../styles/global.css';
 
 interface Props {
@@ -10,26 +11,36 @@ interface Props {
   headerVariant?: 'overlay' | 'solid';
 }
 
-const { title, description = site.description, headerVariant = 'solid' } = Astro.props;
-const pageTitle = title ? `${title} | ${site.name}` : site.title;
+const lang = getLang(Astro.currentLocale);
+const t = useTranslations(lang);
+const { title, description = t('site.description'), headerVariant = 'solid' } = Astro.props;
+const pageTitle = title ? `${title} | ${site.name}` : t('site.title');
 const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site) : undefined;
+// Only real translations are announced to search engines; fallbacks are just switcher shortcuts.
+const alternates = getAlternates(Astro.url.pathname).filter((alternate) => alternate.translated);
+const absolute = (href: string) => (Astro.site ? new URL(href, Astro.site).href : href);
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang={lang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     {canonical && <link rel="canonical" href={canonical} />}
+    {
+      alternates.length > 1 &&
+        alternates.map((alternate) => <link rel="alternate" hreflang={alternate.lang} href={absolute(alternate.href)} />)
+    }
+    {alternates.length > 1 && <link rel="alternate" hreflang="x-default" href={absolute(alternates[0].href)} />}
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/favicon.png" type="image/png" />
     <meta name="theme-color" content="#6600bf" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
-    <meta property="og:locale" content="es_ES" />
+    <meta property="og:locale" content={t('site.ogLocale')} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -38,7 +49,7 @@ const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site) : undefin
     />
   </head>
   <body>
-    <a class="skip-link" href="#contenido">Saltar al contenido</a>
+    <a class="skip-link" href="#contenido">{t('nav.skip')}</a>
     <Header variant={headerVariant} />
     <main id="contenido">
       <slot />

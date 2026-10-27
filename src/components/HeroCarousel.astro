@@ -4,6 +4,49 @@ import hero1 from '../assets/photos/hero-1.jpg';
 import hero2 from '../assets/photos/hero-2.jpg';
 import hero3 from '../assets/photos/hero-3.jpg';
 import ArrowIcon from './ArrowIcon.astro';
+import { getLang, path } from '../i18n';
+
+const lang = getLang(Astro.currentLocale);
+const copy = {
+  es: {
+    labels: [
+      'Emely Aponte, Senior Product & UX/UI Designer',
+      'Me encanta la creación de contenidos y las redes sociales',
+      'Me apasiona el mundo gaming, las series y los cómics',
+    ],
+    headline: ['Diseño experiencias digitales ', ' que transforman procesos complejos en ', 'interfaces intuitivas'],
+    social: ['Me encanta la creación de contenidos y las ', 'redes sociales', '.'],
+    gaming: ['Me apasiona el mundo ', 'gaming', ', las series y los cómics.'],
+    carousel: 'carrusel',
+    slide: 'diapositiva',
+    region: 'Presentación',
+    of: 'de',
+    goTo: 'Ver diapositiva',
+    prev: 'Diapositiva anterior',
+    next: 'Diapositiva siguiente',
+    projects: 'Ver proyectos',
+    talk: 'Hablemos',
+  },
+  en: {
+    labels: [
+      'Emely Aponte, Senior Product & UX/UI Designer',
+      'I love content creation and social media',
+      'I am passionate about gaming, TV series and comics',
+    ],
+    headline: ['I design ', ' digital experiences that turn complex processes into ', 'intuitive interfaces'],
+    social: ['I love content creation and ', 'social media', '.'],
+    gaming: ['I am passionate about ', 'gaming', ', TV series and comics.'],
+    carousel: 'carousel',
+    slide: 'slide',
+    region: 'Introduction',
+    of: 'of',
+    goTo: 'Go to slide',
+    prev: 'Previous slide',
+    next: 'Next slide',
+    projects: 'See projects',
+    talk: "Let's talk",
+  },
+}[lang];
 
 // Black-and-white photos tinted in CSS, like the original Figma layers: two brand colours split by a darker band.
 // Band edges (a, b) are fractions of the photo width on desktop and of the viewport on mobile; focus is the face,
@@ -11,7 +54,7 @@ import ArrowIcon from './ArrowIcon.astro';
 const slides = [
   {
     image: hero1,
-    label: 'Emely Aponte, Senior Product & UX/UI Designer',
+    label: copy.labels[0],
     left: 'var(--purple)',
     right: 'var(--hero-fuchsia)',
     band: { a: 0.3, b: 0.46, aMobile: 0.1, bMobile: 0.32 },
@@ -20,7 +63,7 @@ const slides = [
   },
   {
     image: hero2,
-    label: 'Me encanta la creación de contenidos y las redes sociales',
+    label: copy.labels[1],
     left: 'var(--purple)',
     right: 'var(--hero-fuchsia)',
     band: { a: 0.16, b: 0.34, aMobile: 0.06, bMobile: 0.28 },
@@ -29,7 +72,7 @@ const slides = [
   },
   {
     image: hero3,
-    label: 'Me apasiona el mundo gaming, las series y los cómics',
+    label: copy.labels[2],
     left: 'var(--purple)',
     right: 'var(--hero-fuchsia)',
     band: { a: 0.12, b: 0.3, aMobile: 0.04, bMobile: 0.26 },
@@ -39,15 +82,15 @@ const slides = [
 ];
 ---
 
-<section class="hero" aria-roledescription="carrusel" aria-label="Presentación" data-hero>
+<section class="hero" aria-roledescription={copy.carousel} aria-label={copy.region} data-hero>
   <div class="hero__slides">
     {
       slides.map((slide, index) => (
         <div
           class:list={['hero__slide', `hero__slide--${index + 1}`, { 'is-active': index === 0 }]}
           role="group"
-          aria-roledescription="diapositiva"
-          aria-label={`${index + 1} de ${slides.length}`}
+          aria-roledescription={copy.slide}
+          aria-label={`${index + 1} ${copy.of} ${slides.length}`}
           aria-hidden={index === 0 ? undefined : 'true'}
           style={{
             '--ratio': slide.image.width / slide.image.height,
@@ -81,22 +124,26 @@ const slides = [
                   Emely Aponte · <strong>Senior Product & UX/UI Designer</strong>
                 </span>
                 <span class="hero__headline">
-                  Diseño experiencias digitales <em>end-to-end</em> que transforman procesos complejos en{' '}
-                  <span class="highlight">interfaces intuitivas</span>.
+                  {copy.headline[0]}
+                  <em>end-to-end</em>
+                  {copy.headline[1]}
+                  <span class="highlight">{copy.headline[2]}</span>.
                 </span>
               </h1>
             )}
             {index === 1 && (
               <p class="hero__title hero__title--main">
                 <span class="hero__headline">
-                  Me encanta la creación de contenidos y las <span class="highlight">redes sociales</span>.
+                  {copy.social[0]}
+                  <span class="highlight">{copy.social[1]}</span>{copy.social[2]}
                 </span>
               </p>
             )}
             {index === 2 && (
               <p class="hero__title hero__title--main">
                 <span class="hero__headline">
-                  Me apasiona el mundo <span class="highlight">gaming</span>, las series y los cómics.
+                  {copy.gaming[0]}
+                  <span class="highlight">{copy.gaming[1]}</span>{copy.gaming[2]}
                 </span>
               </p>
             )}
@@ -107,12 +154,12 @@ const slides = [
   </div>
 
   <div class="actions hero__actions container">
-    <a class="btn btn--light" href="/proyectos">Ver proyectos <ArrowIcon /></a>
-    <a class="btn btn--outline-light" href="/contacto">Hablemos</a>
+    <a class="btn btn--light" href={path('projects', lang)}>{copy.projects} <ArrowIcon /></a>
+    <a class="btn btn--outline-light" href={path('contact', lang)}>{copy.talk}</a>
   </div>
 
   <div class="hero__controls">
-    <button type="button" class="hero__arrow" aria-label="Diapositiva anterior" data-prev>
+    <button type="button" class="hero__arrow" aria-label={copy.prev} data-prev>
       <ArrowIcon direction="left" />
     </button>
     <div class="hero__dots">
@@ -121,14 +168,14 @@ const slides = [
           <button
             type="button"
             class:list={['hero__dot', { 'is-active': index === 0 }]}
-            aria-label={`Ver diapositiva ${index + 1}: ${slide.label}`}
+            aria-label={`${copy.goTo} ${index + 1}: ${slide.label}`}
             aria-current={index === 0 ? 'true' : undefined}
             data-dot={index}
           />
         ))
       }
     </div>
-    <button type="button" class="hero__arrow" aria-label="Diapositiva siguiente" data-next>
+    <button type="button" class="hero__arrow" aria-label={copy.next} data-next>
       <ArrowIcon />
     </button>
   </div>

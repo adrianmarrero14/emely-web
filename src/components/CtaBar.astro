@@ -1,5 +1,6 @@
 ---
 import ArrowIcon from './ArrowIcon.astro';
+import { getLang, path, useTranslations } from '../i18n';
 
 interface Props {
   /** Hide the "see projects" half when the page is already about projects. */
@@ -7,18 +8,20 @@ interface Props {
 }
 
 const { showProjects = true } = Astro.props;
+const lang = getLang(Astro.currentLocale);
+const t = useTranslations(lang);
 ---
 
-<section class:list={['cta', { 'cta--single': !showProjects }]} aria-label="Siguientes pasos">
-  <a class="cta__item cta__item--message" href="/contacto">
-    <span class="cta__kicker">¿Hablamos?</span>
-    <span class="cta__label">Envíame un mensaje <ArrowIcon /></span>
+<section class:list={['cta', { 'cta--single': !showProjects }]} aria-label={t('cta.label')}>
+  <a class="cta__item cta__item--message" href={path('contact', lang)}>
+    <span class="cta__kicker">{t('cta.talk')}</span>
+    <span class="cta__label">{t('cta.message')} <ArrowIcon /></span>
   </a>
   {
     showProjects && (
-      <a class="cta__item cta__item--projects" href="/proyectos">
-        <span class="cta__kicker">¿Quieres ver más?</span>
-        <span class="cta__label">Explora mis proyectos <ArrowIcon /></span>
+      <a class="cta__item cta__item--projects" href={path('projects', lang)}>
+        <span class="cta__kicker">{t('cta.more')}</span>
+        <span class="cta__label">{t('cta.projects')} <ArrowIcon /></span>
       </a>
     )
   }

@@ -1,4 +1,6 @@
 import type { ImageMetadata } from 'astro';
+import type { Localized, RouteKey } from '../i18n';
+import type { UiKey } from '../i18n/ui';
 
 import homePinsxp from '../assets/projects/home/pinsxp.jpg';
 import homeIn99 from '../assets/projects/home/in99.png';
@@ -11,12 +13,9 @@ import portfolioCrudebeauty from '../assets/projects/portfolio/crudebeauty.jpg';
 import portfolioCentroMedico from '../assets/projects/portfolio/centro-medico-is.jpg';
 import portfolioNuva from '../assets/projects/portfolio/nuva.jpg';
 
+// Language-independent facts. Titles, descriptions and labels live in src/i18n/ui.ts.
 export const site = {
   name: 'Emely Aponte',
-  title: 'Emely Aponte | Senior Product & UX/UI Designer en Madrid',
-  description:
-    'Portafolio de Emely Aponte, Senior Product & UX/UI Designer en Madrid. Casos de estudio de sistemas de diseño, banca móvil, fintech y e-commerce.',
-  location: 'Madrid, España',
   // The Framer site links two CV files: one from the home page, one from "Acerca de mí".
   cvHome: 'https://drive.google.com/file/d/1UstvP3TviDANhi7TG-Btqu81VbkWWR1_/view?usp=sharing',
   cvAbout: 'https://drive.google.com/file/d/1mfQPhDmBcE3dlHyk5-rFMhvECJi-pxbM/view?usp=sharing',
@@ -24,33 +23,44 @@ export const site = {
   behance: 'https://www.behance.net/emiikira',
 };
 
-export const nav = [
-  { href: '/', label: 'Inicio' },
-  { href: '/sobre-mi', label: 'Sobre mí' },
-  { href: '/proyectos', label: 'Proyectos' },
-  { href: '/contacto', label: 'Contacto' },
-] as const;
+export const nav: { route: RouteKey; label: UiKey }[] = [
+  { route: 'home', label: 'nav.home' },
+  { route: 'about', label: 'nav.about' },
+  { route: 'projects', label: 'nav.projects' },
+  { route: 'contact', label: 'nav.contact' },
+];
 
 export interface Project {
   slug: string;
   name: string;
   /** Short label shown as a tag on cards. */
-  category: string;
+  category: Localized;
   /** One sentence that tells what was designed and for whom. */
-  summary: string;
+  summary: Localized;
   cover: ImageMetadata;
+  /** Full-bleed photo for the vertical cards on /proyectos; `focus` is its object-position. */
   portrait: ImageMetadata;
-  /** Projects with a published case study get a link; the rest show `status`. */
-  href?: string;
-  status?: string;
+  focus?: string;
+  /** Case studies are written in Spanish only for now, so every language links to the same page. */
+  href: string;
+}
+
+export interface UpcomingProject {
+  name: string;
+  status: 'project.status.building' | 'project.status.ongoing';
+  portrait: ImageMetadata;
+  focus?: string;
 }
 
 export const projects: Project[] = [
   {
     slug: 'pinsxp',
     name: 'PinsXP',
-    category: 'Sistema de diseño',
-    summary: 'Compass, un sistema de diseño escalable y asistido por IA para una app social de lugares y momentos.',
+    category: { es: 'Sistema de diseño', en: 'Design system' },
+    summary: {
+      es: 'Compass, un sistema de diseño escalable y asistido por IA para una app social de lugares y momentos.',
+      en: 'Compass, a scalable, AI-assisted design system for a social app about places and moments.',
+    },
     cover: homePinsxp,
     portrait: portfolioPinsxp,
     href: '/proyectos/pinsxp',
@@ -58,8 +68,11 @@ export const projects: Project[] = [
   {
     slug: 'mercantil',
     name: 'Mercantil Banco',
-    category: 'Banca móvil',
-    summary: 'Rediseño de la app de Mercantil Banco Panamá para sus clientes en Venezuela, centrado en las transferencias internacionales.',
+    category: { es: 'Banca móvil', en: 'Mobile banking' },
+    summary: {
+      es: 'Rediseño de la app de Mercantil Banco Panamá para sus clientes en Venezuela, centrado en las transferencias internacionales.',
+      en: 'Redesign of the Mercantil Banco Panamá app for its customers in Venezuela, focused on international transfers.',
+    },
     cover: homeMercantil,
     portrait: portfolioMercantil,
     href: '/proyectos/mercantil',
@@ -67,24 +80,32 @@ export const projects: Project[] = [
   {
     slug: 'crudebeauty',
     name: 'CrudeBeauty',
-    category: 'E-commerce y branding',
-    summary: 'Identidad de marca y tienda online para una firma de aceites esenciales orgánicos.',
+    category: { es: 'E-commerce y branding', en: 'E-commerce & branding' },
+    summary: {
+      es: 'Identidad de marca y tienda online para una firma de aceites esenciales orgánicos.',
+      en: 'Brand identity and online store for an organic essential oils company.',
+    },
     cover: homeCrudebeauty,
     portrait: portfolioCrudebeauty,
+    focus: '52% center',
     href: '/proyectos/crudebeauty',
   },
   {
     slug: 'in99',
     name: 'in99',
-    category: 'Fintech',
-    summary: 'App móvil de calculadora de ahorro para una startup de servicios profesionales online, de la investigación al prototipo.',
+    category: { es: 'Fintech', en: 'Fintech' },
+    summary: {
+      es: 'App móvil de calculadora de ahorro para una startup de servicios profesionales online, de la investigación al prototipo.',
+      en: 'Savings calculator mobile app for an online professional services startup, from research to prototype.',
+    },
     cover: homeIn99,
     portrait: portfolioIn99,
+    focus: '68% center',
     href: '/proyectos/in99',
   },
 ];
 
-export const upcomingProjects = [
-  { name: 'Centro Médico IS', category: 'En construcción', portrait: portfolioCentroMedico },
-  { name: 'Nuva', category: 'En construcción', portrait: portfolioNuva },
+export const upcomingProjects: UpcomingProject[] = [
+  { name: 'Centro Médico IS', status: 'project.status.building', portrait: portfolioCentroMedico, focus: '26% center' },
+  { name: 'Nuva', status: 'project.status.building', portrait: portfolioNuva, focus: '40% center' },
 ];

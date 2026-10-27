@@ -6,6 +6,12 @@ export default defineConfig({
     // Old URL of the projects page
     '/portafolio': '/proyectos',
   },
+  // Spanish keeps the unprefixed URLs; English lives under /en/. Strings and slugs are in src/i18n.
+  i18n: {
+    locales: ['es', 'en'],
+    defaultLocale: 'es',
+    routing: { prefixDefaultLocale: false },
+  },
   image: {
     service: {
       entrypoint: 'astro/assets/services/sharp',
