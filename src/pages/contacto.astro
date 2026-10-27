@@ -2,7 +2,7 @@
 import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import ArrowIcon from '../components/ArrowIcon.astro';
-import contactPhoto from '../assets/figma/contact-photo.png';
+import contactPhoto from '../assets/photos/contact-page.jpg';
 import { site } from '../data/site';
 
 const topics = ['Un proyecto', 'Una oferta de trabajo', 'Una colaboración', 'Otro tema'];
@@ -14,8 +14,8 @@ const topics = ['Un proyecto', 'Una oferta de trabajo', 'Una colaboración', 'Ot
       class="contact__photo"
       src={contactPhoto}
       alt=""
-      widths={[760, contactPhoto.width]}
-      sizes="100vw"
+      widths={[700, 1100, contactPhoto.width]}
+      sizes="(max-width: 900px) 100vw, 55vw"
       loading="eager"
     />
 
@@ -174,17 +174,21 @@ const topics = ['Un proyecto', 'Una oferta de trabajo', 'Una colaboración', 'Ot
   .contact {
     position: relative;
     overflow: hidden;
+    background: var(--white);
   }
 
-  /* The source photo ends in a purple strip; taller than the section so that strip is cropped */
+  /* Black-and-white photo on a white wall, anchored right; the edges fade into the white section */
   .contact__photo {
     position: absolute;
     top: 0;
-    left: 0;
-    width: 100%;
-    height: 122%;
+    right: 0;
+    width: auto;
+    max-width: 62%;
+    height: min(100%, 900px);
     object-fit: cover;
-    object-position: right top;
+    object-position: center top;
+    mask-image: linear-gradient(90deg, transparent, #000 22%), linear-gradient(0deg, transparent, #000 18%);
+    mask-composite: intersect;
   }
 
   .contact__inner {
@@ -437,9 +441,12 @@ const topics = ['Un proyecto', 'Una oferta de trabajo', 'Una colaboración', 'Ot
     .contact__photo {
       position: static;
       order: 2;
+      width: 100%;
+      max-width: none;
       height: 380px;
       margin-bottom: -60px;
-      object-position: 85% top;
+      object-position: center top;
+      mask-image: linear-gradient(0deg, transparent, #000 30%);
     }
 
     .contact__inner {

@@ -1,7 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import ArrowIcon from './ArrowIcon.astro';
-import contactPhoto from '../assets/figma/contact-photo.png';
+import contactPhoto from '../assets/photos/contact-home.jpg';
 import { site } from '../data/site';
 ---
 
@@ -10,8 +10,8 @@ import { site } from '../data/site';
     class="contact-block__photo"
     src={contactPhoto}
     alt=""
-    widths={[760, contactPhoto.width]}
-    sizes="100vw"
+    widths={[700, 1100, contactPhoto.width]}
+    sizes="(max-width: 900px) 100vw, 55vw"
   />
   <div class="container contact-block__copy">
     <div class="panel contact-block__card">
@@ -52,17 +52,21 @@ import { site } from '../data/site';
     position: relative;
     min-height: clamp(560px, 49vw, 707px);
     overflow: hidden;
+    background: var(--white);
   }
 
+  /* Black-and-white photo on a white wall, anchored right; the edges fade into the white section */
   .contact-block__photo {
     position: absolute;
     top: 0;
-    left: 0;
-    width: 100%;
-    height: auto;
-    min-height: 122%;
+    right: 0;
+    width: auto;
+    max-width: 62%;
+    height: 100%;
     object-fit: cover;
-    object-position: right top;
+    object-position: center top;
+    mask-image: linear-gradient(90deg, transparent, #000 22%), linear-gradient(0deg, transparent, #000 18%);
+    mask-composite: intersect;
   }
 
   .contact-block__copy {
@@ -147,10 +151,11 @@ import { site } from '../data/site';
     .contact-block__photo {
       position: static;
       width: 100%;
-      min-height: 0;
+      max-width: none;
       height: 440px;
       margin-bottom: -80px;
-      object-position: 85% top;
+      object-position: center top;
+      mask-image: linear-gradient(0deg, transparent, #000 30%);
     }
 
     .contact-block__copy {

@@ -868,25 +868,27 @@ const challenge = [
     background: var(--purple-06);
   }
 
+  /* Fixed box with the example contained inside: Safari ignores a percentage max-height on grid
+     children, which let tall examples (07, 09) spill over the description */
   .heuristics__media {
-    display: grid;
-    place-items: center;
+    display: flex;
     height: clamp(280px, 34vw, 420px);
     padding: 24px;
+    overflow: hidden;
     border-bottom: 1px solid var(--panel-line);
     background: var(--white);
   }
 
   .heuristics__media :global(img) {
-    width: auto;
-    max-width: 100%;
-    height: auto;
-    max-height: 100%;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
   }
 
   .heuristics__copy {
     display: grid;
     grid-template-columns: auto minmax(0, 1fr);
+    align-content: start;
     column-gap: 20px;
     padding: 24px 28px 28px;
   }
