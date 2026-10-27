@@ -76,8 +76,28 @@ const sections = [
   </CaseSection>
 
   <CaseSection id="impacto" number={3} title={c.sections.impact}>
-    <figure>
-      <Image src={impacto} alt={c.impact.alt} widths={[880, 1760]} sizes="(max-width: 1024px) 92vw, 880px" />
+    <figure class="figma-panel">
+      <div class="figma-panel__text">
+        <h3 class="figma-panel__title">
+          {c.impact.panel.title[0]}<strong>{c.impact.panel.title[1]}</strong>{c.impact.panel.title[2]}
+        </h3>
+        <ul class="figma-panel__list">
+          {
+            c.impact.panel.tokens.map((token) => (
+              <li>
+                <strong>{token.term}</strong> {token.text}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+      <Image
+        class="figma-panel__shot"
+        src={impacto}
+        alt={c.impact.alt}
+        widths={[880, 1760]}
+        sizes="(max-width: 1024px) 92vw, 880px"
+      />
     </figure>
     <ul class="cards">
       {
@@ -106,3 +126,57 @@ const sections = [
     </ul>
   </CaseSection>
 </CaseStudy>
+
+<style>
+  /* Figma variables panel. impacto.jpg is kept as is; its top band (title and bullets baked in
+     Spanish) is hidden by the crop and redrawn in HTML on the same gradient, so it translates. */
+  .figma-panel {
+    overflow: hidden;
+    border-radius: 8px;
+    background: radial-gradient(130% 160% at 50% 100%, #04323f 0%, #0b242b 55%, #10181b 100%);
+  }
+
+  .figma-panel__text {
+    padding: clamp(24px, 5%, 44px) clamp(20px, 4.5%, 40px) clamp(24px, 4%, 36px);
+    color: rgb(255 255 255 / 0.82);
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  .figma-panel .figma-panel__title {
+    margin: 0 0 16px;
+    color: var(--white);
+    font-size: clamp(24px, 3vw, 32px);
+    font-weight: var(--fw-regular);
+    line-height: 1.2;
+  }
+
+  .figma-panel .figma-panel__title strong {
+    color: inherit;
+    font-weight: var(--fw-semibold);
+  }
+
+  .figma-panel__list {
+    display: grid;
+    gap: 10px;
+    padding-left: 20px;
+  }
+
+  .figma-panel__list li::marker {
+    color: var(--white);
+  }
+
+  .figma-panel .figma-panel__list strong {
+    color: var(--white);
+    font-weight: var(--fw-medium);
+  }
+
+  /* Only the screenshots: rows 444–1080 of the 1920×1080 file */
+  .figma-panel .figma-panel__shot {
+    display: block;
+    aspect-ratio: 1920 / 636;
+    object-fit: cover;
+    object-position: bottom;
+    border-radius: 0;
+  }
+</style>
