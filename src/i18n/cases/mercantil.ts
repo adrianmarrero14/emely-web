@@ -230,7 +230,6 @@ const es = {
     ],
     callout:
       'El dato clave: el 25 % de los usuarios abandona al intentar una transacción internacional porque no entiende las tarifas.',
-    gifAlt: 'Animación con los datos de uso de la app',
   },
   goals: {
     text: 'Con la investigación, resumí así lo que había que mejorar en la aplicación:',
@@ -539,7 +538,6 @@ const en: typeof es = {
     ],
     callout:
       'The key insight: 25% of users drop off when trying an international transaction because they don’t understand the fees.',
-    gifAlt: 'Animation with the app’s usage data',
   },
   goals: {
     text: 'From the research, I summed up what needed to improve in the app:',

@@ -14,8 +14,7 @@ const c = content[lang];
 const cover = media('home/crudebeauty.jpg', lang);
 const reto = media('crudebeauty/reto.jpg', lang);
 const persona = media('crudebeauty/persona.jpg', lang);
-const solucion1 = media('crudebeauty/solucion-1.png', lang);
-const solucion2 = media('crudebeauty/solucion-2.png', lang);
+const solucion = media('crudebeauty/solucion.png', lang);
 const branding = media('crudebeauty/branding.png', lang);
 const colores = media('crudebeauty/colores.jpg', lang);
 const iconos = media('crudebeauty/iconos.png', lang);
@@ -81,7 +80,7 @@ const prototypeUrl =
           />
           <figcaption class="competitor__info">
             <Image class="competitor__logo" src={competitor.logo} alt={withName(c.competitors.logoAlt, competitor.name)} />
-            <ul class="competitor__features" aria-label={withName(c.competitors.featuresLabel, competitor.name)}>
+            <ul class="features" aria-label={withName(c.competitors.featuresLabel, competitor.name)}>
               {competitor.pros.map((feature) => (
                 <li>{feature}</li>
               ))}
@@ -141,9 +140,11 @@ const prototypeUrl =
         ))
       }
     </ul>
-    <div class="gallery" style="--cols: 2">
-      <Image src={solucion1} alt={c.solution.alts[0]} />
-      <Image src={solucion2} alt={c.solution.alts[1]} />
+    <div class="showcase">
+      <Image src={solucion} alt={c.solution.alt} widths={[540, solucion.width]} sizes="(max-width: 760px) 92vw, 540px" />
+      <ul class="features" aria-label={c.solution.featuresLabel}>
+        {c.solution.features.map((feature) => <li>{feature}</li>)}
+      </ul>
     </div>
   </CaseSection>
 
@@ -261,15 +262,17 @@ const prototypeUrl =
     box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.08);
   }
 
-  /* Competitor: site screenshots on the left, logo and feature list (HTML, translatable) on the right */
-  .competitor {
+  /* Competitor and MVP: screenshots on the left, feature list (HTML, translatable) on the right */
+  .competitor,
+  .showcase {
     display: grid;
     grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
     align-items: center;
     gap: clamp(24px, 4vw, 48px);
   }
 
-  .competitor :global(.competitor__screens) {
+  .competitor :global(.competitor__screens),
+  .showcase :global(img) {
     width: 100%;
     height: auto;
   }
@@ -294,7 +297,7 @@ const prototypeUrl =
     object-fit: contain;
   }
 
-  .competitor__features {
+  .features {
     display: grid;
     gap: 6px;
     margin: 0;
@@ -304,12 +307,12 @@ const prototypeUrl =
     list-style: none;
   }
 
-  .competitor__features li {
+  .features li {
     position: relative;
     padding-left: 22px;
   }
 
-  .competitor__features li::before {
+  .features li::before {
     content: '+';
     position: absolute;
     left: 0;
@@ -317,14 +320,15 @@ const prototypeUrl =
     font-weight: var(--fw-semibold);
   }
 
-  .competitor__features li.is-con::before {
+  .features li.is-con::before {
     content: '−';
     color: #c62828;
   }
 
   @media (max-width: 760px) {
     .brand-specs,
-    .competitor {
+    .competitor,
+    .showcase {
       grid-template-columns: 1fr;
     }
   }
