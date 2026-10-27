@@ -76,6 +76,16 @@ const sections = [
   </CaseSection>
 
   <CaseSection id="impacto" number={3} title={c.sections.impact}>
+    <h3>{c.impact.panelTitle}</h3>
+    <ul class="list">
+      {
+        c.impact.tokens.map((token) => (
+          <li>
+            <strong>{token.term}</strong> {token.text}
+          </li>
+        ))
+      }
+    </ul>
     <figure>
       <Image src={impacto} alt={c.impact.alt} widths={[880, 1760]} sizes="(max-width: 1024px) 92vw, 880px" />
     </figure>

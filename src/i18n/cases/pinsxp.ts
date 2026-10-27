@@ -65,7 +65,18 @@ const es = {
     ],
   },
   impact: {
-    alt: 'Nuevos flujos de PinsXP construidos con Compass',
+    panelTitle: 'Panel de propiedades en Figma',
+    tokens: [
+      {
+        term: 'Primitivas (Tokens Base):',
+        text: 'La paleta cruda de valores fijos (colores, escalas y medidas) que sirven como cimiento inalterable del sistema.',
+      },
+      {
+        term: 'Semánticas (Tokens de Intención):',
+        text: 'Capa lógica que asigna un propósito funcional a cada valor (ej. fondos, textos, bordes o estados), permitiendo una gestión limpia y automatizada entre el Light Mode y el Dark Mode sin romper la coherencia visual.',
+      },
+    ],
+    alt: 'Variables de Compass en Figma: la colección de primitivas y la de semánticas con sus valores en modo claro y oscuro',
     cards: [
       {
         title: 'De la fricción a la modularidad',
@@ -162,7 +173,18 @@ const en: typeof es = {
     ],
   },
   impact: {
-    alt: 'New PinsXP flows built with Compass',
+    panelTitle: 'Figma properties panel',
+    tokens: [
+      {
+        term: 'Primitives (Base Tokens):',
+        text: 'The raw palette of fixed values (colors, scales, and measurements) that serve as the unalterable foundation of the system.',
+      },
+      {
+        term: 'Semantics (Intent Tokens):',
+        text: 'The logical layer assigning a functional purpose to each value (e.g., backgrounds, text, borders, or states), enabling clean, automated management between Light Mode and Dark Mode without breaking visual consistency.',
+      },
+    ],
+    alt: 'Compass variables in Figma: the primitives collection and the semantics collection with their light and dark mode values',
     cards: [
       {
         title: 'From friction to modularity',
