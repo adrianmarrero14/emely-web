@@ -1,0 +1,331 @@
+---
+import { Image } from 'astro:assets';
+import CaseStudy from '../../layouts/CaseStudy.astro';
+import CaseSection from '../../components/CaseSection.astro';
+import ProcessSteps from '../../components/ProcessSteps.astro';
+import content from '../../i18n/cases/crudebeauty';
+import { getLang } from '../../i18n';
+import { media } from '../../i18n/media';
+
+// Shared markup of the case study; the text comes from src/i18n/cases/crudebeauty.ts.
+const lang = getLang(Astro.currentLocale);
+const c = content[lang];
+
+const cover = media('home/crudebeauty.jpg', lang);
+const reto = media('crudebeauty/reto.jpg', lang);
+const persona = media('crudebeauty/persona.jpg', lang);
+const solucion1 = media('crudebeauty/solucion-1.png', lang);
+const solucion2 = media('crudebeauty/solucion-2.png', lang);
+const branding = media('crudebeauty/branding.png', lang);
+const colores = media('crudebeauty/colores.jpg', lang);
+const iconos = media('crudebeauty/iconos.png', lang);
+
+const sections = [
+  { id: 'reto', title: c.sections.challenge },
+  { id: 'proceso', title: c.sections.process },
+  { id: 'competencia', title: c.sections.competitors },
+  { id: 'persona', title: c.sections.persona },
+  { id: 'solucion', title: c.sections.solution },
+  { id: 'branding', title: c.sections.branding },
+  { id: 'prototipo', title: c.sections.prototype },
+  { id: 'conclusiones', title: c.sections.conclusions },
+];
+
+// Screenshots and logos carry no copy; each site's feature list is HTML so it follows the language
+const competitors = [
+  { name: 'The Ordinary', screens: media('crudebeauty/competencia-1.png', lang), logo: media('crudebeauty/logo-the-ordinary.png', lang) },
+  { name: 'La Roche-Posay', screens: media('crudebeauty/competencia-2.png', lang), logo: media('crudebeauty/logo-la-roche-posay.png', lang) },
+  { name: "Kiehl's", screens: media('crudebeauty/competencia-3.png', lang), logo: media('crudebeauty/logo-kiehls.png', lang) },
+].map((competitor, index) => ({ ...competitor, ...c.competitors.brands[index] }));
+
+const withName = (text: string, name: string) => text.replace('{name}', name);
+
+const prototypeUrl =
+  'https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fproto%2FSBhNVU9kQoWQXY9dcZe9B1%2FCrudeBeauty---Ecommerce%3Fpage-id%3D417%253A615%26type%3Ddesign%26node-id%3D418-616%26viewport%3D882%252C544%252C0.5%26t%3DAGEZ8JlqnFwFLjcF-1%26scaling%3Dscale-down%26starting-point-node-id%3D418%253A616%26mode%3Ddesign';
+---
+
+<CaseStudy
+  slug="crudebeauty"
+  name="CrudeBeauty"
+  tagline={c.tagline}
+  cover={cover}
+  description={c.description}
+  brief={c.brief}
+  details={c.details}
+  sections={sections}
+  note={c.note}
+>
+  <CaseSection id="reto" number={1} title={c.sections.challenge}>
+    <p class="callout">{c.challenge.callout}</p>
+    <figure>
+      <Image src={reto} alt={c.challenge.alt} widths={[880, 1760]} sizes="(max-width: 1024px) 92vw, 880px" />
+    </figure>
+  </CaseSection>
+
+  <CaseSection id="proceso" number={2} title={c.sections.process}>
+    <p>{c.process.text}</p>
+    <ProcessSteps steps={c.process.steps} />
+  </CaseSection>
+
+  <CaseSection id="competencia" number={3} title={c.sections.competitors}>
+    <p set:html={c.competitors.text} />
+    {
+      competitors.map((competitor) => (
+        <figure class="competitor">
+          <Image
+            class="competitor__screens"
+            src={competitor.screens}
+            alt={withName(c.competitors.screensAlt, competitor.name)}
+            widths={[560, competitor.screens.width]}
+            sizes="(max-width: 760px) 92vw, 540px"
+          />
+          <figcaption class="competitor__info">
+            <Image class="competitor__logo" src={competitor.logo} alt={withName(c.competitors.logoAlt, competitor.name)} />
+            <ul class="competitor__features" aria-label={withName(c.competitors.featuresLabel, competitor.name)}>
+              {competitor.pros.map((feature) => (
+                <li>{feature}</li>
+              ))}
+              {competitor.cons.map((feature) => (
+                <li class="is-con">
+                  <span class="visually-hidden">{c.competitors.conLabel} </span>
+                  {feature}
+                </li>
+              ))}
+            </ul>
+          </figcaption>
+        </figure>
+      ))
+    }
+  </CaseSection>
+
+  <CaseSection id="persona" number={4} title={c.sections.persona}>
+    <div class="persona">
+      <Image src={persona} alt={c.persona.alt} widths={[300, 600]} sizes="(max-width: 760px) 70vw, 260px" />
+      <div>
+        <h4>María Morales</h4>
+        <dl class="facts">
+          {
+            c.persona.facts.map((fact) => (
+              <Fragment>
+                <dt>{fact.label}</dt>
+                <dd>{fact.value}</dd>
+              </Fragment>
+            ))
+          }
+        </dl>
+        <p style="margin-top: 14px">{c.persona.bio}</p>
+      </div>
+    </div>
+    <ul class="cards">
+      {
+        c.persona.cards.map((card) => (
+          <li class="card">
+            <h4>{card.title}</h4>
+            <Fragment set:html={card.text} />
+          </li>
+        ))
+      }
+    </ul>
+    <h3>{c.persona.shoppingTitle}</h3>
+    <p>{c.persona.shoppingText}</p>
+  </CaseSection>
+
+  <CaseSection id="solucion" number={5} title={c.sections.solution}>
+    <ul class="cards">
+      {
+        c.solution.cards.map((card) => (
+          <li class="card">
+            <h4>{card.title}</h4>
+            <Fragment set:html={card.text} />
+          </li>
+        ))
+      }
+    </ul>
+    <div class="gallery" style="--cols: 2">
+      <Image src={solucion1} alt={c.solution.alts[0]} />
+      <Image src={solucion2} alt={c.solution.alts[1]} />
+    </div>
+  </CaseSection>
+
+  <CaseSection id="branding" number={6} title={c.sections.branding}>
+    <p>{c.branding.text}</p>
+    <figure class="brand-logo">
+      <Image src={branding} alt={c.branding.logoAlt} />
+    </figure>
+
+    <div class="brand-specs">
+      <div>
+        <h3>{c.branding.colorsTitle}</h3>
+        <ul class="swatches">
+          <li>
+            <span class="swatch" style="background: rgb(121 217 124)"></span>
+            <span><strong>Pantone 2268 C</strong><br />C49 M0 Y65 K100 · R121 G217 B124</span>
+          </li>
+          <li>
+            <span class="swatch" style="background: #000"></span>
+            <span><strong>Pantone Neutral Black C</strong><br />C10 M0 Y0 K100 · R0 G0 B0</span>
+          </li>
+        </ul>
+        <h3>{c.branding.typeTitle}</h3>
+        <dl class="facts">
+          {
+            c.branding.type.map((fact) => (
+              <Fragment>
+                <dt>{fact.label}</dt>
+                <dd>{fact.value}</dd>
+              </Fragment>
+            ))
+          }
+        </dl>
+      </div>
+      <Image src={colores} alt={c.branding.colorsAlt} widths={[440, 880]} sizes="(max-width: 760px) 92vw, 400px" />
+    </div>
+
+    <h3>{c.branding.iconsTitle}</h3>
+    <p>{c.branding.iconsText}</p>
+    <figure class="brand-icons">
+      <Image src={iconos} alt={c.branding.iconsAlt} />
+    </figure>
+  </CaseSection>
+
+  <CaseSection id="prototipo" number={7} title={c.sections.prototype}>
+    <p set:html={c.prototype.text} />
+    <div class="prototype">
+      <iframe src={prototypeUrl} title={c.prototype.title} loading="lazy" allowfullscreen></iframe>
+    </div>
+  </CaseSection>
+
+  <CaseSection id="conclusiones" number={8} title={c.sections.conclusions}>
+    {c.conclusions.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+    <p class="callout">{c.conclusions.callout}</p>
+  </CaseSection>
+</CaseStudy>
+
+<style>
+  .brand-logo,
+  .brand-icons {
+    display: flex;
+    justify-content: center;
+    padding: 32px;
+    border: 1px solid var(--panel-line);
+    border-radius: var(--radius-lg);
+    background: var(--white);
+  }
+
+  .brand-logo img {
+    max-width: 520px;
+  }
+
+  .brand-icons img {
+    max-width: 360px;
+  }
+
+  .brand-specs {
+    display: grid;
+    grid-template-columns: 1fr minmax(0, 380px);
+    align-items: start;
+    gap: 32px;
+  }
+
+  .brand-specs h3:not(:first-child) {
+    margin-top: 24px;
+  }
+
+  .brand-specs > img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+  }
+
+  .swatches {
+    display: grid;
+    gap: 14px;
+    margin-top: 12px;
+    padding: 0;
+    list-style: none;
+  }
+
+  .swatches li {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .swatch {
+    flex: none;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.08);
+  }
+
+  /* Competitor: site screenshots on the left, logo and feature list (HTML, translatable) on the right */
+  .competitor {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(24px, 4vw, 48px);
+  }
+
+  .competitor :global(.competitor__screens) {
+    width: 100%;
+    height: auto;
+  }
+
+  /* Undo the layout's caption style (small, muted, centred) */
+  /* Doubled class to beat the layout's centred, muted figcaption style */
+  .competitor .competitor__info {
+    display: grid;
+    justify-items: start;
+    gap: 20px;
+    margin-top: 0;
+    color: var(--text);
+    font-size: 15px;
+    font-weight: var(--fw-regular);
+    text-align: left;
+  }
+
+  .competitor :global(.competitor__logo) {
+    width: auto;
+    max-width: min(100%, 220px);
+    max-height: 64px;
+    object-fit: contain;
+  }
+
+  .competitor__features {
+    display: grid;
+    gap: 6px;
+    margin: 0;
+    padding: 0;
+    font-size: 15px;
+    line-height: 1.4;
+    list-style: none;
+  }
+
+  .competitor__features li {
+    position: relative;
+    padding-left: 22px;
+  }
+
+  .competitor__features li::before {
+    content: '+';
+    position: absolute;
+    left: 0;
+    color: #2e9e45;
+    font-weight: var(--fw-semibold);
+  }
+
+  .competitor__features li.is-con::before {
+    content: '−';
+    color: #c62828;
+  }
+
+  @media (max-width: 760px) {
+    .brand-specs,
+    .competitor {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

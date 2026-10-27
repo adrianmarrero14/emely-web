@@ -2,7 +2,7 @@
 import { Image } from 'astro:assets';
 import ArrowIcon from './ArrowIcon.astro';
 import type { Project } from '../data/site';
-import { getLang, useTranslations } from '../i18n';
+import { getLang, path, useTranslations } from '../i18n';
 
 interface Props {
   project: Project;
@@ -12,8 +12,7 @@ interface Props {
 const { project, headingLevel: Heading = 'h3' } = Astro.props;
 const lang = getLang(Astro.currentLocale);
 const t = useTranslations(lang);
-// Case studies are only in Spanish for now
-const hreflang = lang === 'es' ? undefined : 'es';
+
 ---
 
 <article class="panel project-card project-card--linked">
@@ -28,11 +27,11 @@ const hreflang = lang === 'es' ? undefined : 'es';
   <div class="project-card__body">
     <span class="tag">{project.category[lang]}</span>
     <Heading class="project-card__title">
-      <a href={project.href} hreflang={hreflang}>{project.name}</a>
+      <a href={path(`case-${project.slug}`, lang)}>{project.name}</a>
     </Heading>
     <p class="project-card__summary">{project.summary[lang]}</p>
     <span class="link-arrow project-card__cta" aria-hidden="true">
-      {t('common.seeCaseStudy')} {t('common.inSpanish')} <ArrowIcon />
+      {t('common.seeCaseStudy')} <ArrowIcon />
     </span>
   </div>
 </article>

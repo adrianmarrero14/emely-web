@@ -19,6 +19,14 @@ export const getLang = (locale: string | undefined): Lang => (isLang(locale) ? l
 
 export const useTranslations = (lang: Lang) => (key: UiKey) => ui[lang][key];
 
+// Every case study exists in every language, under the projects page of each one
+export const caseSlugs = ['pinsxp', 'mercantil', 'crudebeauty', 'in99'] as const;
+export type CaseSlug = (typeof caseSlugs)[number];
+
+const caseRoutes = Object.fromEntries(
+  caseSlugs.map((slug) => [`case-${slug}`, { es: `/proyectos/${slug}`, en: `/en/projects/${slug}` }]),
+) as Record<`case-${CaseSlug}`, Localized>;
+
 // Translated slugs: each page has its own URL per language.
 export const routes = {
   home: { es: '/', en: '/en/' },
@@ -26,27 +34,25 @@ export const routes = {
   projects: { es: '/proyectos', en: '/en/projects' },
   contact: { es: '/contacto', en: '/en/contact' },
   thanks: { es: '/contacto/gracias', en: '/en/contact/thanks' },
+  ...caseRoutes,
 } satisfies Record<string, Localized>;
 
 export type RouteKey = keyof typeof routes;
 
 export const path = (route: RouteKey, lang: Lang) => routes[route][lang];
 
-// Pages that exist in one language only (the case studies, for now) send the switcher to the closest section.
-const fallbacks: { prefix: string; route: RouteKey }[] = [{ prefix: '/proyectos/', route: 'projects' }];
-
 const normalize = (pathname: string) => pathname.replace(/\/$/, '') || '/';
 
 /**
  * The URL of the current page in every language, and whether each one is a real translation.
- * Feeds the language switcher and the hreflang links.
+ * Feeds the language switcher and the hreflang links. A page missing from `routes` sends the
+ * other languages to their home page.
  */
 export const getAlternates = (pathname: string) => {
   const current = normalize(pathname);
   const match = Object.values(routes).find((paths) =>
     Object.values(paths).some((candidate) => normalize(candidate) === current),
   );
-  const fallback = fallbacks.find((entry) => current.startsWith(entry.prefix))?.route ?? 'home';
   const pageLang =
     (Object.keys(languages) as Lang[]).find(
       (lang) => lang !== defaultLang && (current === `/${lang}` || current.startsWith(`/${lang}/`)),
@@ -54,7 +60,7 @@ export const getAlternates = (pathname: string) => {
 
   return (Object.keys(languages) as Lang[]).map((lang) => ({
     lang,
-    href: match ? match[lang] : lang === pageLang ? current : routes[fallback][lang],
+    href: match ? match[lang] : lang === pageLang ? current : routes.home[lang],
     translated: Boolean(match) || lang === pageLang,
   }));
 };

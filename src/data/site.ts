@@ -1,5 +1,5 @@
 import type { ImageMetadata } from 'astro';
-import type { Localized, RouteKey } from '../i18n';
+import type { CaseSlug, Localized, RouteKey } from '../i18n';
 import type { UiKey } from '../i18n/ui';
 
 import homePinsxp from '../assets/projects/home/pinsxp.jpg';
@@ -30,8 +30,11 @@ export const nav: { route: RouteKey; label: UiKey }[] = [
   { route: 'contact', label: 'nav.contact' },
 ];
 
+/** Labels live in src/i18n/ui.ts, so they switch with the language. */
+export type ProjectStatus = 'project.status.launched' | 'project.status.ongoing' | 'project.status.building';
+
 export interface Project {
-  slug: string;
+  slug: CaseSlug;
   name: string;
   /** Short label shown as a tag on cards. */
   category: Localized;
@@ -41,13 +44,13 @@ export interface Project {
   /** Full-bleed photo for the vertical cards on /proyectos; `focus` is its object-position. */
   portrait: ImageMetadata;
   focus?: string;
-  /** Case studies are written in Spanish only for now, so every language links to the same page. */
-  href: string;
+  /** Optional delivery status shown on the cards next to "Caso de estudio". */
+  status?: ProjectStatus;
 }
 
 export interface UpcomingProject {
   name: string;
-  status: 'project.status.building' | 'project.status.ongoing';
+  status: ProjectStatus;
   portrait: ImageMetadata;
   focus?: string;
 }
@@ -63,7 +66,7 @@ export const projects: Project[] = [
     },
     cover: homePinsxp,
     portrait: portfolioPinsxp,
-    href: '/proyectos/pinsxp',
+    status: 'project.status.ongoing',
   },
   {
     slug: 'mercantil',
@@ -75,7 +78,6 @@ export const projects: Project[] = [
     },
     cover: homeMercantil,
     portrait: portfolioMercantil,
-    href: '/proyectos/mercantil',
   },
   {
     slug: 'crudebeauty',
@@ -88,7 +90,6 @@ export const projects: Project[] = [
     cover: homeCrudebeauty,
     portrait: portfolioCrudebeauty,
     focus: '52% center',
-    href: '/proyectos/crudebeauty',
   },
   {
     slug: 'in99',
@@ -101,7 +102,6 @@ export const projects: Project[] = [
     cover: homeIn99,
     portrait: portfolioIn99,
     focus: '68% center',
-    href: '/proyectos/in99',
   },
 ];
 

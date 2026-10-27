@@ -16,11 +16,10 @@ interface Props {
   status: string;
   /** Upcoming projects have no page yet: the card is not a link and its status dot pulses. */
   href?: string;
-  hreflang?: string;
   headingLevel?: 'h2' | 'h3';
 }
 
-const { name, image, focus, tag, summary, status, href, hreflang, headingLevel: Heading = 'h3' } = Astro.props;
+const { name, image, focus, tag, summary, status, href, headingLevel: Heading = 'h3' } = Astro.props;
 const t = useTranslations(getLang(Astro.currentLocale));
 ---
 
@@ -42,7 +41,7 @@ const t = useTranslations(getLang(Astro.currentLocale));
     <Heading class="poster__title">
       {
         href ? (
-          <a href={href} hreflang={hreflang}>
+          <a href={href}>
             <span class="visually-hidden">{t('project.open')} </span>
             {name}
           </a>

@@ -5,10 +5,10 @@ import Base from './Base.astro';
 import CtaBar from '../components/CtaBar.astro';
 import ArrowIcon from '../components/ArrowIcon.astro';
 import { projects } from '../data/site';
-import { getLang, path, useTranslations } from '../i18n';
+import { getLang, path, useTranslations, type CaseSlug } from '../i18n';
 
 interface Props {
-  slug: string;
+  slug: CaseSlug;
   name: string;
   tagline: string;
   cover: ImageMetadata;
@@ -18,15 +18,16 @@ interface Props {
   details: { label: string; value: string }[];
   /** Table of contents; each `id` must match a <CaseSection id>. */
   sections: { id: string; title: string }[];
+  /** Short line under the cover, e.g. to say that product screens keep their original language. */
+  note?: string;
 }
 
-const { slug, name, tagline, cover, description, brief, details, sections } = Astro.props;
+const { slug, name, tagline, cover, description, brief, details, sections, note } = Astro.props;
 
 const lang = getLang(Astro.currentLocale);
 const t = useTranslations(lang);
-const published = projects.filter((project) => project.href);
-const index = published.findIndex((project) => project.slug === slug);
-const next = published[(index + 1) % published.length];
+const index = projects.findIndex((project) => project.slug === slug);
+const next = projects[(index + 1) % projects.length];
 ---
 
 <Base title={`${name}, ${t('case.titleSuffix')}`} description={`${tagline} ${description}`}>
@@ -65,6 +66,7 @@ const next = published[(index + 1) % published.length];
       loading="eager"
     />
   </div>
+  {note && <p class="container case-language">{note}</p>}
 
   <section class="container case-summary" aria-label={t('case.summary')}>
     <div class="panel case-summary__item">
@@ -103,7 +105,7 @@ const next = published[(index + 1) % published.length];
   {
     next && next.slug !== slug && (
       <nav class="case-next" aria-label={t('case.nextLabel')}>
-        <a class="container case-next__link" href={next.href}>
+        <a class="container case-next__link" href={path(`case-${next.slug}`, lang)}>
           <span class="case-next__label">{t('case.next')}</span>
           <span class="case-next__name">
             {next.name} <ArrowIcon />
@@ -230,6 +232,14 @@ const next = published[(index + 1) % published.length];
   }
 
   /* Resumen */
+  .case-language {
+    padding-top: 16px;
+    color: var(--muted);
+    font-size: 13px;
+    font-style: italic;
+    text-align: center;
+  }
+
   .case-summary {
     display: grid;
     grid-template-columns: 1.3fr 1fr;

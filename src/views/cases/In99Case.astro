@@ -1,0 +1,854 @@
+---
+import { Image } from 'astro:assets';
+import CaseStudy from '../../layouts/CaseStudy.astro';
+import CaseSection from '../../components/CaseSection.astro';
+import PhoneMockup from '../../components/PhoneMockup.astro';
+import ArrowIcon from '../../components/ArrowIcon.astro';
+import content from '../../i18n/cases/in99';
+import { getLang, useTranslations } from '../../i18n';
+import { media } from '../../i18n/media';
+
+// Shared markup of the case study; the text comes from src/i18n/cases/in99.ts.
+const lang = getLang(Astro.currentLocale);
+const t = useTranslations(lang);
+const c = content[lang];
+
+const cover = media('home/in99.png', lang);
+const antonio = media('in99/antonio.jpg', lang);
+const idea = media('in99/idea.jpg', lang);
+const flujo = media('in99/flujo.png', lang);
+const wireframes = media('in99/wireframes.png', lang);
+
+const sections = [
+  { id: 'reto', title: c.toc.challenge },
+  { id: 'proceso', title: c.toc.process },
+  { id: 'persona', title: c.toc.persona },
+  { id: 'empatia', title: c.toc.empathy },
+  { id: 'hmw-jtbd', title: c.toc.hmw },
+  { id: 'hipotesis', title: c.toc.hypothesis },
+  { id: 'solucion', title: c.toc.solution },
+  { id: 'flujo', title: c.toc.flow },
+  { id: 'wireframes', title: c.toc.wireframes },
+  { id: 'prototipo', title: c.toc.prototype },
+  { id: 'heuristicas', title: c.toc.heuristics },
+  { id: 'pruebas', title: c.toc.testing },
+];
+
+// Feature icons, in the same order as c.solution.features
+const featureIcons = [
+  'M6 2h12a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2ZM8 6h8v4H8ZM8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01',
+  'M3 17l6-6 4 4 8-8M15 7h6v6',
+  'M15 19v-1a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v1M8.5 10a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7ZM19 8v6M22 11h-6',
+];
+const features = c.solution.features.map((feature, index) => ({ ...feature, icon: featureIcons[index] }));
+
+// Product screens keep their original Spanish UI; an English copy in in99/en/ would replace them.
+const heuristics = c.heuristics.items.map((heuristic, index) => ({
+  ...heuristic,
+  image: media(`in99/heuristica-${String(index + 1).padStart(2, '0')}.png`, lang),
+}));
+
+// Static exports from the Figma file fill the layout on every device; the live file opens in a new tab.
+const wireframesLink = 'https://www.figma.com/design/1dLWx1SeuifhFIy1qPpWbL/In99?node-id=429-3313';
+const prototypeLink =
+  'https://www.figma.com/proto/1dLWx1SeuifhFIy1qPpWbL/In99?page-id=9%3A2&node-id=54-4388&starting-point-node-id=53%3A2854&scaling=scale-down';
+
+const screens = ['proto-login', 'proto-home', 'proto-gastos', 'proto-resumen'].map((file, index) => ({
+  image: media(`in99/${file}.png`, lang),
+  alt: c.prototype.alts[index],
+}));
+---
+
+<CaseStudy
+  slug="in99"
+  name="in99"
+  tagline={c.tagline}
+  cover={cover}
+  description={c.description}
+  brief={c.brief}
+  details={c.details}
+  sections={sections}
+  note={c.note}
+>
+  <CaseSection id="reto" number={1} title={c.toc.challenge}>
+    <p class="callout">{c.challenge.callout}</p>
+    <ul class="cards">
+      {
+        c.challenge.cards.map((item) => (
+          <li class="card">
+            <h4>{item.title}</h4>
+            <Fragment set:html={item.text} />
+          </li>
+        ))
+      }
+    </ul>
+  </CaseSection>
+
+  <CaseSection id="proceso" number={2} title={c.toc.process}>
+    <p>{c.process.text}</p>
+    <ol class="steps">
+      {
+        c.process.steps.map((step, index) => (
+          <li>
+            <span class="steps__number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+            <h4>{step.title}</h4>
+            <p>{step.text}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </CaseSection>
+
+  <CaseSection id="persona" number={3} title={c.toc.persona}>
+    <div class="persona">
+      <figure class="persona-photo">
+        <Image src={antonio} alt={c.persona.alt} widths={[300, 542]} sizes="(max-width: 760px) 70vw, 260px" />
+        <figcaption>{c.persona.quote}</figcaption>
+      </figure>
+      <div>
+        <h4>Antonio Valdés</h4>
+        <dl class="facts">
+          {
+            c.persona.facts.map((fact) => (
+              <>
+                <dt>{fact.label}</dt>
+                <dd>{fact.value}</dd>
+              </>
+            ))
+          }
+        </dl>
+        <p style="margin-top: 14px">{c.persona.bio}</p>
+      </div>
+    </div>
+    <ul class="cards">
+      {
+        c.persona.cards.map((card) => (
+          <li class="card">
+            <h4>{card.title}</h4>
+            <Fragment set:html={card.text} />
+          </li>
+        ))
+      }
+    </ul>
+  </CaseSection>
+
+  <CaseSection id="empatia" number={4} title={c.toc.empathy}>
+    <div class="empathy">
+      {
+        c.empathy.quadrants.map((quadrant) => (
+          <div class="empathy__quadrant">
+            <h4>{quadrant.title}</h4>
+            <p class="empathy__hint">{quadrant.hint}</p>
+            <ul>
+              {quadrant.items.map((item) => <li>{item}</li>)}
+            </ul>
+          </div>
+        ))
+      }
+      <Image class="empathy__photo" src={antonio} alt="" widths={[200, 400]} sizes="160px" />
+    </div>
+    <div class="pains-gains">
+      <div class="pains-gains__col">
+        <h4>{c.empathy.pains.title}</h4>
+        <p class="empathy__hint">{c.empathy.pains.hint}</p>
+        <ul>
+          {c.empathy.pains.items.map((item) => <li>{item}</li>)}
+        </ul>
+      </div>
+      <div class="pains-gains__col pains-gains__col--gains">
+        <h4>{c.empathy.gains.title}</h4>
+        <p class="empathy__hint">{c.empathy.gains.hint}</p>
+        <ul>
+          {c.empathy.gains.items.map((item) => <li>{item}</li>)}
+        </ul>
+      </div>
+    </div>
+  </CaseSection>
+
+  <CaseSection id="hmw-jtbd" number={5} title={c.titles.hmw}>
+    <p set:html={c.hmw.intro} />
+    <div class="voice brand-surface">
+      <div class="brand-surface__tint" aria-hidden="true"></div>
+      <Image class="voice__image" src={idea} alt="" widths={[300, 600]} sizes="(max-width: 760px) 40vw, 220px" />
+      <blockquote class="glass voice__quote">
+        <p>{c.hmw.quote}</p>
+        <cite>Antonio Valdés</cite>
+      </blockquote>
+    </div>
+    <h3>{c.hmw.hmwTitle}</h3>
+    <ul class="cards cards--2">
+      {c.hmw.questions.map((question) => <li class="card"><h4>HMW</h4>{question}</li>)}
+    </ul>
+    <h3>{c.hmw.jtbdTitle}</h3>
+    <ul class="cards">
+      {
+        c.hmw.jobs.map((job) => (
+          <li class="card">
+            <h4>JTBD</h4>
+            {job}
+          </li>
+        ))
+      }
+    </ul>
+  </CaseSection>
+
+  <CaseSection id="hipotesis" number={6} title={c.toc.hypothesis}>
+    <h3>{c.hypothesis.hypothesisTitle}</h3>
+    <p class="callout">{c.hypothesis.hypothesis}</p>
+    <h3>{c.hypothesis.experimentTitle}</h3>
+    <p set:html={c.hypothesis.experiment} />
+    <ul class="list">
+      {c.hypothesis.items.map((item) => <li>{item}</li>)}
+    </ul>
+  </CaseSection>
+
+  <CaseSection id="solucion" number={7} title={c.toc.solution}>
+    <p set:html={c.solution.text} />
+    <ul class="features">
+      {
+        features.map((feature) => (
+          <li>
+            <span class="features__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d={feature.icon} />
+              </svg>
+            </span>
+            <h4>{feature.title}</h4>
+            <p>{feature.text}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </CaseSection>
+
+  <CaseSection id="flujo" number={8} title={c.toc.flow}>
+    <p>{c.flow.text}</p>
+    <figure class="zoomable">
+      <Image src={flujo} alt={c.flow.alt} widths={[880, flujo.width]} sizes="(max-width: 1024px) 92vw, 880px" />
+      <figcaption>
+        <a class="link-arrow" href={flujo.src} target="_blank" rel="noopener noreferrer">
+          {c.flow.link}
+          <span class="visually-hidden">{t('common.newTab')}</span>
+        </a>
+      </figcaption>
+    </figure>
+  </CaseSection>
+
+  <CaseSection id="wireframes" number={9} title={c.toc.wireframes}>
+    <p>{c.wireframes.text}</p>
+    <figure class="wireframes">
+      <Image src={wireframes} alt={c.wireframes.alt} widths={[880, wireframes.width]} sizes="(max-width: 1024px) 92vw, 880px" />
+    </figure>
+    <div class="actions">
+      <a class="btn btn--ghost" href={wireframesLink} target="_blank" rel="noopener noreferrer">
+        {c.wireframes.link} <ArrowIcon />
+        <span class="visually-hidden">{t('common.newTab')}</span>
+      </a>
+    </div>
+  </CaseSection>
+
+  <CaseSection id="prototipo" number={10} title={c.titles.prototype}>
+    <p set:html={c.prototype.text} />
+    <div class="showcase brand-surface">
+      <div class="brand-surface__tint" aria-hidden="true"></div>
+      <ul class="showcase__screens">
+        {
+          screens.map((screen) => (
+            <li>
+              <PhoneMockup screen={screen.image} alt={screen.alt} />
+            </li>
+          ))
+        }
+      </ul>
+      <div class="glass showcase__cta">
+        <p>{c.prototype.cta}</p>
+        <a class="btn btn--light" href={prototypeLink} target="_blank" rel="noopener noreferrer">
+          {c.prototype.link} <ArrowIcon />
+          <span class="visually-hidden">{t('common.newTab')}</span>
+        </a>
+      </div>
+    </div>
+  </CaseSection>
+
+  <CaseSection id="heuristicas" number={11} title={c.toc.heuristics}>
+    <p set:html={c.heuristics.intro} />
+    <div class="heuristics" data-heuristics>
+      <ol class="heuristics__track" data-track>
+        {
+          heuristics.map((heuristic, index) => (
+            <li class="heuristics__slide" aria-label={`${index + 1} ${c.heuristics.of} ${heuristics.length}`}>
+              <div class="heuristics__media">
+                <Image src={heuristic.image} alt={heuristic.alt} widths={[700, heuristic.image.width]} sizes="(max-width: 760px) 90vw, 700px" />
+              </div>
+              <div class="heuristics__copy">
+                <span class="heuristics__number">{String(index + 1).padStart(2, '0')}</span>
+                <h4>{heuristic.title}</h4>
+                <p>{heuristic.text}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+      <div class="heuristics__controls">
+        <button type="button" class="heuristics__button" data-prev aria-label={c.heuristics.prev}>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6" /></svg>
+        </button>
+        <p class="heuristics__count" aria-live="polite"><span data-current>1</span> / {heuristics.length}</p>
+        <button type="button" class="heuristics__button" data-next aria-label={c.heuristics.next}>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6" /></svg>
+        </button>
+      </div>
+    </div>
+  </CaseSection>
+
+  <CaseSection id="pruebas" number={12} title={c.titles.testing}>
+    <p set:html={c.testing.text} />
+    <ul class="cards">
+      {
+        c.testing.cards.map((card) => (
+          <li class="card">
+            <h4>{card.title}</h4>
+            <Fragment set:html={card.text} />
+          </li>
+        ))
+      }
+    </ul>
+  </CaseSection>
+</CaseStudy>
+
+<script>
+  for (const root of document.querySelectorAll<HTMLElement>('[data-heuristics]')) {
+    const track = root.querySelector<HTMLElement>('[data-track]')!;
+    const slides = [...track.children] as HTMLElement[];
+    const current = root.querySelector('[data-current]')!;
+    const prev = root.querySelector<HTMLButtonElement>('[data-prev]')!;
+    const next = root.querySelector<HTMLButtonElement>('[data-next]')!;
+    let index = 0;
+
+    const update = () => {
+      current.textContent = String(index + 1);
+      prev.disabled = index === 0;
+      next.disabled = index === slides.length - 1;
+    };
+
+    const go = (to: number) => {
+      index = Math.max(0, Math.min(slides.length - 1, to));
+      track.scrollTo({ left: slides[index].offsetLeft - track.offsetLeft, behavior: 'smooth' });
+      update();
+    };
+
+    prev.addEventListener('click', () => go(index - 1));
+    next.addEventListener('click', () => go(index + 1));
+
+    // Keep the counter in sync when the user swipes; wait until scrolling settles
+    // so a smooth scroll triggered by the buttons doesn't reset the index midway.
+    let settle: number | undefined;
+    track.addEventListener('scroll', () => {
+      clearTimeout(settle);
+      settle = window.setTimeout(() => {
+        const nearest = Math.round(track.scrollLeft / track.clientWidth);
+        if (nearest !== index) {
+          index = nearest;
+          update();
+        }
+      }, 150);
+    }, { passive: true });
+
+    update();
+  }
+</script>
+
+<style>
+  /* Proceso */
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 12px;
+    padding: 0;
+    list-style: none;
+  }
+
+  .steps li {
+    padding: 20px 18px;
+    border: 1px solid var(--panel-line);
+    border-radius: var(--radius-md);
+    background: var(--purple-06);
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .steps__number {
+    color: var(--fuchsia);
+    font-size: 13px;
+    font-weight: var(--fw-semibold);
+  }
+
+  .steps h4 {
+    margin-block: 4px 6px;
+    color: var(--purple);
+    font-size: 16px;
+    font-weight: var(--fw-semibold);
+  }
+
+  /* Four questions read better as a 2 × 2 grid than as 3 + 1 */
+  ul.cards.cards--2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  /* Persona */
+  .persona-photo figcaption {
+    margin-top: 10px;
+    color: var(--purple);
+    font-size: 14px;
+    font-style: italic;
+    font-weight: var(--fw-medium);
+    text-align: left;
+  }
+
+  /* Mapa de empatía: four quadrants around the persona */
+  .empathy {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .empathy__quadrant {
+    padding: 24px;
+    border: 1px solid var(--panel-line);
+    border-radius: var(--radius-md);
+    background: var(--purple-06);
+  }
+
+  .empathy__quadrant:nth-child(2),
+  .empathy__quadrant:nth-child(4) {
+    text-align: right;
+  }
+
+  .empathy__quadrant:nth-child(3),
+  .empathy__quadrant:nth-child(4) {
+    padding-top: 72px;
+  }
+
+  .empathy__quadrant:nth-child(1),
+  .empathy__quadrant:nth-child(2) {
+    padding-bottom: 72px;
+  }
+
+  .empathy h4,
+  .pains-gains h4 {
+    color: var(--purple);
+    font-size: 18px;
+    font-weight: var(--fw-semibold);
+  }
+
+  .empathy__quadrant:nth-child(even) h4 {
+    color: var(--fuchsia);
+  }
+
+  .empathy__hint {
+    margin-bottom: 12px;
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: var(--fw-light);
+  }
+
+  .empathy ul,
+  .pains-gains ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 0;
+    list-style: none;
+  }
+
+  .empathy__quadrant:nth-child(even) ul {
+    justify-content: flex-end;
+  }
+
+  .empathy li,
+  .pains-gains li {
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: var(--purple);
+    color: var(--white);
+    font-size: 13px;
+    font-weight: var(--fw-medium);
+    line-height: 1.4;
+  }
+
+  .empathy__quadrant:nth-child(even) li {
+    background: var(--fuchsia);
+  }
+
+  .empathy :global(.empathy__photo) {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 132px;
+    height: 132px;
+    border: 6px solid var(--white);
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center 20%;
+    transform: translate(-50%, -50%);
+  }
+
+  .pains-gains {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .pains-gains__col {
+    padding: 24px;
+    border: 1px solid var(--panel-line);
+    border-top: 4px solid var(--purple);
+    border-radius: var(--radius-md);
+    background: var(--white);
+    box-shadow: var(--panel-shadow);
+  }
+
+  .pains-gains__col li {
+    border: 1px solid var(--purple-24);
+    background: var(--purple-06);
+    color: var(--purple);
+  }
+
+  .pains-gains__col--gains {
+    border-top-color: var(--fuchsia);
+  }
+
+  .pains-gains__col--gains h4 {
+    color: var(--fuchsia);
+  }
+
+  .pains-gains__col--gains li {
+    border-color: rgb(201 0 157 / 0.3);
+    background: var(--fuchsia-12);
+    color: var(--fuchsia);
+  }
+
+  /* Voz del usuario */
+  .voice {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    align-items: center;
+    gap: 24px;
+    padding: 24px;
+    border-radius: var(--radius-lg);
+  }
+
+  .voice :global(.voice__image) {
+    position: relative;
+    width: 100%;
+    height: 220px;
+    border-radius: var(--radius-md);
+    object-fit: cover;
+  }
+
+  .voice__quote {
+    position: relative;
+    padding: 24px 28px;
+    border-radius: var(--radius-md);
+  }
+
+  .voice blockquote p {
+    font-size: clamp(17px, 1.6vw, 20px);
+    font-weight: var(--fw-medium);
+    line-height: 1.5;
+  }
+
+  .voice cite {
+    display: block;
+    margin-top: 12px;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: var(--fw-light);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* Funciones clave */
+  .features {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    padding: 0;
+    list-style: none;
+  }
+
+  .features li {
+    padding: 24px;
+    border: 1px solid var(--panel-line);
+    border-radius: var(--radius-md);
+    background: var(--white);
+    box-shadow: var(--panel-shadow);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .features__icon {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 14px;
+    border-radius: 12px;
+    background: var(--purple);
+    color: var(--white);
+  }
+
+  .features li:nth-child(even) .features__icon {
+    background: var(--fuchsia);
+  }
+
+  .features__icon svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .features h4 {
+    margin-bottom: 6px;
+    color: var(--ink);
+    font-size: 16px;
+    font-weight: var(--fw-semibold);
+  }
+
+  .zoomable figcaption {
+    text-align: left;
+  }
+
+  /* Wireframes y prototipo */
+  .wireframes {
+    padding: clamp(12px, 2vw, 24px);
+    border: 1px solid var(--panel-line);
+    border-radius: var(--radius-lg);
+    background: var(--white);
+    box-shadow: var(--panel-shadow);
+  }
+
+  .showcase {
+    display: grid;
+    gap: clamp(24px, 3vw, 36px);
+    padding: clamp(28px, 4vw, 48px) clamp(20px, 3vw, 40px);
+    border-radius: var(--radius-lg);
+  }
+
+  .showcase__screens {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    align-items: start;
+    gap: clamp(12px, 2vw, 24px);
+    padding: 0;
+    list-style: none;
+  }
+
+  /* Staggered like a product shot */
+  .showcase__screens li:nth-child(even) {
+    margin-top: clamp(16px, 3vw, 40px);
+  }
+
+  .showcase__screens :global(.phone) {
+    max-width: none;
+  }
+
+  .showcase__cta {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px 24px;
+    padding: 20px 24px;
+    border-radius: var(--radius-md);
+  }
+
+  .showcase__cta p {
+    font-weight: var(--fw-medium);
+  }
+
+  /* Heurísticas: carrusel con scroll-snap */
+  .heuristics {
+    display: grid;
+    gap: 16px;
+  }
+
+  .heuristics__track {
+    display: grid;
+    grid-auto-columns: 100%;
+    grid-auto-flow: column;
+    overflow-x: auto;
+    padding: 0;
+    border: 1px solid var(--panel-line);
+    list-style: none;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    border-radius: var(--radius-lg);
+  }
+
+  .heuristics__track::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Example on top at full width (some are wide flows), explanation below */
+  .heuristics__slide {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    scroll-snap-align: start;
+    background: var(--purple-06);
+  }
+
+  /* Fixed box with the example contained inside: Safari ignores a percentage max-height on grid
+     children, which let tall examples (07, 09) spill over the description */
+  .heuristics__media {
+    display: flex;
+    height: clamp(280px, 34vw, 420px);
+    padding: 24px;
+    overflow: hidden;
+    border-bottom: 1px solid var(--panel-line);
+    background: var(--white);
+  }
+
+  .heuristics__media :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .heuristics__copy {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-content: start;
+    column-gap: 20px;
+    padding: 24px 28px 28px;
+  }
+
+  .heuristics__copy .heuristics__number {
+    grid-row: span 2;
+  }
+
+  .heuristics__number {
+    color: var(--fuchsia);
+    font-size: 40px;
+    font-weight: var(--fw-bold);
+    line-height: 1;
+  }
+
+  .heuristics__copy h4 {
+    margin-bottom: 6px;
+    color: var(--purple);
+    font-size: 20px;
+    font-weight: var(--fw-semibold);
+  }
+
+  .heuristics__copy p {
+    font-size: 15px;
+  }
+
+  .heuristics__controls {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 16px;
+  }
+
+  .heuristics__count {
+    min-width: 56px;
+    color: var(--ink);
+    font-size: 14px;
+    font-weight: var(--fw-medium);
+    text-align: center;
+  }
+
+  .heuristics__button {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border: 2px solid var(--purple);
+    border-radius: 50%;
+    background: var(--white);
+    color: var(--purple);
+    cursor: pointer;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease;
+  }
+
+  .heuristics__button:hover:not(:disabled) {
+    background: var(--purple);
+    color: var(--white);
+  }
+
+  .heuristics__button:disabled {
+    opacity: 0.35;
+    cursor: default;
+  }
+
+  .heuristics__button svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  @media (max-width: 1100px) {
+    .steps {
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    }
+  }
+
+  @media (max-width: 760px) {
+    .empathy,
+    .pains-gains,
+    .features,
+    ul.cards.cards--2 {
+      grid-template-columns: 1fr;
+    }
+
+    .empathy__quadrant:nth-child(n) {
+      padding: 20px;
+      text-align: left;
+    }
+
+    .empathy__quadrant:nth-child(even) ul {
+      justify-content: flex-start;
+    }
+
+    .empathy :global(.empathy__photo) {
+      display: none;
+    }
+
+    .voice {
+      grid-template-columns: 1fr;
+    }
+
+    .voice :global(.voice__image) {
+      height: 160px;
+    }
+
+    .voice__quote {
+      padding: 20px;
+    }
+
+    .showcase__screens {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .heuristics__media {
+      height: 300px;
+      padding: 16px;
+    }
+
+    .heuristics__copy {
+      grid-template-columns: 1fr;
+      padding: 20px;
+    }
+
+    .heuristics__copy .heuristics__number {
+      grid-row: auto;
+      margin-bottom: 8px;
+      font-size: 28px;
+    }
+  }
+</style>

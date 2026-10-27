@@ -6,7 +6,7 @@ import CtaBar from '../components/CtaBar.astro';
 import portfolioHero from '../assets/figma/portfolio-hero.png';
 import portfolioDesk from '../assets/figma/portfolio-desk.png';
 import { projects, upcomingProjects } from '../data/site';
-import { getLang, useTranslations } from '../i18n';
+import { getLang, path, useTranslations } from '../i18n';
 
 const lang = getLang(Astro.currentLocale);
 const t = useTranslations(lang);
@@ -38,9 +38,9 @@ const copy = {
   },
 }[lang];
 
-// Case studies are only written in Spanish for now
-const hreflang = lang === 'es' ? undefined : 'es';
-const caseStatus = lang === 'es' ? t('common.caseStudy') : `${t('common.caseStudy')} · ES`;
+// "Caso de estudio", plus the delivery status when the project has one
+const caseStatus = (project: (typeof projects)[number]) =>
+  [t('common.caseStudy'), project.status && t(project.status)].filter(Boolean).join(' · ');
 ---
 
 <Base title={copy.title} description={copy.description}>
@@ -86,9 +86,8 @@ const caseStatus = lang === 'es' ? t('common.caseStudy') : `${t('common.caseStud
                 focus={project.focus}
                 tag={project.category[lang]}
                 summary={project.summary[lang]}
-                status={caseStatus}
-                href={project.href}
-                hreflang={hreflang}
+                status={caseStatus(project)}
+                href={path(`case-${project.slug}`, lang)}
               />
             </li>
           ))

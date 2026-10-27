@@ -22,14 +22,13 @@ const es = {
   'lang.label': 'Idioma',
   'lang.es': 'Español',
   'lang.en': 'English',
-  'lang.unavailable': 'Esta página todavía no está traducida; te llevamos a la sección equivalente.',
+  'lang.unavailable': 'Esta página todavía no está traducida; te llevamos al inicio.',
 
   'common.newTab': '(se abre en una pestaña nueva)',
   'common.cv': 'Ver mi currículum',
   'common.seeProjects': 'Ver proyectos',
   'common.caseStudy': 'Caso de estudio',
   'common.seeCaseStudy': 'Ver caso de estudio',
-  'common.inSpanish': '',
   'common.social': 'Redes sociales',
 
   'cta.label': 'Siguientes pasos',
@@ -49,8 +48,9 @@ const es = {
   'contactBlock.followTitle': 'Sigue mi trayectoria.',
   'contactBlock.followText': 'En mis redes comparto novedades, proyectos y oportunidades.',
 
-  'project.status.building': 'En construcción',
+  'project.status.launched': 'Lanzado',
   'project.status.ongoing': 'En curso',
+  'project.status.building': 'En construcción',
   'project.open': 'Abrir el caso de estudio de',
 
   'case.eyebrow': 'Caso de estudio',
@@ -64,6 +64,12 @@ const es = {
   'case.next': 'Siguiente caso de estudio',
   'case.nextLabel': 'Siguiente proyecto',
   'case.titleSuffix': 'caso de estudio',
+  'case.phase.empathize': 'Empatizar',
+  'case.phase.define': 'Definir',
+  'case.phase.ideate': 'Idear',
+  'case.phase.prototype': 'Prototipar',
+  'case.phase.test': 'Probar',
+  'case.processLabel': 'Fases del proceso de diseño',
 } as const;
 
 export type UiKey = keyof typeof es;
@@ -89,14 +95,13 @@ const en = {
   'lang.label': 'Language',
   'lang.es': 'Español',
   'lang.en': 'English',
-  'lang.unavailable': 'This page is not translated yet; you will land on the closest section.',
+  'lang.unavailable': 'This page is not translated yet; you will land on the home page.',
 
   'common.newTab': '(opens in a new tab)',
   'common.cv': 'View my résumé',
   'common.seeProjects': 'See projects',
   'common.caseStudy': 'Case study',
   'common.seeCaseStudy': 'Read the case study',
-  'common.inSpanish': '(in Spanish)',
   'common.social': 'Social media',
 
   'cta.label': 'Next steps',
@@ -116,8 +121,9 @@ const en = {
   'contactBlock.followTitle': 'Follow my journey.',
   'contactBlock.followText': 'I share news, projects and opportunities on my social media.',
 
-  'project.status.building': 'Under construction',
+  'project.status.launched': 'Launched',
   'project.status.ongoing': 'In progress',
+  'project.status.building': 'Under construction',
   'project.open': 'Open the case study for',
 
   'case.eyebrow': 'Case study',
@@ -131,6 +137,12 @@ const en = {
   'case.next': 'Next case study',
   'case.nextLabel': 'Next project',
   'case.titleSuffix': 'case study',
+  'case.phase.empathize': 'Empathize',
+  'case.phase.define': 'Define',
+  'case.phase.ideate': 'Ideate',
+  'case.phase.prototype': 'Prototype',
+  'case.phase.test': 'Test',
+  'case.processLabel': 'Design process phases',
 } satisfies Record<UiKey, string>;
 
 export const ui = { es, en };

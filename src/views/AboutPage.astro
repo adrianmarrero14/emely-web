@@ -7,7 +7,7 @@ import emelyPhoto from '../assets/photos/emely-square.jpg';
 import skillsBg from '../assets/figma/skills-bg.png';
 import skillsSketch from '../assets/figma/skills-sketch.png';
 import { site } from '../data/site';
-import { getLang, path, useTranslations } from '../i18n';
+import { getLang, path, useTranslations, type RouteKey } from '../i18n';
 
 const lang = getLang(Astro.currentLocale);
 const t = useTranslations(lang);
@@ -198,18 +198,16 @@ const content = {
 }[lang];
 
 // Language-independent part of each job, in the same order as `content.experience`
-const jobs = [
-  { company: 'Darien Technology', current: true, caseStudy: '/proyectos/pinsxp' },
+const jobs: { company: string; current?: boolean; caseStudy?: RouteKey }[] = [
+  { company: 'Darien Technology', current: true, caseStudy: 'case-pinsxp' },
   { company: 'Finaer' },
   { company: 'Amaris Consulting' },
-  { company: 'in99', caseStudy: '/proyectos/in99' },
-  { company: 'Darien Technology', caseStudy: '/proyectos/mercantil' },
+  { company: 'in99', caseStudy: 'case-in99' },
+  { company: 'Darien Technology', caseStudy: 'case-mercantil' },
   { company: 'Lookers Inbound' },
 ];
 const experience = jobs.map((job, index) => ({ ...job, ...content.experience[index] }));
 const { story, services, stack } = content;
-// Case studies are only written in Spanish for now
-const hreflang = lang === 'es' ? undefined : 'es';
 ---
 
 <Base title={content.title} description={content.description}>
@@ -320,8 +318,8 @@ const hreflang = lang === 'es' ? undefined : 'es';
                 <p class="timeline__company">{job.company}</p>
                 <p>{job.description}</p>
                 {job.caseStudy && (
-                  <a class="link-arrow timeline__link" href={job.caseStudy} hreflang={hreflang}>
-                    {t('common.seeCaseStudy')} {t('common.inSpanish')} <ArrowIcon />
+                  <a class="link-arrow timeline__link" href={path(job.caseStudy, lang)}>
+                    {t('common.seeCaseStudy')} <ArrowIcon />
                   </a>
                 )}
               </div>

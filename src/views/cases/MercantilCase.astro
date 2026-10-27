@@ -1,0 +1,428 @@
+---
+import { Image } from 'astro:assets';
+import CaseStudy from '../../layouts/CaseStudy.astro';
+import CaseSection from '../../components/CaseSection.astro';
+import ProcessSteps from '../../components/ProcessSteps.astro';
+import content from '../../i18n/cases/mercantil';
+import { getLang } from '../../i18n';
+import { media } from '../../i18n/media';
+
+// Shared markup of the case study; the text comes from src/i18n/cases/mercantil.ts.
+const lang = getLang(Astro.currentLocale);
+const c = content[lang];
+
+const cover = media('home/mercantil.png', lang);
+const reto = media('mercantil/reto.png', lang);
+const persona = media('mercantil/persona.png', lang);
+const objetivos = media('mercantil/objetivos.jpg', lang);
+const bocetos = ['boceto-1.png', 'boceto-2.png', 'boceto-3.png', 'boceto-4.png'].map((file) => media(`mercantil/${file}`, lang));
+
+const sections = [
+  { id: 'reto', title: c.toc.challenge },
+  { id: 'proceso', title: c.toc.process },
+  { id: 'persona', title: c.toc.persona },
+  { id: 'empatia', title: c.toc.empathy },
+  { id: 'entrevistas', title: c.toc.interviews },
+  { id: 'datos', title: c.toc.data },
+  { id: 'objetivos', title: c.toc.goals },
+  { id: 'solucion', title: c.toc.solution },
+  { id: 'bocetos', title: c.toc.sketches },
+  { id: 'prototipo', title: c.toc.prototype },
+  { id: 'conclusiones', title: c.toc.conclusions },
+];
+
+// Empathy map: "thinks and feels" on top, "hears" and "sees" either side of the photo, "says and does" below it,
+// then "pains" and "gains"
+const [thinks, hears, sees, says, pains, gains] = c.empathy.quadrants;
+
+const prototypeUrl =
+  'https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fproto%2Ff1PacEZNlH3ijGv34WVe3r%2FMercantil%3Fpage-id%3D0%253A1%26type%3Ddesign%26node-id%3D2-387%26viewport%3D1268%252C513%252C0.25%26t%3DyyxZaTteGqxgxwtr-1%26scaling%3Dscale-down%26starting-point-node-id%3D2%253A3%26mode%3Ddesign';
+---
+
+<CaseStudy
+  slug="mercantil"
+  name="Mercantil Banco"
+  tagline={c.tagline}
+  cover={cover}
+  description={c.description}
+  brief={c.brief}
+  details={c.details}
+  sections={sections}
+  note={c.note}
+>
+  <CaseSection id="reto" number={1} title={c.toc.challenge}>
+    <p class="callout">{c.challenge.callout}</p>
+    <figure>
+      <Image src={reto} alt={c.challenge.alt} widths={[880, 1760]} sizes="(max-width: 1024px) 92vw, 880px" />
+    </figure>
+  </CaseSection>
+
+  <CaseSection id="proceso" number={2} title={c.toc.process}>
+    <p set:html={c.process.text} />
+    <ProcessSteps steps={c.process.steps} />
+  </CaseSection>
+
+  <CaseSection id="persona" number={3} phase={c.phases.empathize} title={c.toc.persona}>
+    <div class="persona">
+      <Image src={persona} alt={c.persona.alt} widths={[300, 517]} sizes="(max-width: 760px) 70vw, 260px" />
+      <div>
+        <h4>Leonardo Gil Rojas</h4>
+        <dl class="facts">
+          {
+            c.persona.facts.map((fact) => (
+              <>
+                <dt>{fact.label}</dt>
+                <dd>{fact.value}</dd>
+              </>
+            ))
+          }
+        </dl>
+      </div>
+    </div>
+    <h3>{c.persona.bioTitle}</h3>
+    <p>{c.persona.bio}</p>
+    <div class="persona-needs">
+      <div class="card">
+        <h4>{c.persona.needsTitle}</h4>
+        <ul class="list">
+          {c.persona.needs.map((item) => <li>{item}</li>)}
+        </ul>
+      </div>
+      <div class="card">
+        <h4>{c.persona.painsTitle}</h4>
+        <ul class="list">
+          {c.persona.pains.map((item) => <li>{item}</li>)}
+        </ul>
+      </div>
+    </div>
+  </CaseSection>
+
+  <CaseSection id="empatia" number={4} phase={c.phases.empathize} title={c.toc.empathy}>
+    <p>{c.empathy.text}</p>
+    <!-- Rebuilt from the original picture so its text follows the page language -->
+    <figure class="empathy" aria-label={c.empathy.label}>
+      <Image class="empathy__photo" src={persona} alt="" widths={[240, 480]} sizes="200px" />
+      {
+        [
+          { quadrant: thinks, area: 'thinks', tone: 'blue' },
+          { quadrant: hears, area: 'hears', tone: 'navy' },
+          { quadrant: sees, area: 'sees', tone: 'sky' },
+          { quadrant: says, area: 'says', tone: 'navy' },
+          { quadrant: pains, area: 'pains', tone: 'red' },
+          { quadrant: gains, area: 'gains', tone: 'green' },
+        ].map(({ quadrant, area, tone }) => (
+          <section class={`empathy__card empathy__card--${area} empathy__card--${tone}`}>
+            <h3>{quadrant.title}</h3>
+            <p class="empathy__hint">{quadrant.hint}</p>
+            <ul>
+              {quadrant.items.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+          </section>
+        ))
+      }
+    </figure>
+  </CaseSection>
+
+  <CaseSection id="entrevistas" number={5} phase={c.phases.empathize} title={c.toc.interviews}>
+    <p>{c.interviews.text}</p>
+    <ul class="interviews">
+      {
+        c.interviews.items.map((interview) => (
+          <li>
+            <blockquote>
+              <p>“{interview.quote}”</p>
+            </blockquote>
+            <p class="interviews__meta">
+              <span>{interview.name}</span>
+              <strong>{interview.insight}</strong>
+            </p>
+          </li>
+        ))
+      }
+    </ul>
+  </CaseSection>
+
+  <CaseSection id="datos" number={6} phase={c.phases.empathize} title={c.toc.data}>
+    <p>{c.data.text}</p>
+    {
+      c.data.groups.map((group) => (
+        <div class="data-group">
+          <h3>{group.group}</h3>
+          <ul class="stats">
+            {group.stats.map((stat) => (
+              <li class="stat">
+                <span>{stat.label}</span>{' '}
+                <strong>{stat.value}</strong>{' '}
+                {stat.text}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
+    <p class="callout">{c.data.callout}</p>
+    <figure class="narrow">
+      <img src="/images/mercantil-datos.gif" width="1152" height="648" alt={c.data.gifAlt} loading="lazy" decoding="async" />
+    </figure>
+  </CaseSection>
+
+  <CaseSection id="objetivos" number={7} phase={c.phases.define} title={c.titles.goals}>
+    <p>{c.goals.text}</p>
+    <div class="cards">
+      {
+        c.goals.cards.map((card) => (
+          <div class="card">
+            <h4>{card.title}</h4>
+            <ul class="list">
+              {card.items.map((item) => (
+                <li set:html={item} />
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+    <figure class="narrow">
+      <Image src={objetivos} alt={c.goals.alt} widths={[700, 1400]} sizes="(max-width: 760px) 92vw, 700px" />
+    </figure>
+  </CaseSection>
+
+  <CaseSection id="solucion" number={8} phase={c.phases.define} title={c.toc.solution}>
+    <p>{c.solution.text}</p>
+    <ul class="cards">
+      {
+        c.solution.cards.map((card) => (
+          <li class="card">
+            <h4>{card.title}</h4>
+            <Fragment set:html={card.text} />
+          </li>
+        ))
+      }
+    </ul>
+  </CaseSection>
+
+  <CaseSection id="bocetos" number={9} phase={c.phases.ideate} title={c.toc.sketches}>
+    <p>{c.sketches.text}</p>
+    <div class="gallery" style="--cols: 2">
+      {bocetos.map((boceto, index) => <Image src={boceto} alt={c.sketches.alts[index]} widths={[440, 880]} sizes="(max-width: 760px) 92vw, 440px" />)}
+    </div>
+  </CaseSection>
+
+  <CaseSection id="prototipo" number={10} phase={c.phases.prototype} title={c.titles.prototype}>
+    <p set:html={c.prototype.text} />
+    <div class="prototype">
+      <iframe src={prototypeUrl} title={c.prototype.iframeTitle} loading="lazy" allowfullscreen></iframe>
+    </div>
+  </CaseSection>
+
+  <CaseSection id="conclusiones" number={11} phase={c.phases.test} title={c.toc.conclusions}>
+    <p>{c.conclusions.text}</p>
+    <ul class="cards">
+      {
+        c.conclusions.cards.map((card) => (
+          <li class="card">
+            <h4>{card.title}</h4>
+            <Fragment set:html={card.text} />
+          </li>
+        ))
+      }
+    </ul>
+    <p class="callout">{c.conclusions.callout}</p>
+  </CaseSection>
+</CaseStudy>
+
+<style>
+  .narrow {
+    max-width: 700px;
+    margin-inline: auto;
+  }
+
+  .persona-needs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .interviews {
+    display: grid;
+    gap: 16px;
+    padding: 0;
+    list-style: none;
+  }
+
+  .interviews li {
+    padding: 22px 24px;
+    border: 1px solid var(--panel-line);
+    border-left: 4px solid var(--purple);
+    border-radius: var(--radius-md);
+    background: var(--white);
+    box-shadow: var(--panel-shadow);
+  }
+
+  .interviews li:nth-child(even) {
+    border-left-color: var(--fuchsia);
+  }
+
+  .interviews blockquote {
+    color: var(--ink);
+    font-size: 17px;
+    font-weight: var(--fw-light);
+    font-style: italic;
+  }
+
+  .interviews__meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 4px 16px;
+    margin-top: 10px;
+    font-size: 14px;
+  }
+
+  .interviews__meta span {
+    color: var(--muted);
+    font-weight: var(--fw-medium);
+  }
+
+  .interviews__meta strong {
+    color: var(--purple);
+  }
+
+  /* Empathy map: six cards around the persona photo, in the colours of the original board */
+  .empathy {
+    display: grid;
+    grid-template-columns: 1fr minmax(160px, 200px) 1fr;
+    grid-template-areas:
+      'thinks thinks thinks'
+      'hears photo sees'
+      'says says says'
+      'pains gains gains';
+    align-items: start;
+    gap: 16px;
+  }
+
+  .empathy :global(.empathy__photo) {
+    grid-area: photo;
+    align-self: center;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+    border: 4px solid var(--white);
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: var(--panel-shadow);
+  }
+
+  .empathy__card {
+    --tone: var(--purple);
+    display: grid;
+    align-content: start;
+    gap: 8px;
+    height: 100%;
+    padding: 20px 22px;
+    border: 1px solid var(--panel-line);
+    border-top: 4px solid var(--tone);
+    border-radius: var(--radius-md);
+    background: var(--white);
+    box-shadow: var(--panel-shadow);
+  }
+
+  .empathy__card--thinks {
+    grid-area: thinks;
+  }
+
+  .empathy__card--hears {
+    grid-area: hears;
+  }
+
+  .empathy__card--sees {
+    grid-area: sees;
+  }
+
+  .empathy__card--says {
+    grid-area: says;
+  }
+
+  .empathy__card--pains {
+    grid-area: pains;
+  }
+
+  .empathy__card--gains {
+    grid-area: gains;
+  }
+
+  .empathy__card--blue {
+    --tone: #0f8be6;
+  }
+
+  .empathy__card--navy {
+    --tone: #0b2a63;
+  }
+
+  .empathy__card--sky {
+    --tone: #12a3dc;
+  }
+
+  .empathy__card--red {
+    --tone: #e3000f;
+  }
+
+  .empathy__card--green {
+    --tone: #11a536;
+  }
+
+  .empathy__card h3 {
+    margin: 0;
+    color: var(--tone);
+    font-size: 18px;
+    font-weight: var(--fw-bold);
+  }
+
+  .empathy__hint {
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: var(--fw-light);
+  }
+
+  .empathy__card ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 4px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .empathy__card li {
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--tone) 12%, var(--white));
+    color: var(--ink);
+    font-size: 14px;
+    line-height: 1.4;
+  }
+
+  .data-group {
+    display: grid;
+    gap: 12px;
+  }
+
+  @media (max-width: 760px) {
+    .persona-needs {
+      grid-template-columns: 1fr;
+    }
+
+    .empathy {
+      grid-template-columns: 1fr;
+      grid-template-areas: 'photo' 'thinks' 'hears' 'sees' 'says' 'pains' 'gains';
+    }
+
+    .empathy :global(.empathy__photo) {
+      justify-self: center;
+      width: 160px;
+    }
+
+  }
+</style>

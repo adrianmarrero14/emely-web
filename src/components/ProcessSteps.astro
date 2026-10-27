@@ -1,0 +1,131 @@
+---
+import { getLang, useTranslations } from '../i18n';
+
+// Design-process diagram in HTML instead of a picture, so its text follows the page language.
+interface Props {
+  steps: { title: string; items: string[] }[];
+  label?: string;
+}
+
+const t = useTranslations(getLang(Astro.currentLocale));
+const { steps, label = t('case.processLabel') } = Astro.props;
+---
+
+<ol class="process" aria-label={label}>
+  {
+    steps.map((step, index) => (
+      <li class="process__step">
+        <p class="process__title">
+          <span class="process__number" aria-hidden="true">
+            {String(index + 1).padStart(2, '0')}
+          </span>
+          {step.title}
+        </p>
+        <ul class="process__items">
+          {step.items.map((item) => (
+            <li>{item}</li>
+          ))}
+        </ul>
+      </li>
+    ))
+  }
+</ol>
+
+<style>
+  .process {
+    --steps: 5;
+    display: grid;
+    grid-template-columns: repeat(var(--steps), minmax(0, 1fr));
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .process__step {
+    position: relative;
+    display: grid;
+    align-content: start;
+    gap: 16px;
+    padding-right: 20px;
+  }
+
+  /* Connector between steps: a thin line running from each pill to the next */
+  .process__step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 22px;
+    right: 0;
+    left: calc(100% - 20px);
+    height: 2px;
+    background: linear-gradient(90deg, var(--purple-24), var(--fuchsia));
+  }
+
+  .process__title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 46px;
+    padding: 8px 16px 8px 8px;
+    border-radius: 999px;
+    background: var(--purple);
+    color: var(--white);
+    font-size: 15px;
+    font-weight: var(--fw-semibold);
+    line-height: 1.2;
+  }
+
+  .process__number {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: rgb(255 255 255 / 0.16);
+    font-size: 12px;
+  }
+
+  .process__items {
+    display: grid;
+    gap: 8px;
+    margin: 0;
+    padding: 0 4px 0 22px;
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .process__items li::marker {
+    color: var(--fuchsia);
+  }
+
+  /* Phones and narrow tablets: a vertical timeline */
+  @media (max-width: 900px) {
+    .process {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    .process__step {
+      padding: 0 0 0 0;
+    }
+
+    .process__step:not(:last-child)::after {
+      top: 46px;
+      bottom: -20px;
+      left: 22px;
+      width: 2px;
+      height: auto;
+      background: linear-gradient(180deg, var(--purple-24), var(--fuchsia));
+    }
+
+    .process__title {
+      justify-self: start;
+    }
+
+    .process__items {
+      padding-left: 62px;
+    }
+  }
+</style>
