@@ -4,25 +4,27 @@ import type { Localized } from '..';
 // Strings may contain <strong> only; they are rendered with set:html.
 
 const es = {
-  tagline: 'Cómo escalé un sistema de diseño complejo con ayuda de la IA.',
+  tagline: 'Escalado de un sistema de diseño (Compass) asistido por IA.',
   description:
     'Lideré la conceptualización, la arquitectura y el escalado de Compass, el sistema de diseño de PinsXP: una plataforma social para guardar, compartir y conectar momentos y lugares. Integré flujos de trabajo asistidos por IA para unificar y acelerar el diseño de nuevas experiencias.',
   brief:
-    'Diseñar un sistema de diseño que garantice una experiencia visual coherente y escalable en todos los productos digitales de PinsXP.',
+    'Diseñar, estructurar y escalar desde cero Compass, un sistema de diseño robusto, accesible (WCAG) y altamente tokenizado, optimizando los flujos de trabajo con herramientas de inteligencia artificial y protocolos avanzados.',
   details: [
-    { label: 'Cliente', value: 'PinsXP' },
+    { label: 'Cliente', value: 'PinsXP (startup estadounidense)' },
     { label: 'Rol', value: 'Lead Product Designer' },
+    { label: 'Empresa', value: 'Darien Technology' },
     { label: 'Ubicación', value: 'Madrid, España' },
     { label: 'Tipo', value: 'Sistema de diseño' },
   ],
   sections: {
-    challenge: 'El reto',
+    challenge: 'Contexto y reto',
+    method: 'Metodología end-to-end',
     solution: 'La solución: Compass',
-    impact: 'El impacto',
+    impact: 'Resultados e impacto',
     next: 'Próximos pasos',
   },
   challenge: {
-    text: 'En PinsXP, los usuarios guardan sus lugares favoritos, crean itinerarios de viaje o planes y comparten momentos en grupo con sus amigos. A medida que la startup crecía, diseñar pantallas y flujos de forma aislada empezó a generar <strong>inconsistencias visuales y a ralentizar el desarrollo</strong>.',
+    text: 'En PinsXP, los usuarios guardan sus lugares favoritos, crean itinerarios de viaje o planes y comparten momentos en grupo con sus amigos. La startup crecía a gran velocidad y eso abría una <strong>brecha cada vez mayor entre el equipo de diseño en Figma y los ingenieros de frontend</strong>, que ralentizaba el time-to-market.',
     alts: [
       'Pantallas de PinsXP antes del sistema de diseño',
       'Detalle de componentes sin estandarizar',
@@ -31,16 +33,33 @@ const es = {
     problemTitle: 'El problema',
     problems: [
       {
-        title: 'Componentes sin estándar',
-        text: 'La falta de estandarización ralentizaba la creación de nuevos flujos y pantallas.',
+        title: 'Inconsistencias visuales',
+        text: 'Tarjetas de lugares guardados, creación de grupos o listados de planes se resolvían de formas distintas en cada pantalla.',
       },
       {
-        title: 'Elementos cotidianos dispares',
-        text: 'Tarjetas de lugares guardados, creación de grupos o listados de planes se resolvían de formas distintas.',
+        title: 'Componentes duplicados',
+        text: 'La falta de estandarización multiplicaba las variantes de un mismo componente y ralentizaba la creación de nuevos flujos.',
       },
       {
-        title: 'Fricción con ingeniería',
-        text: 'Gestionar estados vacíos o el cambio entre modo claro y oscuro consumía demasiado tiempo operativo.',
+        title: 'Fricción en el handoff',
+        text: 'La entrega de flujos complejos de interfaz, como los estados vacíos o el cambio entre modo claro y oscuro, consumía demasiado tiempo operativo.',
+      },
+    ],
+  },
+  method: {
+    text: 'Abordé el proyecto con una metodología sistemática, dividida en tres fases clave.',
+    steps: [
+      {
+        title: 'Auditoría y discovery',
+        text: 'Mapeo exhaustivo de los componentes existentes y detección de las fricciones en el traspaso (handoff) entre diseño y desarrollo.',
+      },
+      {
+        title: 'Arquitectura de tokens',
+        text: 'Una jerarquía limpia de variables avanzadas en Figma, con <strong>tokens primitivos y semánticos</strong>, para soportar la escalabilidad multiplataforma.',
+      },
+      {
+        title: 'IA y workflows avanzados',
+        text: 'Incorporé <strong>Claude Code y el protocolo Figma MCP</strong> (Model Context Protocol) para automatizar la sincronización de especificaciones técnicas, validar tokens en tiempo real y acelerar la traducción de los elementos visuales a código limpio.',
       },
     ],
   },
@@ -51,18 +70,21 @@ const es = {
       'Lo llamé <strong>Compass</strong> porque funciona como una brújula: guía a diseño e ingeniería en una misma dirección para que guardar, compartir y descubrir lugares mantenga siempre el mismo pulso visual y de usabilidad.',
     cards: [
       {
-        title: 'Primitivas y semánticas',
-        text: 'Separé los valores base (primitivas) de la capa con propósito funcional (semánticas). Así, el cambio entre modo claro y oscuro se gestiona de forma limpia y automatizada.',
+        title: 'Estructura en Figma',
+        text: 'Componentes altamente modulares apalancados en Auto Layout, propiedades avanzadas de componentes y variables semánticas.',
       },
       {
-        title: 'Asistencia con Claude',
-        text: 'Integré Claude como asistente estratégico para definir y alinear las reglas de diseño, la nomenclatura y las especificaciones técnicas del sistema de forma ágil y rigurosa.',
-      },
-      {
-        title: 'Handoff a desarrollo',
-        text: 'Cada componente nuevo se entrega documentado: desbordamiento de texto, restricciones de tamaño y todos sus estados (cargando, vacío, error, éxito y deshabilitado).',
+        title: 'Accesibilidad y escalabilidad',
+        text: 'Estándares de accesibilidad (WCAG) desde la raíz del sistema, con componentes inclusivos y listos para producción.',
       },
     ],
+    code: {
+      title: 'Conexión diseño-código con Figma MCP y Claude Code',
+      items: [
+        'Flujos asistidos por IA que automatizan la revisión de la consistencia de los tokens.',
+        'Menos ambigüedad en la documentación técnica: ingeniería consume directrices y estructuras sincronizadas directamente desde el ecosistema de diseño.',
+      ],
+    },
   },
   impact: {
     panel: {
@@ -82,16 +104,16 @@ const es = {
     alt: 'Variables de Compass en Figma: la colección de primitivas y la de semánticas con sus valores en modo claro y oscuro',
     cards: [
       {
-        title: 'De la fricción a la modularidad',
-        text: 'Crear flujos sociales nuevos, como compartir colecciones o coordinar planes en grupo, pasó de ser un proceso artesanal a uno modular y predecible.',
+        title: 'Velocidad de entrega',
+        text: 'Los tiempos de implementación de nuevas vistas y componentes bajaron de forma notable gracias a la automatización del handoff con Claude Code y el MCP.',
       },
       {
-        title: 'Sinergia total con ingeniería',
-        text: 'Alinear las variables de diseño con la estructura del equipo de desarrollo redujo al mínimo los errores y el tiempo de revisión en código.',
+        title: 'Coherencia visual',
+        text: 'Se eliminó <strong>más del 80 % de la deuda técnica de diseño</strong> y la experiencia de usuario quedó unificada en toda la plataforma de PinsXP.',
       },
       {
-        title: 'Una experiencia coherente',
-        text: 'Cada pantalla refleja ahora una interfaz cohesiva, accesible y optimizada para guardar y compartir experiencias sin fricción.',
+        title: 'Escalabilidad sostenida',
+        text: 'Un sistema listo para crecer con los futuros requerimientos de la startup sin comprometer la calidad de la interfaz.',
       },
     ],
   },
@@ -116,24 +138,27 @@ const es = {
 };
 
 const en: typeof es = {
-  tagline: 'How I scaled a complex design system with the help of AI.',
+  tagline: 'Scaling an AI-assisted design system (Compass).',
   description:
     'I led the concept, architecture and scaling of Compass, the design system of PinsXP: a social platform to save, share and connect moments and places. I brought AI-assisted workflows into the process to unify and speed up the design of new experiences.',
-  brief: 'Design a system that guarantees a consistent, scalable visual experience across every PinsXP digital product.',
+  brief:
+    'Design, structure and scale Compass from scratch: a robust, accessible (WCAG) and highly tokenised design system, with workflows optimised through artificial intelligence tools and advanced protocols.',
   details: [
-    { label: 'Client', value: 'PinsXP' },
+    { label: 'Client', value: 'PinsXP (US startup)' },
     { label: 'Role', value: 'Lead Product Designer' },
+    { label: 'Company', value: 'Darien Technology' },
     { label: 'Location', value: 'Madrid, Spain' },
     { label: 'Type', value: 'Design system' },
   ],
   sections: {
-    challenge: 'The challenge',
+    challenge: 'Context and challenge',
+    method: 'End-to-end methodology',
     solution: 'The solution: Compass',
-    impact: 'The impact',
+    impact: 'Results and impact',
     next: 'Next steps',
   },
   challenge: {
-    text: 'On PinsXP, people save their favourite places, build travel itineraries or plans, and share moments with groups of friends. As the startup grew, designing screens and flows in isolation began to cause <strong>visual inconsistencies and slow down development</strong>.',
+    text: 'On PinsXP, people save their favourite places, build travel itineraries or plans, and share moments with groups of friends. The startup was growing fast, and that opened a <strong>widening gap between the design team in Figma and the frontend engineers</strong> that slowed down time-to-market.',
     alts: [
       'PinsXP screens before the design system',
       'Close-up of non-standardised components',
@@ -142,16 +167,33 @@ const en: typeof es = {
     problemTitle: 'The problem',
     problems: [
       {
-        title: 'No standard components',
-        text: 'The lack of standards slowed down the creation of new flows and screens.',
+        title: 'Visual inconsistencies',
+        text: 'Saved-place cards, group creation and plan lists were solved in a different way on every screen.',
       },
       {
-        title: 'Everyday elements done differently',
-        text: 'Saved-place cards, group creation and plan lists were each solved in a different way.',
+        title: 'Duplicated components',
+        text: 'The lack of standards multiplied the variants of the same component and slowed down the creation of new flows.',
       },
       {
-        title: 'Friction with engineering',
-        text: 'Handling empty states or switching between light and dark mode took up too much operational time.',
+        title: 'Handoff friction',
+        text: 'Delivering complex interface flows, such as empty states or switching between light and dark mode, took up too much operational time.',
+      },
+    ],
+  },
+  method: {
+    text: 'I approached the project with a systematic methodology, split into three key phases.',
+    steps: [
+      {
+        title: 'Audit and discovery',
+        text: 'A thorough map of the existing components and of the friction points in the handoff between design and development.',
+      },
+      {
+        title: 'Token architecture',
+        text: 'A clean hierarchy of advanced variables in Figma, with <strong>primitive and semantic tokens</strong>, to support multi-platform scalability.',
+      },
+      {
+        title: 'AI and advanced workflows',
+        text: 'I brought in <strong>Claude Code and the Figma MCP protocol</strong> (Model Context Protocol) to automate the sync of technical specs, validate tokens in real time and speed up the translation of visual elements into clean code.',
       },
     ],
   },
@@ -162,18 +204,21 @@ const en: typeof es = {
       'I named it <strong>Compass</strong> because it works like one: it points design and engineering in the same direction, so saving, sharing and discovering places always keeps the same visual and usability rhythm.',
     cards: [
       {
-        title: 'Primitives and semantics',
-        text: 'I separated the base values (primitives) from the layer with a functional purpose (semantics). That way, switching between light and dark mode is handled cleanly and automatically.',
+        title: 'Structure in Figma',
+        text: 'Highly modular components built on Auto Layout, advanced component properties and semantic variables.',
       },
       {
-        title: 'Assisted by Claude',
-        text: 'I brought in Claude as a strategic assistant to define and align the design rules, naming and technical specs of the system in a fast and rigorous way.',
-      },
-      {
-        title: 'Developer handoff',
-        text: 'Every new component ships documented: text overflow, size constraints and all of its states (loading, empty, error, success and disabled).',
+        title: 'Accessibility and scalability',
+        text: 'Accessibility standards (WCAG) from the root of the system, with inclusive, production-ready components.',
       },
     ],
+    code: {
+      title: 'Connecting design and code with Figma MCP and Claude Code',
+      items: [
+        'AI-assisted workflows that automate the token consistency review.',
+        'Less ambiguity in the technical documentation: engineering consumes guidelines and structures synced straight from the design ecosystem.',
+      ],
+    },
   },
   impact: {
     panel: {
@@ -192,16 +237,16 @@ const en: typeof es = {
     alt: 'Compass variables in Figma: the primitives collection and the semantics collection with their light and dark mode values',
     cards: [
       {
-        title: 'From friction to modularity',
-        text: 'Building new social flows, such as sharing collections or coordinating group plans, went from a handcrafted process to a modular, predictable one.',
+        title: 'Delivery speed',
+        text: 'Implementation times for new views and components dropped noticeably thanks to the handoff automated with Claude Code and the MCP.',
       },
       {
-        title: 'Full synergy with engineering',
-        text: 'Aligning the design variables with the structure of the development team kept errors and code review time to a minimum.',
+        title: 'Visual consistency',
+        text: '<strong>Over 80% of the design debt</strong> was eliminated, and the user experience is now unified across the whole PinsXP platform.',
       },
       {
-        title: 'A consistent experience',
-        text: 'Every screen now reflects a cohesive, accessible interface, optimised for saving and sharing experiences without friction.',
+        title: 'Sustained scalability',
+        text: 'A system ready to grow with the startup’s future requirements without compromising the quality of the interface.',
       },
     ],
   },

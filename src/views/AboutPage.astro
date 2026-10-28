@@ -62,11 +62,20 @@ const content = {
         items: ['Figma (variables avanzadas, auto-layout, componentes, tokens)', 'Framer', 'Accesibilidad (WCAG)', 'Visualización de datos'],
       },
       { title: 'Herramientas y Gestión', items: ['Jira', 'Notion', 'Maze', 'Metodologías ágiles'] },
-      {
-        title: 'AI Tools & Automatización',
-        items: ['Optimización de flujos de research', 'Ideación', 'Generación de contenido y copys', 'Automatización de flujos operativos'],
-      },
     ],
+    ai: {
+      title: 'AI-Driven Design & Workflow Automation',
+      items: [
+        {
+          title: 'Prompt Engineering & AI Research',
+          text: 'Optimización del proceso de discovery y de los flujos creativos.',
+        },
+        {
+          title: 'Claude Code & Figma MCP Integration',
+          text: 'Automatización de flujos de trabajo técnicos: facilita la traducción de especificaciones de diseño a código y conecta el ecosistema de diseño con los entornos de desarrollo en tiempo real.',
+        },
+      ],
+    },
     experienceEyebrow: 'Experiencia',
     experienceTitle: ['Trayectoria ', 'profesional'],
     current: 'Actual',
@@ -153,11 +162,20 @@ const content = {
         items: ['Figma (advanced variables, auto layout, components, tokens)', 'Framer', 'Accessibility (WCAG)', 'Data visualisation'],
       },
       { title: 'Tools & Management', items: ['Jira', 'Notion', 'Maze', 'Agile methodologies'] },
-      {
-        title: 'AI Tools & Automation',
-        items: ['Streamlined research workflows', 'Ideation', 'Content and copy generation', 'Automated operational workflows'],
-      },
     ],
+    ai: {
+      title: 'AI-Driven Design & Workflow Automation',
+      items: [
+        {
+          title: 'Prompt Engineering & AI Research',
+          text: 'Optimising the discovery process and creative workflows.',
+        },
+        {
+          title: 'Claude Code & Figma MCP Integration',
+          text: 'Automating technical workflows: it eases the translation of design specs into code and connects the design ecosystem with development environments in real time.',
+        },
+      ],
+    },
     experienceEyebrow: 'Experience',
     experienceTitle: ['Professional ', 'background'],
     current: 'Current',
@@ -207,7 +225,7 @@ const jobs: { company: string; current?: boolean; caseStudy?: RouteKey }[] = [
   { company: 'Lookers Inbound' },
 ];
 const experience = jobs.map((job, index) => ({ ...job, ...content.experience[index] }));
-const { story, services, stack } = content;
+const { story, services, stack, ai } = content;
 ---
 
 <Base title={content.title} description={content.description}>
@@ -296,6 +314,22 @@ const { story, services, stack } = content;
             </li>
           ))
         }
+        <li class="glass skills__group skills__group--ai">
+          <span class="skills__number" aria-hidden="true">
+            {String(stack.length + 1).padStart(2, '0')}
+          </span>
+          <h3>{ai.title}</h3>
+          <dl class="skills__ai">
+            {
+              ai.items.map((item) => (
+                <div>
+                  <dt>{item.title}</dt>
+                  <dd>{item.text}</dd>
+                </div>
+              ))
+            }
+          </dl>
+        </li>
       </ul>
     </div>
   </section>
@@ -506,7 +540,7 @@ const { story, services, stack } = content;
 
   .skills__grid {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 20px;
     padding: 0;
     list-style: none;
@@ -548,6 +582,35 @@ const { story, services, stack } = content;
     font-size: 13px;
     font-weight: var(--fw-medium);
     line-height: 1.4;
+  }
+
+  /* AI category: full-width card, each skill with its explanation */
+  .skills__group--ai {
+    grid-column: 1 / -1;
+  }
+
+  .skills__ai {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .skills__ai div {
+    padding: 16px 18px;
+    border-radius: 8px;
+    background: rgb(255 255 255 / 0.14);
+  }
+
+  .skills__ai dt {
+    margin-bottom: 4px;
+    color: var(--white);
+    font-size: 15px;
+    font-weight: var(--fw-semibold);
+  }
+
+  .skills__ai dd {
+    font-size: 14px;
+    line-height: 1.55;
   }
 
   /* Trayectoria */
@@ -671,6 +734,11 @@ const { story, services, stack } = content;
     .skills__grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
+
+    /* The last chip card would sit alone in its row */
+    .skills__group:nth-child(odd):nth-last-child(2) {
+      grid-column: 1 / -1;
+    }
   }
 
   @media (max-width: 1024px) {
@@ -696,7 +764,8 @@ const { story, services, stack } = content;
   }
 
   @media (max-width: 640px) {
-    .skills__grid {
+    .skills__grid,
+    .skills__ai {
       grid-template-columns: 1fr;
     }
   }

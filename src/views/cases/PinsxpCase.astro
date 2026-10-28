@@ -20,6 +20,7 @@ const impacto = media('pinsxp/impacto.jpg', lang);
 
 const sections = [
   { id: 'reto', title: c.sections.challenge },
+  { id: 'metodologia', title: c.sections.method },
   { id: 'solucion', title: c.sections.solution },
   { id: 'impacto', title: c.sections.impact },
   { id: 'proximos-pasos', title: c.sections.next },
@@ -56,7 +57,21 @@ const sections = [
     </ul>
   </CaseSection>
 
-  <CaseSection id="solucion" number={2} title={c.sections.solution}>
+  <CaseSection id="metodologia" number={2} title={c.sections.method}>
+    <p>{c.method.text}</p>
+    <ol class="cards">
+      {
+        c.method.steps.map((step) => (
+          <li class="card">
+            <h4>{step.title}</h4>
+            <Fragment set:html={step.text} />
+          </li>
+        ))
+      }
+    </ol>
+  </CaseSection>
+
+  <CaseSection id="solucion" number={3} title={c.sections.solution}>
     <p>{c.solution.text}</p>
     <div class="gallery" style="--cols: 2">
       <Image src={compass1} alt={c.solution.alts[0]} widths={[728, compass1.width]} sizes="(max-width: 760px) 92vw, 440px" />
@@ -73,9 +88,13 @@ const sections = [
         ))
       }
     </ul>
+    <h3>{c.solution.code.title}</h3>
+    <ul class="list">
+      {c.solution.code.items.map((item) => <li>{item}</li>)}
+    </ul>
   </CaseSection>
 
-  <CaseSection id="impacto" number={3} title={c.sections.impact}>
+  <CaseSection id="impacto" number={4} title={c.sections.impact}>
     <figure class="figma-panel">
       <div class="figma-panel__text">
         <h3 class="figma-panel__title">
@@ -111,7 +130,7 @@ const sections = [
     </ul>
   </CaseSection>
 
-  <CaseSection id="proximos-pasos" number={4} title={c.sections.next}>
+  <CaseSection id="proximos-pasos" number={5} title={c.sections.next}>
     <h3>{c.next.title}</h3>
     <p>{c.next.text}</p>
     <ul class="cards">
